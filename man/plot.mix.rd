@@ -1,0 +1,67 @@
+\name{plot.mixEM}
+\title{Various Plots Pertaining to Mixture Models}
+\alias{plot.mixEM} 
+\usage{
+\method{plot}{mixEM}(x, loglik = TRUE, density = FALSE, 
+                     w = 1.0, alpha = 0.05, marginal = FALSE,
+                     \dots)
+}
+
+\description{
+    Takes an object of class \code{mixEM} and returns various graphical output for select mixture models.
+} 
+\arguments{
+  \item{x}{An object of class \code{mixEM}.}
+  \item{loglik}{If TRUE, a plot of the log-likelihood versus the EM iterations is given.}
+  \item{density}{Graphics pertaining to certain mixture models.  The details are given below.}
+  \item{w}{A graphical parameter to control the height of the y-axis on the histogram when the
+  univariate mixture of normal component's density curves are overlaid.}
+  \item{alpha}{A vector of significance levels when constructing confidence ellipses and confidence bands for the mixture
+  of multivariate normals and mixture of regressions cases, respectively.  The default is 0.05.}
+  \item{marginal}{For the mixture of bivariate normals, should optional marginal histograms be included?}
+  \item{...}{Graphical parameters passed to \code{plot} command.}
+}
+\value{
+  \code{plot.mixEM} returns a plot of the log-likelihood versus the EM iterations by default for all objects of class
+  \code{mixEM}.  In addition, other plots may be produced for the following k-component mixture model functions:
+  \item{normalmixEM}{A histogram of the raw data is produced along with k density curves determined by \code{normalmixEM}.}
+  \item{repnormmixEM}{A histogram of the raw data produced in a similar manner as for \code{normalmixEM}.}
+  \item{mvnormalmixEM}{A 2-dimensional plot with each point color-coded to denote its most probable component membership. In
+  addition, the estimated component means are plotted along with (1 - \code{alpha})\% bivariate normal density contours.  These ellipses are
+  constructed by assigning each value to their component of most probable membership and then using normal theory. Optional marginal histograms
+  may also be produced.}
+  \item{regmixEM}{A plot of the response versus the predictor with each point color-coded to denote its most probable component
+  membership.  In addition, the estimated component regression lines are plotted along with (1 - \code{alpha})\% Working-Hotelling 
+  confidence bands. These bands are constructed by assigning each value to their component of most probable membership and then
+  performing least squares estimation.}
+  \item{logisregmixEM}{A plot of the binary response versus the predictor with each point color-coded to denote its most probable
+  compopnent membership.  In addition, the estimate component logistic regression lines are plotted.}
+  \item{regmixEM.mixed}{Provides a 2x2 matrix of plots summarizing the posterior slope and posterior intercept terms from a
+  mixture of random effects regression.  See \code{post.beta} for a more detailed description.}
+} 
+
+\seealso{ 
+\code{\link{post.beta}} 
+} 
+
+\examples{ 
+##Analyzing the Old Faithful geyser data with a 2-component mixture of normals.
+
+data(faithful)
+attach(faithful)
+out<-normalmixEM(waiting, arbvar = FALSE, verb = TRUE)
+plot(out, density = TRUE, w = 1.1)
+
+##Fitting randomly generated data with a 2-component location mixture of bivariate normals.
+
+x.1<-rmvnorm(40, c(0, 0))
+x.2<-rmvnorm(60, c(3, 4))
+X.1<-rbind(x.1, x.2)
+
+out.1<-mvnormalmixEM(X.1, arbvar = FALSE, verb = TRUE)
+plot(out.1, density = TRUE, alpha = c(0.01, 0.05, 0.10), 
+     marginal = TRUE)
+
+}
+
+\keyword{file}
