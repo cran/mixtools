@@ -45,6 +45,7 @@ normalmixEM(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   \item{posterior}{An nxk matrix of posterior probabilities for
    observations.}
   \item{all.loglik}{A vector of each iteration's log-likelihood.}
+  \item{restarts}{The number of times the algorithm restarted due to unacceptable choice of initial values.}
   \item{ft}{A character vector giving the name of the function.}
 }
 \seealso{
@@ -58,7 +59,7 @@ normalmixEM(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
 
 data(faithful)
 attach(faithful)
-out<-normalmixEM(waiting, arbvar = FALSE)
+out<-normalmixEM(waiting, arbvar = FALSE, epsilon = 1e-03)
 out
 }
 

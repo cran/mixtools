@@ -50,9 +50,10 @@ regmixMH=function (y, x, lambda = NULL, beta = NULL, s = NULL, k = 2,
             k)
         new.sigma <- log(s) + omega * rcauchy(k)
         new.sigma <- exp(new.sigma)
-        temp <- exp(log(lambda[1:(k - 1)]) - log(lambda[k]) + 
-            omega * rcauchy(k - 1))
-        new.lambda <- c(temp, 1)/(1 + sum(temp))
+#        temp <- exp(log(lambda[1:(k - 1)]) - log(lambda[k]) + 
+#            omega * rcauchy(k - 1))
+#        new.lambda <- c(temp, 1)/(1 + sum(temp))
+	new.lambda <- lambda.pert(lambda,omega*rcauchy(k-1))
         new.pi.beta <- dnorm(new.beta, mu, sig)
         new.pi.sigma <- dexp(new.sigma)
         new.pi.lambda <- dbeta(new.lambda, 1, 1)

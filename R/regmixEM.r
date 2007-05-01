@@ -34,6 +34,7 @@ regmixEM = function (y, x, lambda = NULL, beta = NULL, sigma = NULL, k = 2,
     obsloglik <- sum(log(apply(comp, 1, sum)))
     ll <- obsloglik
     z = matrix(nrow = n, ncol = k)
+	restarts <- 0
     while (diff > epsilon && iter < maxit) {
         for (i in 1:n) {
             for (j in 1:k) {
@@ -48,21 +49,32 @@ regmixEM = function (y, x, lambda = NULL, beta = NULL, sigma = NULL, k = 2,
                 z[i, j] = 1/sum(z.denom)
             }
         }
+#	  z[,k]=1-apply(as.matrix(z[,(1:(k-1))]),1,sum)
+	z = z/apply(z,1,sum)
         lambda.new <- apply(z, 2, mean)
-        if (sum(lambda.new < 1e-08)>0) {
+        if (sum(lambda.new < 1e-08)>0 || is.na(sum(lambda.new))) {
             sing <- 1
         }
         else {
+ 
+        if (arbmean == FALSE) {
             if (addintercept) {
+			beta.new <- lm(y~x[,-1],weights=apply(t(t(z)/(s^2)),1,sum))$coef
+            }
+            else beta.new <- lm(y~x-1,weights=apply(t(t(z)/(s^2)),1,sum))$coef
+#            beta.new <- sapply(lm.out, coef)
+#        beta.new1 <- apply(t(apply(z,2,sum)*t(beta.new)),1,sum)/n
+#	beta.new2 <- lm(y~x[,-1],weights=apply(t(t(z)/(s^2)),1,sum))$coef
+#	beta.new<-as.vector(solve(t(x) %*% sweep(x, 1, t(t(z)/(s^2)), "*")) %*% apply(t(t(z)/(s^2))*y*x,2,sum) )
+        } else {
+           if (addintercept) {
                 lm.out <- lapply(1:k, function(i) lm(y ~ x[, 
                   -1], weights = z[, i]))
             }
             else lm.out <- lapply(1:k, function(i) lm(y ~ x - 
                 1, weights = z[, i]))
             beta.new <- sapply(lm.out, coef)
-        if (arbmean == FALSE) {
-        beta.new <- apply(t(apply(z,2,sum)*t(beta.new)),1,sum)/n
-        }
+		}
         xbeta.new <- x %*% beta.new
         res <- (y - xbeta.new)^2
             if(arbmean == FALSE){
@@ -87,10 +99,12 @@ regmixEM = function (y, x, lambda = NULL, beta = NULL, sigma = NULL, k = 2,
 #                s^2)))))
 #            newobsloglik <- sum(log(apply(comp, 1, sum)))
         }
-        if (newobsloglik < obsloglik || sing > 0 || abs(newobsloglik) == 
-            Inf || is.nan(newobsloglik) || sum(z) != n) {
+        if (sing > 0 || is.na(newobsloglik) || newobsloglik < obsloglik || abs(newobsloglik) == 
+            Inf || sum(z) != n) {
             cat("Need new starting values due to singularity...", 
                 "\n")
+		restarts <- restarts + 1
+		if(restarts>15) stop("Too many tries!")
             tmp <- regmix.init(y = y, x = x, k = k, addintercept = addintercept, 
                 arbmean = arbmean, arbvar = arbvar)
             lambda <- tmp$lambda
@@ -137,7 +151,7 @@ regmixEM = function (y, x, lambda = NULL, beta = NULL, sigma = NULL, k = 2,
 names(beta) <- c(paste("beta", ".", 0:(p-1), sep = ""))
 colnames(z) <- c(paste("comp", ".", 1:k, sep = ""))
     a=list(x=x, y=y, lambda = lambda[scale.order], beta = beta, sigma = sigma.min, scale = s[scale.order]/sigma.min, loglik = obsloglik, 
-        posterior = z[,scale.order], all.loglik=ll, ft="regmixEM")
+        posterior = z[,scale.order], all.loglik=ll, restarts = restarts, ft="regmixEM")
     class(a) = "mixEM"
     a
     } else {
@@ -145,7 +159,7 @@ rownames(beta) <- c(paste("beta", ".", 0:(p-1), sep = ""))
 colnames(beta) <- c(paste("comp", ".", 1:k, sep = ""))
 colnames(z) <- c(paste("comp", ".", 1:k, sep = ""))
     a=list(x=x, y=y, lambda = lambda, beta = beta, sigma = s, loglik = obsloglik, 
-        posterior = z, all.loglik=ll, ft="regmixEM")
+        posterior = z, all.loglik=ll, restarts = restarts, ft="regmixEM")
     class(a) = "mixEM"
     a
     }

@@ -19,7 +19,7 @@ makemultdata = function (..., cuts)
         x = sapply(list(...), full.data, maxm = m)
     }
     else {
-        if (sapply(list(...), is.matrix) == 1) {
+        if (sapply(list(...), is.matrix) == 1 | sapply(list(...), is.data.frame) == 1) {
             x = t(...)
         }
         else x = cbind(...)

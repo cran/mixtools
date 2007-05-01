@@ -3,8 +3,7 @@
 \alias{plot.mixMCMC} 
 \usage{ 
 \method{plot}{mixMCMC}(x, trace.plots = TRUE, 
-                       summary.plots = FALSE, burnin = 2000, 
-                       \dots) 
+     summary.plots = FALSE, burnin = 2000, \dots) 
 }
 
 \description{
@@ -35,8 +34,8 @@ attach(NOdata)
 beta<-matrix(c(1.3, -0.1, 0.6, 0.1), 2, 2)
 sigma<-c(.02, .05)
 MH.out<-regmixMH(Equivalence, NO, beta = beta, s = sigma, 
-                 sampsize = 10000, omega = .0013)
-plot(MH.out, summary.plots = TRUE, burnin = 9950, 
+                 sampsize = 2500, omega = .0013)
+plot(MH.out, summary.plots = TRUE, burnin = 2450, 
      alpha = 0.01)
 }
 

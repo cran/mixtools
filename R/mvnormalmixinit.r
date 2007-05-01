@@ -35,7 +35,7 @@ mvnormalmix.init = function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, a
             mean = as.vector(mu.hyp[[i]]), sigma = as.matrix(sigma))))
 	  if (arbmean==FALSE) {
 		mu <- apply(sapply(mu,as.vector),1,mean)
-		mu <- lapply(1:k, function(i) mu)
+#		mu <- lapply(1:k, function(i) mu)
     }
 	}
     if (is.null(mu) == FALSE && arbmean == TRUE){

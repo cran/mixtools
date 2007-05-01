@@ -24,7 +24,7 @@ repnormmixEM(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   \item{sigma}{A vector of standard deviations.  If NULL, then 1/\code{sigma}$^2$ has
     random standard exponential entries according to a binning method done on the data.
     If \code{lambda}, \code{mu}, and \code{sigma} are NULL, then number of components is determined by \code{k}.}
-  \item{k}{Number of components.  Ignored unless all of \code{lambda}, \code{beta}, 
+  \item{k}{Number of components.  Ignored unless all of \code{lambda}, \code{mu}, 
     and \code{sigma} are NULL.}
   \item{arbmean}{If TRUE, then the component densities are allowed to have different \code{mu}s. If FALSE, then
   a scale mixture will be fit.}
@@ -47,6 +47,7 @@ repnormmixEM(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   \item{posterior}{An nxk matrix of posterior probabilities for
    observations.}
   \item{all.loglik}{A vector of each iteration's log-likelihood.}
+  \item{restarts}{The number of times the algorithm restarted due to unacceptable choice of initial values.}
   \item{ft}{A character vector giving the name of the function.}
 }
 \seealso{
@@ -62,7 +63,7 @@ repnormmixEM(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
 
 data(Waterdata)
 water<-t(as.matrix(Waterdata))
-em.out<-repnormmixEM(water, k = 2, verb = TRUE)
+em.out<-repnormmixEM(water, k = 2, verb = TRUE, epsilon = 1e-03)
 em.out
 }
 

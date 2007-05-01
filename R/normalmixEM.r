@@ -5,6 +5,7 @@ function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbmean = TRUE, arbv
     if(arbmean == FALSE && arbvar == FALSE){
     stop(paste("Must change constraints on mu and/or sigma!","\n"))
     }
+    x <- as.vector(x)
     n <- length(x)
     tmp <- normalmix.init(x = x, lambda = lambda, mu = mu, s = sigma, 
         k = k, arbmean = arbmean, arbvar = arbvar)
@@ -22,6 +23,7 @@ function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbmean = TRUE, arbv
     obsloglik <- sum(log(compsum))
     ll <- obsloglik
     z = matrix(nrow = n, ncol = k)
+	restarts <- 0
     while (diff > epsilon && iter < maxit) {
         res <- outer(x, mu, "-")^2
         for (i in 1:n) {
@@ -37,9 +39,13 @@ function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbmean = TRUE, arbv
                 z[i, j] = 1/sum(z.denom)
             }
         }
+	
+#	  z[,k]=1-apply(as.matrix(z[,(1:(k-1))]),1,sum)
+	z=z/apply(z,1,sum)
+
         lambda.new <- apply(z, 2, mean)
         sing <- sum(is.nan(z))
-        if (sum(lambda.new < 1e-08)>0) {
+        if (sum(lambda.new < 1e-08)>0 || is.na(sum(lambda.new))) {
             sing <- 1
         }
         else {
@@ -67,10 +73,12 @@ function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbmean = TRUE, arbv
             compsum <- apply(comp, 1, sum)
             newobsloglik <- sum(log(compsum))
         }
-        if (sing > 0 || abs(newobsloglik) == Inf || is.nan(newobsloglik) || 
+        if (sing > 0 || abs(newobsloglik) == Inf || is.na(newobsloglik) || 
             sum(z) != n) {
             cat("Need new starting values due to singularity...", 
                 "\n")
+		restarts <- restarts + 1
+		if(restarts>15) stop("Too many tries!")
             tmp <- normalmix.init(x = x, k = k, arbmean = arbmean, arbvar = arbvar)
             lambda <- tmp$lambda
             mu <- tmp$mu
@@ -107,13 +115,13 @@ function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbmean = TRUE, arbv
     z = z[,scale.order]
     colnames(z) <- c(paste("comp", ".", 1:k, sep = ""))
     a=list(x=x, lambda = lambda[scale.order], mu = mu, sigma = sigma.min, scale = sigma[scale.order]/sigma.min, loglik = obsloglik, 
-        posterior = z, all.loglik=ll, ft="normalmixEM")
+        posterior = z, all.loglik=ll, restarts=restarts, ft="normalmixEM")
     class(a) = "mixEM"
     a
     } else {
     colnames(z) <- c(paste("comp", ".", 1:k, sep = ""))
     a=list(x=x, lambda = lambda, mu = mu, sigma = sigma, loglik = obsloglik, 
-        posterior = z, all.loglik=ll, ft="normalmixEM")
+        posterior = z, all.loglik=ll, restarts=restarts, ft="normalmixEM")
     class(a) = "mixEM"
     a
     }

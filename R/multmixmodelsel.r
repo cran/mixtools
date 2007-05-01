@@ -42,10 +42,12 @@ multmixmodel.sel <- function (y, comps = NULL, ...)
         ll = c(ll, loglik)
     }
     out = rbind(aic, bic, caic, icl, ll)
-    Winner = apply(out, 1, function(x) (1:length(x))[x == 
-        max(x)])
+#    Winner = apply(out, 1, function(x) (1:length(x))[x == 
+#        max(x)])
+    win = apply(out, 1, which.max)
     rownames(out) = c("AIC", "BIC", "CAIC", "ICL", "Loglik")
     colnames(out) = sort(comps)
+    Winner = as.numeric(colnames(out)[win])
     cbind(out, Winner)
 }
 

@@ -31,7 +31,7 @@ multmixmodel.sel(y, comps = NULL, ...)
 
 x<-matrix(rpois(70, 6), 10, 7) 
 x.new<-makemultdata(x, cuts = 5)
-multmixmodel.sel(x.new$y, comps = c(1,2))
+multmixmodel.sel(x.new$y, comps = c(1,2), epsilon = 1e-03)
 
 }
 

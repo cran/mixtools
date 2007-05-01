@@ -39,7 +39,7 @@ regmixEM(y, x, lambda = NULL, beta = NULL, sigma = NULL, k = 2,
 }
 \value{
   \code{regmixEM} returns a list of class \code{mixEM} with items:
-  \item{x}{The set of predictors (which includes a column of 1's if \code{addintercept} = TRUE.}
+  \item{x}{The set of predictors (which includes a column of 1's if \code{addintercept} = TRUE).}
   \item{y}{The response values.}
   \item{lambda}{The final mixing proportions.}
   \item{beta}{The final regression coefficients.}
@@ -51,6 +51,7 @@ regmixEM(y, x, lambda = NULL, beta = NULL, sigma = NULL, k = 2,
   \item{posterior}{An nxk matrix of posterior probabilities for
    observations.}
   \item{all.loglik}{A vector of each iteration's log-likelihood.}
+  \item{restarts}{The number of times the algorithm restarted due to unacceptable choice of initial values.}
   \item{ft}{A character vector giving the name of the function.}
 }
 \seealso{
@@ -67,7 +68,7 @@ regmixEM(y, x, lambda = NULL, beta = NULL, sigma = NULL, k = 2,
  
 data(NOdata)
 attach(NOdata)
-em.out<-regmixEM(Equivalence, NO, verb = TRUE)
+em.out<-regmixEM(Equivalence, NO, verb = TRUE, epsilon = 1e-04)
 em.out[3:6]
 }
 

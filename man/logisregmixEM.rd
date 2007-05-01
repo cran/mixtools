@@ -1,5 +1,5 @@
 \name{logisregmixEM}
-\title{EM Algorithm for Mixtures of (Binary) Logistic or Binomial Regressions}
+\title{EM Algorithm for Mixtures of Logistic Regressions}
 \alias{logisregmixEM}
 \usage{
 logisregmixEM(y, x, N = NULL, lambda = NULL, beta = NULL, k = 2,
@@ -8,14 +8,14 @@ logisregmixEM(y, x, N = NULL, lambda = NULL, beta = NULL, k = 2,
 }
 
 \description{
-  Returns EM algorithm output for mixtures of logistic or binomial regressions with
+  Returns EM algorithm output for mixtures of logistic regressions with
   arbitrarily many components.
 }
 \arguments{
   \item{y}{An n-vector of successes out of N trials.}
   \item{x}{An nxp matrix of predictors.  See \code{addintercept} below.}
-  \item{N}{An n-vector of number of trials for binomial regression.  
-  If NULL, then \code{N} is an n-vector of 1s for logistic regression.}
+  \item{N}{An n-vector of number of trials for the logistic regression.  
+  If NULL, then \code{N} is an n-vector of 1s for binary logistic regression.}
   \item{lambda}{Initial value of mixing proportions.  Entries should sum to
     1.  This determines number of components.  If NULL, then \code{lambda} is
     random from uniform Dirichlet and number of
@@ -42,6 +42,7 @@ logisregmixEM(y, x, N = NULL, lambda = NULL, beta = NULL, k = 2,
   \item{posterior}{An nxk matrix of posterior probabilities for
     observations.}
   \item{all.loglik}{A vector of each iteration's log-likelihood.}   
+  \item{restarts}{The number of times the algorithm restarted due to unacceptable choice of initial values.}
   \item{ft}{A character vector giving the name of the function.}
 }
 \seealso{
@@ -51,7 +52,7 @@ logisregmixEM(y, x, N = NULL, lambda = NULL, beta = NULL, k = 2,
   McLachlan, G. J. and Peel, D. (2000) \emph{Finite Mixture Models}, John Wiley \& Sons, Inc.
 }
 \examples{
-## EM output for data generated from a 2-component binomial regression model.
+## EM output for data generated from a 2-component logistic regression model.
 
 beta<-matrix(c(1, .5, 2, -.8), 2, 2)
 x<-runif(50, 0, 10)
@@ -60,12 +61,12 @@ xbeta<-x1\%*\%beta
 N<-ceiling(runif(50, 50, 75))
 w<-rbinom(50, 1, .3)
 y<-w*rbinom(50, size = N, prob = (1/(1+exp(-xbeta[, 1]))))+
-           (1-w)*rbinom(50, size = N, prob = 
-           (1/(1+exp(-xbeta[, 2]))))
-out.1<-logisregmixEM(y, x, N, verb = TRUE)
+            (1-w)*rbinom(50, size = N, prob = 
+            (1/(1+exp(-xbeta[, 2]))))
+out.1<-logisregmixEM(y, x, N, verb = TRUE, epsilon = 1e-01)
 out.1
 
-## EM output for data generated from a 2-component logistic regression model.
+## EM output for data generated from a 2-component binary logistic regression model.
 
 beta<-matrix(c(-10, .1, 20, -.1), 2, 2)
 x<-runif(500, 50, 250)
@@ -76,7 +77,7 @@ y<-w*rbinom(500, size = 1, prob = (1/(1+exp(-xbeta[, 1]))))+
             (1-w)*rbinom(500, size = 1, prob = 
             (1/(1+exp(-xbeta[, 2]))))
 out.2<-logisregmixEM(y, x, beta = beta, lambda = c(.3, .7), 
-                     verb = TRUE, epsilon = 1e-5)
+                     verb = TRUE, epsilon = 1e-01)
 out.2
 }
 

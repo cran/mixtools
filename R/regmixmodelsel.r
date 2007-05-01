@@ -1,4 +1,4 @@
-regmixmodel.sel = function (x, y, k = 2, type = c("fixed", "random", "mixed"), ...) 
+regmixmodel.sel = function (x, y, w=NULL, k = 2, type = c("fixed", "random", "mixed"), ...) 
 {
     aic <- NULL
     bic <- NULL
@@ -68,7 +68,7 @@ length(emout$mu) +(v*m*(m+1)/2)+ length(emout$sigma)+  length(emout$lambda)}
                 emout <- list(mu = mu, R = R, sigma = sd.a, lambda = 1, 
                   loglik = loglik)
             }
-            else emout <- regmixEM.mixed(y, x, k = j, mixed = FALSE, ...)
+            else emout <- regmixEM.mixed(y, x, k = j, ...)
 		P = p(emout)
             aic[j] <- AIC(emout, p=P)
             bic[j] <- BIC(emout, p=P, n=n)
@@ -78,9 +78,12 @@ length(emout$mu) +(v*m*(m+1)/2)+ length(emout$sigma)+  length(emout$lambda)}
     }
     else if (type == "mixed") {
 	p <- function(emout) {
-		if(is.list(emout$R)){ m<-nrow(emout$R[[1]])
+		if(is.list(emout$R)){ 
+			m<-nrow(emout$R[[1]])
+			v<-length(emout$R)
 		} else {
-		m<-nrow(emout$R)}
+		m<-nrow(emout$R)
+		v<-1}
 length(emout$alpha)+ length(emout$mu) +(v*m*(m+1)/2)+ length(emout$sigma)+  length(emout$lambda)}
 	n <- sum(sapply(y,length))
         for (i in 1:k) {
@@ -107,7 +110,7 @@ length(emout$alpha)+ length(emout$mu) +(v*m*(m+1)/2)+ length(emout$sigma)+  leng
                 emout <- list(mu = mu, R = R, alpha = alpha, 
                   sigma = sd.a, lambda = 1, loglik = loglik)
             }
-            else emout <- regmixEM.mixed(y, x, k = i, mixed = TRUE, ...)
+            else emout <- regmixEM.mixed(y, x, k = i, ...)
 		P = p(emout)
             aic[i] <- AIC(emout, p=P)
             bic[i] <- BIC(emout, p=P, n=n)

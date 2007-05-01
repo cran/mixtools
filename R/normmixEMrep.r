@@ -22,6 +22,7 @@ repnormmixEM = function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbme
         2, sum)/s.2[i * arbvar + (1 - arbvar)]))
     obsloglik <- sum(log(apply(sapply(comp, rbind), 1, sum)))
     ll <- obsloglik
+	restarts <- 0
     while (diff > epsilon & iter < maxit) {
         xmu <- lapply(1:k, function(i) apply(res[[i]], 2, sum))
         z = matrix(nrow = n, ncol = k)
@@ -38,8 +39,11 @@ repnormmixEM = function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbme
                 z[i, j] = 1/sum(z.denom)
             }
         }
+	z = z/apply(z,1,sum)
+#	  z[,k]=1-apply(as.matrix(z[,(1:(k-1))]),1,sum)
+
         lambda.new <- apply(z, 2, mean)
-        if (sum(lambda.new < 1e-08)>0) {
+        if (sum(lambda.new < 1e-08)>0 || is.na(sum(lambda.new))) {
             sing <- 1
         }
         else {
@@ -69,10 +73,12 @@ repnormmixEM = function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbme
             newobsloglik <- sum(log(apply(sapply(comp, rbind), 
                 1, sum)))
         }
-        if (sing > 0 || abs(newobsloglik) == Inf || is.nan(newobsloglik) || 
+        if (sing > 0 || is.na(newobsloglik) || abs(newobsloglik) == Inf || 
             sum(z) != n) {
             cat("Need new starting values due to singularity...", 
                 "\n")
+		restarts <- restarts + 1
+		if(restarts>15) stop("Too many tries!")
             tmp <- repnormmix.init(x = x, k = k, arbmean = arbmean, arbvar = arbvar)
             lambda <- tmp$lambda
             mu <- tmp$mu
@@ -111,13 +117,13 @@ repnormmixEM = function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbme
     z = z[,scale.order]
 colnames(z) <- c(paste("comp", ".", 1:k, sep = ""))
     a=list(x=as.data.frame(x), lambda = lambda[scale.order], mu = mu, sigma = sigma.min, scale = s[scale.order]/sigma.min, loglik = obsloglik, 
-        posterior = z[,scale.order], all.loglik=ll, ft="repnormmixEM")
+        posterior = z[,scale.order], all.loglik=ll, restarts = restarts, ft="repnormmixEM")
     class(a) = "mixEM"
     a
     } else {
 colnames(z) <- c(paste("comp", ".", 1:k, sep = ""))
     a=list(x=as.data.frame(x), lambda = lambda, mu = mu, sigma = s, loglik = obsloglik, 
-        posterior = z, all.loglik=ll,ft="repnormmixEM")
+        posterior = z, all.loglik=ll, restarts = restarts, ft="repnormmixEM")
     class(a) = "mixEM"
     a
     }
