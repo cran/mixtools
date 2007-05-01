@@ -64,8 +64,8 @@ attach(NOdata)
 beta<-matrix(c(1.3, -0.1, 0.6, 0.1), 2, 2)
 sigma<-c(.02, .05)
 MH.out<-regmixMH(Equivalence, NO, beta = beta, s = sigma, 
-                 sampsize = 10000, omega = .0013)
-MH.out$theta[9990:9999,]
+                 sampsize = 2500, omega = .0013)
+MH.out$theta[2400:2499,]
 }
 
 \keyword{file}

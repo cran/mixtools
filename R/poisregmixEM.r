@@ -19,6 +19,7 @@ poisregmixEM = function (y, x, lambda = NULL, beta = NULL, k = 2, addintercept =
     compsum <- apply(comp, 1, sum)
     obsloglik <- sum(log(compsum))
     ll <- obsloglik
+	restarts <- 0
     while (diff > epsilon && iter < maxit) {
         j.star = apply(xbeta, 1, which.max)
         for (i in 1:n) {
@@ -29,8 +30,11 @@ poisregmixEM = function (y, x, lambda = NULL, beta = NULL, k = 2, addintercept =
             }
         }
         z = z/apply(z, 1, sum)
-    if(sum(is.nan(z))>0){
+	  z[,k]=1-apply(as.matrix(z[,(1:(k-1))]),1,sum)
+    if(sum(is.na(z))>0){
         cat("Need new starting values due to underflow...","\n")
+		restarts <- restarts + 1
+		if(restarts>15) stop("Too many tries!")
         tmp <- poisregmix.init(y=y, x=x, k=k)
         lambda <- tmp$lambda
         beta <- tmp$beta
@@ -51,8 +55,10 @@ poisregmixEM = function (y, x, lambda = NULL, beta = NULL, k = 2, addintercept =
         comp <- t(t(dpois(y, exp(xbeta))) * lambda)
         compsum <- apply(comp, 1, sum)
         newobsloglik <- sum(log(compsum))
-    if(abs(newobsloglik)==Inf || is.nan(newobsloglik) || sum(z)!=n){
+    if(abs(newobsloglik)==Inf || is.na(newobsloglik) || newobsloglik < obsloglik || sum(z)!=n){
         cat("Need new starting values due to singularity...","\n")
+		restarts <- restarts + 1
+		if(restarts>15) stop("Too many tries!")
         tmp <- poisregmix.init(y=y, x=x, k=k)
         lambda <- tmp$lambda
         beta <- tmp$beta
@@ -83,7 +89,7 @@ poisregmixEM = function (y, x, lambda = NULL, beta = NULL, k = 2, addintercept =
 rownames(beta) <- c(paste("beta", ".", 0:(p-1), sep = ""))
 colnames(beta) <- c(paste("comp", ".", 1:k, sep = ""))
 colnames(z) <- c(paste("comp", ".", 1:k, sep = ""))
-    a=list(x=x, y=y, lambda = lambda, beta = beta, loglik = obsloglik, posterior = z, all.loglik=ll, ft="poisregmixEM")
+    a=list(x=x, y=y, lambda = lambda, beta = beta, loglik = obsloglik, posterior = z, all.loglik=ll, restarts=restarts, ft="poisregmixEM")
     class(a) = "mixEM"
     a
 }

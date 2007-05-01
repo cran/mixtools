@@ -40,6 +40,7 @@ poisregmixEM(y, x, lambda = NULL, beta = NULL, k = 2,
   \item{posterior}{An nxk matrix of posterior probabilities for
     observations.}
   \item{all.loglik}{A vector of each iteration's log-likelihood.}
+  \item{restarts}{The number of times the algorithm restarted due to unacceptable choice of initial values.}
   \item{ft}{A character vector giving the name of the function.}
 }
 \seealso{
@@ -60,7 +61,7 @@ x<-runif(50, 0, 10)
 xbeta<-cbind(1, x)\%*\%beta
 w<-rbinom(50, 1, .5)
 y<-w*rpois(50, exp(xbeta[, 1]))+(1-w)*rpois(50, exp(xbeta[, 2]))
-out<-poisregmixEM(y, x, verb = TRUE)
+out<-poisregmixEM(y, x, verb = TRUE,  epsilon = 1e-03)
 out
 }
 

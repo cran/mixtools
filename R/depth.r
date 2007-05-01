@@ -18,6 +18,8 @@ depth <- function(pts,x,Cx=var(x)){
                 PACKAGE="mixtools")
   count <- y[[6]]
   n <- nrow(x)
-  depth <- sqrt(8)*(count-n*(n-1)/4)/sqrt((n*(n-1)))#this is to standardize the depth
+#  depth <- sqrt(8)*(count-n*(n-1)/4)/sqrt((n*(n-1)))#this is to standardize the depth
+#  depth <- (factorial(n)/(2*factorial(n-2)))^(-1)*count
+  depth <- choose(n,2)^(-1)*count
   depth
 }

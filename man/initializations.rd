@@ -1,10 +1,13 @@
 \name{mixtools initializations}
+\alias{flaremix.init}
 \alias{logisregmix.init}
 \alias{multmix.init}
 \alias{mvnormalmix.init}
 \alias{normalmix.init}
 \alias{poisregmix.init}
+\alias{regmix.chgpt.init}
 \alias{regmix.init}
+\alias{regmix.lambda.init}
 \alias{regmix.mixed.init}
 \alias{repnormmix.init}
 
@@ -13,6 +16,8 @@
   Internal intialization functions for EM algorithms in the package \code{mixtools}.
 }
 \usage{
+flaremix.init(y, x, lambda = NULL, beta = NULL, sigma = NULL,
+              alpha = NULL)
 logisregmix.init(y, x, N, lambda = NULL, beta = NULL, k = 2)
 multmix.init(y, lambda = NULL, theta = NULL, k = 2)
 mvnormalmix.init(x, lambda = NULL, mu = NULL, sigma = NULL, 
@@ -20,8 +25,13 @@ mvnormalmix.init(x, lambda = NULL, mu = NULL, sigma = NULL,
 normalmix.init(x, lambda = NULL, mu = NULL, s = NULL, k = 2, 
                arbmean = TRUE, arbvar = TRUE)
 poisregmix.init(y, x, lambda = NULL, beta = NULL, k = 2)
+regmix.chgpt.init(y, x, lambda = NULL, beta = NULL,
+                  gamma = NULL, sigma = NULL, t = NULL, k = 2)
 regmix.init(y, x, lambda = NULL, beta = NULL, s = NULL, k = 2, 
             addintercept = TRUE, arbmean = TRUE, arbvar=TRUE)
+regmix.lambda.init(y, x, lambda = NULL, beta = NULL, s = NULL,
+                   k = 2, addintercept = TRUE, arbmean = TRUE,
+                   arbvar = TRUE)
 regmix.mixed.init(y, x, w = NULL, sigma = NULL, 
                   arb.sigma = TRUE, alpha = NULL, lambda = NULL, 
                   mu = NULL, R = NULL, arb.R = TRUE, k = 2, 

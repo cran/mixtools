@@ -2,7 +2,7 @@
 \title{Model Selection in Mixtures of Normals with Repeated Measures}
 \alias{repnormmixmodel.sel}
 \usage{
-repnormmixmodel.sel(x, k = 2)
+repnormmixmodel.sel(x, k = 2, ...)
 }
 \description{
   Assess the number of components in a mixture model with normal components and repeated measures 
@@ -13,6 +13,7 @@ repnormmixmodel.sel(x, k = 2)
   \item{x}{An mxn matrix of observations. The rows correspond to the repeated measures and the columns correspond
   to the subject.}
   \item{k}{The maximum number of components to assess.}
+  \item{...}{Additional arguments passed to \code{repnormmixEM}.}
 }
 \value{
   \code{repnormmixmodel.sel} returns a matrix of the AIC, BIC, CAIC, and ICL values along with the winner (i.e., the highest
@@ -33,7 +34,7 @@ repnormmixmodel.sel(x, k = 2)
 
 data(Waterdata)
 water<-t(as.matrix(Waterdata))
-out<-repnormmixmodel.sel(water, k = 3)
+out<-repnormmixmodel.sel(water, k = 3, epsilon = 1e-03)
 out
 }
 

@@ -15,16 +15,22 @@ mvnormalmixEM = function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbm
     k = tmp$k
     diff <- 1
     iter <- 0
-    if (arbvar) {
+    if (arbmean==FALSE){
         comp <- lapply(1:k, function(i) lambda[i] * dmvnorm(x, 
-            mu[[i]], sigma[[i]]))
+            mu, sigma[[i]]))
+	} else{
+    if (arbvar==FALSE) {
+        comp <- lapply(1:k, function(i) lambda[i] * dmvnorm(x, 
+            mu[[i]], sigma))
     }
     else comp <- lapply(1:k, function(i) lambda[i] * dmvnorm(x, 
-        mu[[i]], sigma))
+        mu[[i]], sigma[[i]]))
+    }
     comp <- sapply(comp, cbind)
     compsum <- apply(comp, 1, sum)
     obsloglik <- sum(log(compsum))
     ll <- obsloglik
+	restarts <- 0
     while (diff > epsilon & iter < maxit) {
         if (arbvar) {
             z = matrix(nrow = n, ncol = k)
@@ -41,9 +47,11 @@ mvnormalmixEM = function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbm
                   z[i, j] = 1/sum(z.denom)
                 }
             }
+	z = z/apply(z,1,sum)
+#	  z[,k]=1-apply(as.matrix(z[,(1:(k-1))]),1,sum)
             sing <- sum(is.nan(z))
             lambda.new <- apply(z, 2, mean)
-            if (sum(lambda.new < 1e-08)>0) {
+            if (sum(lambda.new < 1e-08)>0 || is.na(sum(lambda.new))) {
                 sing <- 1
             }
             else {
@@ -79,7 +87,7 @@ mvnormalmixEM = function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbm
                   z.denom = c()
                   for (m in 1:k) {
                     z.denom = c(z.denom, lambda[m]/lambda[j] * 
-                      (det(sigma.inv)/det(sigma.inv))^(0.5) * 
+#                      (det(sigma.inv)/det(sigma.inv))^(0.5) * 
                       exp(-0.5 * ((x[i, ] - mu[[m]]) %*% sigma.inv %*% 
                         t(t(x[i, ] - mu[[m]])) - (x[i, ] - mu[[j]]) %*% 
                         sigma.inv %*% t(t(x[i, ] - mu[[j]])))))
@@ -87,9 +95,12 @@ mvnormalmixEM = function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbm
                   z[i, j] = 1/sum(z.denom)
                 }
             }
+#	  z[,k]=1-apply(as.matrix(z[,(1:(k-1))]),1,sum)
+	z = z/apply(z,1,sum)
+
             sing <- sum(is.nan(z))
             lambda.new <- apply(z, 2, mean)
-            if (sum(lambda.new < 1e-08)>0) {
+            if (sum(lambda.new < 1e-08)>0 || is.na(sum(lambda.new))) {
                 sing <- 1
             }
             else {
@@ -118,10 +129,12 @@ mvnormalmixEM = function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbm
                 newobsloglik <- sum(log(compsum))
             }
         }
-        if (sing > 0 || abs(newobsloglik) == Inf || is.nan(newobsloglik) || 
+        if (sing > 0 || is.na(newobsloglik) || abs(newobsloglik) == Inf || 
             sum(z) != n) {
             cat("Need new starting values due to singularity...", 
                 "\n")
+		restarts <- restarts + 1
+		if(restarts>15) stop("Too many tries!")
             tmp <- mvnormalmix.init(x = x, k = k, arbmean=arbmean, arbvar = arbvar)
             lambda <- tmp$lambda
             mu <- tmp$mu
@@ -160,7 +173,7 @@ mvnormalmixEM = function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbm
     colnames(z) <- c(paste("comp", ".", 1:k, sep = ""))
     cat("number of iterations=", iter, "\n")
     a=list(x=x, lambda = lambda, mu = mu, sigma = sigma, 
-        loglik = obsloglik, posterior = z, all.loglik=ll, ft="mvnormalmixEM")
+        loglik = obsloglik, posterior = z, all.loglik=ll, restarts=restarts, ft="mvnormalmixEM")
     class(a) = "mixEM"
     a
 }

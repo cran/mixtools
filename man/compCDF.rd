@@ -21,7 +21,7 @@ Plot the components' CDF via the posterior probabilities.
 \references{
   McLachlan, G. J. and Peel, D. (2000) \emph{Finite Mixture Models}, John Wiley \& Sons, Inc.
   
-  Elmore, R. T., Hettmansperger, T. H. and Xuan, F. (2004) The Sign Statistic, One-Way Layouts
+  Elmore, R. T., Hettmansperger, T. P. and Xuan, F. (2004) The Sign Statistic, One-Way Layouts
   and Mixture Models, \emph{Statistical Science} \bold{19(4)}, 579--587.
 }
 \seealso{

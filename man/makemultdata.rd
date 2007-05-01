@@ -12,11 +12,11 @@ makemultdata(..., cuts)
 }
 \arguments{
   \item{...}{Either vectors (possibly of different lengths) of raw data 
-    or an nxm matrix of data. If \code{...} are vectors of varying length, 
+    or an nxm matrix (or data frame) of data. If \code{...} are vectors of varying length, 
     then \code{makemultdata} will create a matrix of size nxm where n is the
     sample size and m is the length of the vector with maximum length.  Those 
     vectors with length less than m will have \code{NA}s to make the 
-    corresponding row in the matrix of length m.  If \code{...} is a matrix, then
+    corresponding row in the matrix of length m.  If \code{...} is a matrix (or data frame), then
     the rows must correspond to the sample and the columns the repeated measures.}
   \item{cuts}{A vector of cutpoints.  This vector is sorted by the algorithm.}
 }
@@ -38,7 +38,7 @@ makemultdata(..., cuts)
 \code{\link{compCDF}}, \code{\link{multmixmodel.sel}}, \code{\link{multmixEM}}
 }
 \references{
-  Elmore, R. T., Hettmansperger, T. H. and Xuan, F. (2004) The Sign Statistic, One-Way Layouts
+  Elmore, R. T., Hettmansperger, T. P. and Xuan, F. (2004) The Sign Statistic, One-Way Layouts
   and Mixture Models, \emph{Statistical Science} \bold{19(4)}, 579--587.
 }
 \examples{
@@ -60,6 +60,13 @@ E<-c(.73, .8, .9, 1.24, .82, .72, .57, 1.18, .54, 1.3)
 out2<-makemultdata(A, B, C, D, E, 
                    cuts = median(c(A, B, C, D, E)))
 out2
+
+## The reaction time data.
+
+data(RTdata)
+out3<-makemultdata(RTdata, cuts = 
+                   100*c(5, 10, 12, 14, 16, 20, 25, 30, 40, 50))
+out3$y
 }
 
 \keyword{file}

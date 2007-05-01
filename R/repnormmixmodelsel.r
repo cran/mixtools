@@ -1,4 +1,4 @@
-repnormmixmodel.sel <- function (x, k = 2) 
+repnormmixmodel.sel <- function (x, k = 2, ...) 
 {
     aic <- NULL
     bic <- NULL
@@ -28,7 +28,7 @@ repnormmixmodel.sel <- function (x, k = 2)
                 emout <- list(mu = mu, stdev = sd(x), 
                   lambda = 1, loglik = loglik)
             }
-            else emout <- repnormmixEM(x, k = i)
+            else emout <- repnormmixEM(x, k = i, ...)
             aic[i] <- AIC(emout)
             bic[i] <- BIC(emout)
             caic[i] <- CAIC(emout)

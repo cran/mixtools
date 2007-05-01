@@ -2,8 +2,8 @@
 \title{Model Selection in Mixtures of Regressions}
 \alias{regmixmodel.sel}
 \usage{
-regmixmodel.sel(x, y, k = 2, type = c("fixed", "random", 
-                "mixed"), ...)
+regmixmodel.sel(x, y, w = NULL, k = 2, type = c("fixed", 
+                "random", "mixed"), ...)
 }
 \description{
   Assess the number of components in a mixture of regressions model using the Akaike's information
@@ -11,9 +11,10 @@ regmixmodel.sel(x, y, k = 2, type = c("fixed", "random",
   and Integrated Completed Likelihood (ICL).
 }
 \arguments{
-  \item{x}{An nxp matrix of predictors. If an intercept is required, then \code{x} must NOT include a column of 1's!
+  \item{x}{An nxp matrix (or list) of predictors. If an intercept is required, then \code{x} must NOT include a column of 1's!
   Requiring an intercept may be controlled through arguments specified in \code{...}.}
-  \item{y}{An n-vector of response values.}
+  \item{y}{An n-vector (or list) of response values.}
+  \item{w}{An optional list of fixed effects predictors for type "mixed" or "random".}
   \item{k}{The maximum number of components to assess.}
   \item{type}{The type of regression mixture to use.  If "fixed", then a mixture of regressions with fixed effects
   will be used.  If "random", then a mixture of regressions where the random effects regression coefficients are assumed
