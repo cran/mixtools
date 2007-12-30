@@ -35,9 +35,11 @@
   \item{variances}{Same as \code{means} but giving the estimated variances instead.}
 }
 \references{
-\item Benaglia, T., Chauveau, D., and Hunter, D. R. (2007), An EM-like algorithm
-for semi- and non-parametric estimation in multivariate mixtures, Penn State
-Department of Statistics Technical Report 07-01.
+   \itemize{
+   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009), An EM-like algorithm
+   for semi- and non-parametric estimation in multivariate mixtures, 
+   Journal of Computational and Graphical Statistics (to appear).
+   }
 }
 \seealso{ 
 \code{\link{npEM}},

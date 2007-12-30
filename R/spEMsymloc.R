@@ -29,15 +29,15 @@ spEMsymloc <- function(x, mu0, bw = bw.nrd0(x), h=bw, eps = 1e-8, maxiter=100,
     lambda[iter,] <- colMeans(z.hat) 
     mu[iter,] <- apply(sweep(z.hat, 1, x, "*"), 2, mean)/lambda[iter,]
 
-    ## E-step
+    ## density estimation step
     if(stochastic){
       z <- t(apply(z.hat, 1, function(prob) rmultinom(1, 1, prob)))
-      ans <- .C("kernelsmoothlocation", n=as.integer(n), m=as.integer(m),
+      ans <- .C("KDEsymloc", n=as.integer(n), m=as.integer(m),
                 mu=as.double(mu[iter,]), x=as.double(x), bw=as.double(bw),
                 z=as.double(z), f = double(n*m),
                 PACKAGE="mixtools")
     } else {
-      ans <- .C("kernelsmoothlocation", n=as.integer(n), m=as.integer(m),
+      ans <- .C("KDEsymloc", n=as.integer(n), m=as.integer(m),
                 mu=as.double(mu[iter,]), x=as.double(x), bw=as.double(bw),
                 z=as.double(z.hat), f = double(n*m),                     
                 PACKAGE="mixtools")
@@ -45,6 +45,8 @@ spEMsymloc <- function(x, mu0, bw = bw.nrd0(x), h=bw, eps = 1e-8, maxiter=100,
 
     fkernel <- matrix(ans$f, ncol=m)
     lambda.f <- sweep(fkernel, 2, lambda[iter,], "*")
+
+    ## E-step (for next iteration)
     z.hat <- lambda.f/rowSums(lambda.f)    
     finished <- iter >= maxiter
     if (stochastic) {

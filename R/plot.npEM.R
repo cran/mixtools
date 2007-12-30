@@ -1,9 +1,8 @@
-plot.npEM <- function(x, blocks = NULL, hist=TRUE, addlegend=TRUE,
-                      scale = TRUE, title=NULL, breaks="Sturges", 
-                      ylim=NULL, dens.col, newplot=TRUE, ...) {
+plot.spEM <- plot.npEM <- function(x, blocks = NULL, hist=TRUE, addlegend=TRUE,
+                                   scale = TRUE, title=NULL, breaks="Sturges", 
+                                   ylim=NULL, dens.col, newplot=TRUE, ...) {
   r <- NCOL(x$data)
   m <- NCOL(x$posteriors)
-  ask <- par(ask=(r>1))
   blockid <- x$blockid
   if (is.null(blocks)) {
     if(!is.null(blockid)) {
@@ -12,6 +11,7 @@ plot.npEM <- function(x, blocks = NULL, hist=TRUE, addlegend=TRUE,
       blocks <- blockid <- 1:r
     }
   }
+  ask <- par(ask=(length(unique(blocks))>1))
   ylim.orig <- ylim
   out <- list(x=list(), y=list())
   if (!newplot) {

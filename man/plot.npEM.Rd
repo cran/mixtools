@@ -1,8 +1,12 @@
 \name{plot.npEM}
-\title{Plot Nonparametric EM output}
+\title{Plot Nonparametric or Semiparametric EM Output}
 \alias{plot.npEM} 
+\alias{plot.spEM}
 \usage{
 \method{plot}{npEM}(x, blocks = NULL, hist=TRUE, addlegend = TRUE,
+      scale=TRUE, title=NULL, breaks="Sturges", ylim=NULL, dens.col,
+      newplot = TRUE, \dots)
+\method{plot}{spEM}(x, blocks = NULL, hist=TRUE, addlegend = TRUE,
       scale=TRUE, title=NULL, breaks="Sturges", ylim=NULL, dens.col,
       newplot = TRUE, \dots)
 }

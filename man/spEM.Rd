@@ -1,20 +1,21 @@
-\name{npEM}
-\title{Nonparametric EM-like Algorithm for Mixtures of Independent Repeated Measurements}
-\alias{npEM}
-\alias{npEMindrep}
-\alias{npEMindrepbw}
+\name{spEM}
+\title{Semiparametric EM-like Algorithm for Mixtures of Independent Repeated Measurements}
+\alias{spEM}
 \usage{
-npEM(x, mu0, blockid = 1:ncol(x), 
-     bw = bw.nrd0(as.vector(as.matrix(x))), samebw = TRUE, 
+spEM(x, mu0, blockid = 1:ncol(x), 
+     bw = bw.nrd0(as.vector(as.matrix(x))), constbw = TRUE, 
      h = bw, eps = 1e-8, 
      maxiter = 300, stochastic = FALSE, verb = TRUE)
 }
 
 \description{
-  Returns nonparametric EM algorithm output (Benaglia et al, 2009) for mixtures
+  Returns semiparametric EM algorithm output (Benaglia et al, 2009) for mixtures
   of multivariate (repeated measures) data where the coordinates of a row (case)
   in the data matrix are assumed to be independent, conditional on the mixture
   component (subpopulation) from which they are drawn.
+  For now, this algorithm only implements model (17) in 
+  Benaglia et al, in which each component and block has exactly
+  the same (nonparametric) shape and they differ only by location and scale.
 }
 \arguments{
   \item{x}{An \eqn{n\times r}{n x r} matrix of data.  Each of the \eqn{n} rows is a case,
@@ -37,7 +38,7 @@ npEM(x, mu0, blockid = 1:ncol(x),
   of the kernel density.  By default, a simplistic application of the 
   default \code{\link{bw.nrd0}} 
   bandwidth used by \code{\link{density}} to the entire dataset.}
-  \item{samebw}{Logical:  If \code{TRUE}, use the same bandwidth for
+  \item{constbw}{Logical:  If \code{TRUE}, use the same bandwidth for
   each iteration and for each component and block.  If \code{FALSE}, 
   use a separate bandwidth for each component and block, and update
   this bandwidth at each iteration of the algorithm using a suitably
@@ -63,12 +64,12 @@ npEM(x, mu0, blockid = 1:ncol(x),
   it runs}
 }
 \value{
-\code{npEM} returns a list of class \code{npEM} with the following items:
+\code{spEM} returns a list of class \code{spEM} with the following items:
   \item{data}{The raw data (an \eqn{n\times r}{n x r} matrix).}
   \item{posteriors}{An \eqn{n\times m}{n x m} matrix of posterior probabilities for
    observation. If \code{stochastic = TRUE}, this matrix is computed 
    from an average over the \code{maxiter} iterations.}
-  \item{bandwidth}{If \code{samebw==TRUE}, 
+  \item{bandwidth}{If \code{constbw==TRUE}, 
   same as the \code{bw} input argument; otherwise, value of \code{bw} matrix
   at final iteration.  This
   information is needed by any method that produces density estimates from the
@@ -79,41 +80,45 @@ npEM(x, mu0, blockid = 1:ncol(x),
   \item{lambda}{The sequence of mixing proportions over iterations.}
   \item{lambdahat}{The final mixing proportions if \code{stochastic = FALSE}, 
   or the average mixing proportions if \code{stochastic = TRUE}.}
+  \item{mu}{The sequence of location parameters over iterations.}
+  \item{muhat}{The final location parameters if \code{stochastic = FALSE}, 
+  or the average location parameters if \code{stochastic = TRUE}.}
+  \item{sigma}{The sequence of scale parameters over iterations.}
+  \item{sigmahat}{The final scale parameters if \code{stochastic = FALSE}, 
+  or the average scale parameters if \code{stochastic = TRUE}.}
   \item{loglik}{The sequence of log-likelihoods over iterations.}
 }
 \seealso{
-\code{\link{plot.npEM}}, \code{\link{normmixrm.sim}}, \code{\link{spEMsymloc}},
-\code{\link{plotseq.npEM}}
+\code{\link{plot.spEM}}, \code{\link{normmixrm.sim}}, \code{\link{spEMsymloc}},
+\code{\link{npEM}}, \code{\link{plotseq.npEM}}
 }
 \references{
    \itemize{
    \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009), An EM-like algorithm
    for semi- and non-parametric estimation in multivariate mixtures, 
    Journal of Computational and Graphical Statistics (to appear).
-
-   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009), 
-   Bandwidth Selection in an EM-like algorithm for nonparametric 
-   multivariate mixtures, Technical Report.
+   
+   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009), Bandwidth
+   Selection in an EM-like algorithm for nonparametric multivariate mixtures,
+   Technical Report.
    
    \item Bordes, L., Chauveau, D., and Vandekerkhove, P. (2007),
    An EM algorithm for a semiparametric mixture model, 
    Computational Statistics and Data Analysis, 51: 5429-5443.
    }
 }
-
 \examples{
-## Examine and plot water-level task data set.
+## simulate a 2-component gaussian mixture with 3 iid repeated measures
+mu <- matrix(c(0, 15), 2, 3)
+sigma <- matrix(c(1, 5), 2, 3)
+x <- rmvnormmix(300, lambda = c(.4,.6), mu = mu, sigma = sigma)
 
-## First, try a 3-component solution where no two coordinates are
-## assumed i.d.
-data(Waterdata)
-a <- npEM(Waterdata, mu0=3, bw=4) # Assume indep but not iid
-plot(a) # This produces 8 plots, one for each coordinate
-
-## Next, same thing but pairing clock angles that are directly opposite one
-## another (1:00 with 7:00, 2:00 with 8:00, etc.)
-b <- npEM(Waterdata, mu0=3, blockid=c(4,3,2,1,3,4,1,2), bw=4) # iid in pairs
-plot(b) # Now only 4 plots, one for each block
+## apply spEM with or without an iterative bandwidth selection
+d <- spEM(x, mu0 = 2, blockid = rep(1,3), constbw = FALSE)
+d2 <- spEM(x, mu0 = 2, blockid = rep(1,3), constbw = TRUE)
+plot(d, xlim=c(-10, 40), ylim = c(0, .16), xlab = "", breaks = 30,
+     cex.lab=1.5, cex.axis=1.5, addlegend=FALSE)
+plot(d2, newplot=FALSE, addlegend=FALSE, lty=2)
 }
 
 
