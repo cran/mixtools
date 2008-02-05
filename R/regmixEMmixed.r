@@ -348,7 +348,7 @@ Omega.k <- lapply(1:N, function(i) lapply(1:k, function(j) Omega.def(rho=rho[i,j
         }
 
         if (sing > 0 || is.na(newobsloglik) || abs(newobsloglik) == Inf ||  
-            sum(z) != N || newobsloglik < obsloglik) {
+            newobsloglik < obsloglik) {# || sum(z) != N
             cat("Need new starting values due to singularity...", 
                 "\n")
 		restarts <- restarts + 1

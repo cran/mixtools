@@ -67,7 +67,7 @@ regmixEM.lambda = function (y, x, lambda = NULL, beta = NULL, sigma = NULL,
     compsum <- apply(comp, 1, sum)
     newobsloglik <- sum(log(compsum))
     if (newobsloglik < obsloglik || sing > 0 || abs(newobsloglik) == 
-        Inf || is.nan(newobsloglik) || sum(z) != n) {
+        Inf || is.nan(newobsloglik)){# || sum(z) != n) {
       cat("Need new starting values due to singularity...", 
           "\n")
       tmp <- regmix.lambda.init(y = y, x = x, k = k,

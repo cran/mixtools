@@ -19,8 +19,8 @@ regcr=function (beta, x, em.beta=NULL, em.sigma=NULL, alpha = 0.05, nonparametri
     if (nonparametric) {
 	  beta.old=beta
 	  if(is.null(em.sigma) && is.null(em.beta)){
-	  beta=t(sqrt.mat(solve(cov(beta)))%*%(t(beta)-apply(beta,2,mean)))
-	  } else beta=1/sqrt(length(x))*t(em.sigma^(-1)*sqrt.mat(t(cbind(1,x))%*%cbind(1,x))%*%(t(beta.old)-em.beta))
+	  beta=t(matsqrt(solve(cov(beta)))%*%(t(beta)-apply(beta,2,mean)))
+	  } else beta=1/sqrt(length(x))*t(em.sigma^(-1)*matsqrt(t(cbind(1,x))%*%cbind(1,x))%*%(t(beta.old)-em.beta))
         d = depth(beta, beta)
         beta = beta.old[order(d), ]
         d = d[order(d)]

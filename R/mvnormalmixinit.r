@@ -29,10 +29,10 @@ mvnormalmix.init = function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, a
             mean))
         if (arbvar) {
             mu <- lapply(1:k, function(i) as.vector(rmvnorm(1, 
-                mean = as.vector(mu.hyp[[i]]), sigma = as.matrix(sigma[[i]]))))
+                mu = as.vector(mu.hyp[[i]]), sigma = as.matrix(sigma[[i]]))))
         }
         else mu <- lapply(1:k, function(i) as.vector(rmvnorm(1, 
-            mean = as.vector(mu.hyp[[i]]), sigma = as.matrix(sigma))))
+            mu = as.vector(mu.hyp[[i]]), sigma = as.matrix(sigma))))
 	  if (arbmean==FALSE) {
 		mu <- apply(sapply(mu,as.vector),1,mean)
 #		mu <- lapply(1:k, function(i) mu)

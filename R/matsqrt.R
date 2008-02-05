@@ -1,4 +1,4 @@
-sqrt.mat <- function(x) {
+matsqrt <- function(x) {
 xe <- eigen(x)
 xe.v <- xe$values
 if(all(xe.v >= 0)) {

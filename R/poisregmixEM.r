@@ -55,7 +55,7 @@ poisregmixEM = function (y, x, lambda = NULL, beta = NULL, k = 2, addintercept =
         comp <- t(t(dpois(y, exp(xbeta))) * lambda)
         compsum <- apply(comp, 1, sum)
         newobsloglik <- sum(log(compsum))
-    if(abs(newobsloglik)==Inf || is.na(newobsloglik) || newobsloglik < obsloglik || sum(z)!=n){
+    if(abs(newobsloglik)==Inf || is.na(newobsloglik) || newobsloglik < obsloglik){# || sum(z)!=n){
         cat("Need new starting values due to singularity...","\n")
 		restarts <- restarts + 1
 		if(restarts>15) stop("Too many tries!")

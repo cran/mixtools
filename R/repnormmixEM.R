@@ -73,8 +73,7 @@ repnormmixEM = function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbme
             newobsloglik <- sum(log(apply(sapply(comp, rbind), 
                 1, sum)))
         }
-        if (sing > 0 || is.na(newobsloglik) || abs(newobsloglik) == Inf || 
-            sum(z) != n) {
+        if (sing > 0 || is.na(newobsloglik) || abs(newobsloglik) == Inf ){#|| sum(z) != n) {
             cat("Need new starting values due to singularity...", 
                 "\n")
 		restarts <- restarts + 1

@@ -32,7 +32,7 @@ test.equality.mixed(y, x, w=NULL, arb.R = TRUE,
   \item{p.value}{The p-value corresponding to this likelihood ratio test.}
 }
 \seealso{
-\code{\link{test.equality}}}
+\code{\link{test.equality}}
 }
 \examples{
 ##Test of equal variances in the simulated data set.

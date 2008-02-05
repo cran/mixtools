@@ -1,4 +1,4 @@
-\name{mixtools kernels}
+\name{mixtools-internal}
 \alias{kern.B}
 \alias{kern.C}
 \alias{kern.G}

@@ -100,7 +100,7 @@ regmixEM = function (y, x, lambda = NULL, beta = NULL, sigma = NULL, k = 2,
 #            newobsloglik <- sum(log(apply(comp, 1, sum)))
         }
         if (sing > 0 || is.na(newobsloglik) || newobsloglik < obsloglik || abs(newobsloglik) == 
-            Inf || sum(z) != n) {
+            Inf){# || sum(z) != n) {
             cat("Need new starting values due to singularity...", 
                 "\n")
 		restarts <- restarts + 1

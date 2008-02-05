@@ -1,8 +1,8 @@
-\name{sqrt.mat}
+\name{matsqrt}
 \title{Calculates the Square Root of a Diagonalizable Matrix}
-\alias{sqrt.mat}
+\alias{matsqrt}
 \usage{
-sqrt.mat(x)
+matsqrt(x)
 }
 \description{
 Returns the square root of a diagonalizable matrix.
@@ -11,7 +11,7 @@ Returns the square root of a diagonalizable matrix.
   \item{x}{An nxn diagonalizable matrix.}
 }
 \value{
-  \code{sqrt.mat} returns the square root of \code{x}.  
+  \code{matsqrt} returns the square root of \code{x}.  
 }
 \details{
 This function is called by \code{regcr}.
@@ -21,7 +21,7 @@ This function is called by \code{regcr}.
 }
 \examples{
 a<-matrix(c(1, -0.2, -0.2, 1), 2, 2)
-sqrt.mat(a)
+matsqrt(a)
 
 }
 

@@ -68,7 +68,7 @@ logisregmixEM=function (y, x, N = NULL, lambda = NULL, beta = NULL, k = 2,
             compsum <- apply(comp, 1, sum)
             newobsloglik <- sum(log(compsum))
             if (abs(newobsloglik) == Inf || is.na(newobsloglik) || 
-                newobsloglik < obsloglik || sum(z) != n) {
+                newobsloglik < obsloglik){# || sum(z) != n) {
                 cat("Need new starting values due to singularity...", 
                   "\n")
 		restarts <- restarts + 1

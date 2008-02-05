@@ -19,4 +19,7 @@ to the stimulus presented.  The response (RT) is recorded in milliseconds.
   Miller, C. A., Kail, R., Leonard, L. B. and Tomblin, J. B. (2001) Speed of Processing in Children with
   Specific Language Impairment, \emph{Journal of Speech, Language, and Hearing Research} \bold{44(2)}, 416--433.
 }
+\seealso{
+\code{\link{RTdata2}}
+}
 \keyword{datasets}

@@ -30,7 +30,7 @@ test.equality(y, x = NULL, arbmean = TRUE, arbvar = FALSE,
   \item{p.value}{The p-value corresponding to this likelihood ratio test.}
 }
 \seealso{
-\code{\link{test.equality.mixed}}}
+\code{\link{test.equality.mixed}}
 }
 \examples{
 ## Should a location mixture be used for the Old Faithful data?

@@ -87,7 +87,7 @@ mvnormalmixEM = function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbm
                   z.denom = c()
                   for (m in 1:k) {
                     z.denom = c(z.denom, lambda[m]/lambda[j] * 
-#                      (det(sigma.inv)/det(sigma.inv))^(0.5) * 
+                      (det(sigma.inv)/det(sigma.inv))^(0.5) * 
                       exp(-0.5 * ((x[i, ] - mu[[m]]) %*% sigma.inv %*% 
                         t(t(x[i, ] - mu[[m]])) - (x[i, ] - mu[[j]]) %*% 
                         sigma.inv %*% t(t(x[i, ] - mu[[j]])))))
@@ -129,8 +129,7 @@ mvnormalmixEM = function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbm
                 newobsloglik <- sum(log(compsum))
             }
         }
-        if (sing > 0 || is.na(newobsloglik) || abs(newobsloglik) == Inf || 
-            sum(z) != n) {
+        if (sing > 0 || is.na(newobsloglik) || abs(newobsloglik) == Inf){# || sum(z) != n) {
             cat("Need new starting values due to singularity...", 
                 "\n")
 		restarts <- restarts + 1

@@ -95,11 +95,11 @@ beta <- lapply(1:k,function(j) matrix(sapply(lm.out.beta[[j]],coef),nrow=p))
 	  mu = matrix(ncol=k,nrow=p)
 		if(arb.R==TRUE){
 		  for(j in 1:k){
-		  mu[,j] = rmvnorm(1,mean=as.vector(mu.hyp[[j]]),sigma=R[[j]])
+		  mu[,j] = rmvnorm(1,mu=as.vector(mu.hyp[[j]]),sigma=R[[j]])
 			} 
 		} else {
 		  for(j in 1:k){
-		  mu[,j] = rmvnorm(1,mean=as.vector(mu.hyp[[j]]),sigma=R)
+		  mu[,j] = rmvnorm(1,mu=as.vector(mu.hyp[[j]]),sigma=R)
 		} 
     }
 } else k = ncol(mu)
