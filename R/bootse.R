@@ -128,24 +128,24 @@ boot.se <- function (em.fit, B = 100,
 
 
 		    k.bs=sapply(1:n, function(i) rmultinom(1,size=1,prob=lambda))
-		    bs.i <- sample(1:n,n,replace=T)
+		    bs.i <- sample(1:n,n,replace=TRUE)
 ##
 		    if(arb.R==FALSE){
 			if(arb.sigma==FALSE){
 		    		y.sim <- lapply(1:n, function(i) w[[i]] %*% 
-                  alpha + as.vector(rmvnorm(1, mean = x[[i]] %*% mu[, 
+                  alpha + as.vector(rmvnorm(1, mu = x[[i]] %*% mu[, 
                   (k.bs[, i] == 1)], sigma = (x[[i]]%*%R%*%t(x[[i]])  +diag(sigma,n.i[i])) )))
 				} else y.sim <- lapply(1:n, function(i) w[[i]] %*% 
-                  alpha + as.vector(rmvnorm(1, mean = x[[i]] %*% mu[, 
+                  alpha + as.vector(rmvnorm(1, mu = x[[i]] %*% mu[, 
                   (k.bs[, i] == 1)], sigma = (x[[i]]%*%R%*%t(x[[i]])  +diag(sigma[(k.bs[,i] == 1)],n.i[i])) )))
 		    } else{
 				if(arb.sigma==FALSE){
 					y.sim <- lapply(1:n, function(i) w[[i]] %*% 
-                  alpha + as.vector(rmvnorm(1, mean = x[[i]] %*% mu[, 
+                  alpha + as.vector(rmvnorm(1, mu = x[[i]] %*% mu[, 
                   (k.bs[, i] == 1)], sigma = (x[[i]]%*%R[(k.bs[, i] == 
                   1)][[1]]%*%t(x[[i]])  +diag(sigma,n.i[i])) )))   
 					} else y.sim <- lapply(1:n, function(i) w[[i]] %*% 
-                  alpha + as.vector(rmvnorm(1, mean = x[[i]] %*% mu[, 
+                  alpha + as.vector(rmvnorm(1, mu = x[[i]] %*% mu[, 
                   (k.bs[, i] == 1)], sigma = (x[[i]]%*%R[(k.bs[, i] == 
                   1)][[1]]%*%t(x[[i]])  +diag(sigma[(k.bs[,i] == 1)],n.i[i])) )))   
 			}
@@ -225,7 +225,7 @@ R.se1=apply(R.bs,1,sd)
                   j = j + 1
                   w=rmultinom(n,size=1,prob=lambda)
                   y.sim=sapply(1:n,function(i) rnorm(m,mean=mu[w[,i]==1],sd=sigma[w[,i]==1]) )
-                  em.bs = try(repnormmixEM(y = y.sim,k = k,
+                  em.bs = try(repnormmixEM(x = y.sim,k = k,
                     arbmean = arbmean, arbvar = arbvar, lambda=em.fit$lambda, mu=em.fit$mu,
                     sigma=(scale*em.fit$sigma), ...), silent = TRUE)
                   if (class(em.bs) == "try-error" || em.bs$restarts!=0) {
@@ -298,7 +298,7 @@ R.se1=apply(R.bs,1,sd)
                 while (j < B) {
                   j = j + 1
                   w=rmultinom(n,size=1,prob=lambda)
-                  y.sim=t(sapply(1:n,function(i) rmvnorm(1,mean=mu[w[,i]==1][[1]],sigma=sigma[w[,i]==1][[1]]) ))
+                  y.sim=t(sapply(1:n,function(i) rmvnorm(1,mu=mu[w[,i]==1][[1]],sigma=sigma[w[,i]==1][[1]]) ))
                   em.bs = try(mvnormalmixEM(x = y.sim, k = k,
                     arbmean = arbmean, arbvar = arbvar, lambda=em.fit$lambda, mu=em.fit$mu,
                     sigma=em.fit$sigma, ...), silent = TRUE)

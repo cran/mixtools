@@ -99,8 +99,7 @@ hmeEM <- function (y, x, lambda=NULL, beta = NULL, sigma = NULL, w = NULL,
 
 
         if (sing > 0 || is.na(newobsloglik) || newobsloglik < 
-            obsloglik || abs(newobsloglik) == Inf || sum(z) != 
-            n) {
+            obsloglik || abs(newobsloglik) == Inf){# || sum(z) != n) {
             cat("Need new starting values due to singularity...", 
                 "\n")
             restarts <- restarts + 1
