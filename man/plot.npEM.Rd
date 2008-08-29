@@ -2,8 +2,9 @@
 \title{Plot Nonparametric EM output}
 \alias{plot.npEM} 
 \usage{
-\method{plot}{npEM}(x, blocks = NULL, hist=TRUE, scale=TRUE, title=NULL, 
-      breaks="Sturges", ylim=NULL, dens.col, \dots)
+\method{plot}{npEM}(x, blocks = NULL, hist=TRUE, addlegend = TRUE,
+      scale=TRUE, title=NULL, breaks="Sturges", ylim=NULL, dens.col,
+      newplot = TRUE, \dots)
 }
 \description{
     Takes an object of class \code{npEM} and returns a set of plots of the 
@@ -13,10 +14,12 @@
 } 
 \arguments{
   \item{x}{An object of class \code{npEM} such as the output
-  of the \code{\link{npEMindrep}} function}
+  of the \code{\link{npEM}} function}
   \item{blocks}{Blocks (of repeated measures coordinates) to plot; not relevant
   for univariate case.  Default is to plot all blocks.}
-  \item{hist}{If TRUE, superimpose density estimate plots on a histogram of the data}
+  \item{hist}{If TRUE, superimpose density estimate plots on a histogram
+    of the data}
+  \item{addlegend}{If TRUE, adds legend to the plot.}
   \item{scale}{If TRUE, scale each density estimate by its corresponding estimated
   mixing proportion, so that the total area under all densities equals 1 and the 
   densities plotted may be added to produce an estimate of the mixture density.
@@ -28,7 +31,8 @@
   given, each plot uses its own ylim that ensures that no part of the plot will
   go past the top of the plotting area.}
   \item{dens.col}{Color values to use for the individual component density
-  functions, repeated as necessary.  Default value is \code{2:(m+1)}.}
+    functions, repeated as necessary.  Default value is \code{2:(m+1)}.}
+  \item{newplot}{If TRUE, creates a new plot.}
   \item{\dots}{Any remaining arguments are passed to the \code{\link{hist}} and 
   \code{\link{lines}} functions.}
 }
@@ -44,7 +48,7 @@
 } 
 
 \seealso{ 
-\code{\link{npEMindrep}}, \code{\link{density.npEM}}, \code{\link{spEMsymloc}},
+\code{\link{npEM}}, \code{\link{density.npEM}}, \code{\link{spEMsymloc}},
 \code{\link{plotseq.npEM}}
 } 
 
@@ -54,13 +58,16 @@
 ## First, try a 3-component solution where no two coordinates are
 ## assumed i.d.
 data(Waterdata)
-a <- npEMindrep(Waterdata, 3, bw=4)
+a <- npEM(Waterdata, 3, bw=4)
+par(mfrow=c(2,4))
 plot(a) # This produces 8 plots, one for each coordinate
 
 ## Next, same thing but pairing clock angles that are directly opposite one
 ## another (1:00 with 7:00, 2:00 with 8:00, etc.)
-b <- npEMindrep(Waterdata, 3, blockid=c(4,3,2,1,3,4,1,2), bw=4) 
+b <- npEM(Waterdata, 3, blockid=c(4,3,2,1,3,4,1,2), bw=4)
+par(mfrow=c(2,2))
 plot(b) # Now only 4 plots, one for each block
+
 }
 
 \keyword{file}

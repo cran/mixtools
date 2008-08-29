@@ -1,9 +1,13 @@
-\name{npEMindrep}
+\name{npEM}
 \title{Nonparametric EM-like Algorithm for Mixtures of Independent Repeated Measurements}
+\alias{npEM}
 \alias{npEMindrep}
+\alias{npEMindrepbw}
 \usage{
-npEMindrep(x, mu0, blockid = 1:ncol(x), bw=bw.nrd0(as.matrix(x)), h=bw,
-           eps=1e-8, maxiter = 100, stochastic = FALSE, verb = TRUE)
+npEM(x, mu0, blockid = 1:ncol(x), 
+     bw = bw.nrd0(as.vector(as.matrix(x))), samebw = TRUE, 
+     h = bw, eps = 1e-8, 
+     maxiter = 300, stochastic = FALSE, verb = TRUE)
 }
 
 \description{
@@ -30,7 +34,14 @@ npEMindrep(x, mu0, blockid = 1:ncol(x), bw=bw.nrd0(as.matrix(x)), h=bw,
   if \code{blockid=rep(1,ncol(x))}, then the coordinates in each row 
   are assumed conditionally i.i.d.}
   \item{bw}{Bandwidth for density estimation, equal to the standard deviation 
-  of the kernel density.}
+  of the kernel density.  By default, a simplistic application of the 
+  default \code{\link{bw.nrd0}} 
+  bandwidth used by \code{\link{density}} to the entire dataset.}
+  \item{samebw}{Logical:  If \code{TRUE}, use the same bandwidth for
+  each iteration and for each component and block.  If \code{FALSE}, 
+  use a separate bandwidth for each component and block, and update
+  this bandwidth at each iteration of the algorithm using a suitably
+  modified \code{\link{bw.nrd0}} method.}
   \item{h}{Alternative way to specify the bandwidth, to provide backward 
   compatibility.}
   \item{eps}{Tolerance limit for declaring algorithm convergence.  Convergence
@@ -52,12 +63,14 @@ npEMindrep(x, mu0, blockid = 1:ncol(x), bw=bw.nrd0(as.matrix(x)), h=bw,
   it runs}
 }
 \value{
-\code{npEMindrep} returns a list of class \code{npEM} with the following items:
+\code{npEM} returns a list of class \code{npEM} with the following items:
   \item{data}{The raw data (an \eqn{n\times r}{n x r} matrix).}
   \item{posteriors}{An \eqn{n\times m}{n x m} matrix of posterior probabilities for
    observation. If \code{stochastic = TRUE}, this matrix is computed 
    from an average over the \code{maxiter} iterations.}
-  \item{bandwidth}{Same as the \code{bw} input argument, returned because this
+  \item{bandwidth}{If \code{samebw==TRUE}, 
+  same as the \code{bw} input argument; otherwise, value of \code{bw} matrix
+  at final iteration.  This
   information is needed by any method that produces density estimates from the
   output.}
   \item{blockid}{Same as the \code{blockid} input argument, but recoded to have
@@ -86,12 +99,12 @@ Department of Statistics Technical Report 07-01.
 ## First, try a 3-component solution where no two coordinates are
 ## assumed i.d.
 data(Waterdata)
-a <- npEMindrep(Waterdata, mu0=3, bw=4) # Assume indep but not iid
+a <- npEM(Waterdata, mu0=3, bw=4) # Assume indep but not iid
 plot(a) # This produces 8 plots, one for each coordinate
 
 ## Next, same thing but pairing clock angles that are directly opposite one
 ## another (1:00 with 7:00, 2:00 with 8:00, etc.)
-b <- npEMindrep(Waterdata, mu0=3, blockid=c(4,3,2,1,3,4,1,2), bw=4) # iid in pairs
+b <- npEM(Waterdata, mu0=3, blockid=c(4,3,2,1,3,4,1,2), bw=4) # iid in pairs
 plot(b) # Now only 4 plots, one for each block
 }
 

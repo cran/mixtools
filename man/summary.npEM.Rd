@@ -8,7 +8,7 @@
 }
 \arguments{
   \item{object,x}{an object of class \code{npEM} such as a result of a call
-  to \code{\link{npEMindrep}}}
+  to \code{\link{npEM}}}
   \item{digits}{Significant digits for printing values}
   \item{\dots}{further arguments passed to or from other methods.}
 }
@@ -40,15 +40,15 @@ for semi- and non-parametric estimation in multivariate mixtures, Penn State
 Department of Statistics Technical Report 07-01.
 }
 \seealso{ 
-\code{\link{npEMindrep}},
+\code{\link{npEM}},
 \code{\link{plot.npEM}}
 }
 \examples{
 data(Waterdata)
-a <- npEMindrep(Waterdata, 3, bw=4) # Assume indep but not iid
+a <- npEM(Waterdata, 3, bw=4) # Assume indep but not iid
 summary(a) 
 
-b <- npEMindrep(Waterdata, 3, bw=4, blockid=rep(1,8)) # Now assume iid
+b <- npEM(Waterdata, 3, bw=4, blockid=rep(1,8)) # Now assume iid
 summary(b) 
 }
 \keyword{file}

@@ -3,7 +3,7 @@
 \alias{spEMsymloc}
 \usage{
 spEMsymloc(x, mu0, bw = bw.nrd0(x), h=bw, eps = 1e-8, maxiter = 100, 
-    stochastic = FALSE, verb = TRUE)
+    stochastic = FALSE, verbose = FALSE)
 }
 
 \description{
@@ -42,7 +42,7 @@ spEMsymloc(x, mu0, bw = bw.nrd0(x), h=bw, eps = 1e-8, maxiter = 100,
    and runs for \code{maxiter} iterations.}
 
 
-  \item{verb}{If TRUE, print updates for every iteration of the algorithm as
+  \item{verbose}{If TRUE, print updates for every iteration of the algorithm as
   it runs}
 }
 \value{
@@ -65,7 +65,7 @@ spEMsymloc(x, mu0, bw = bw.nrd0(x), h=bw, eps = 1e-8, maxiter = 100,
 }
 \seealso{
 \code{\link{plot.npEM}}, \code{\link{rnormmix}},
-\code{\link{npEMindrep}}, \code{\link{plotseq.npEM}}
+\code{\link{npEM}}, \code{\link{plotseq.npEM}}
 }
 \references{
 \item Bordes, L., Chauveau, D., and Vandekerkhove, P. (2007),

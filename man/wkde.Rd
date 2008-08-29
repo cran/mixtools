@@ -19,7 +19,7 @@ at a specified vector of points.
 \value{A vector of the same length as \code{u}
 }
 \seealso{
-\code{\link{npEMindrep}}, \code{\link{ise.npEM}}
+\code{\link{npEM}}, \code{\link{ise.npEM}}
 }
 \references{
 \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2007), An EM-like algorithm
@@ -38,7 +38,7 @@ centers <- matrix(c(0, 0, 0, 4, 4, 4), 2, 3, byrow=TRUE) # initial centers for e
 blockid = c(1,1,2) # block structure of coordinates
 n = 100
 x <- rmvnormmix(n, lambda, mu, sigma) # simulated data
-a <- npEMindrep(x, centers, blockid, eps=1e-8, verb=FALSE)
+a <- npEM(x, centers, blockid, eps=1e-8, verb=FALSE)
 
 par(mfrow=c(2,2))
 u <- seq(min(x), max(x), len=200)

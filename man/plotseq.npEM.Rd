@@ -10,7 +10,7 @@
   estimates along iterations from an object of class \code{npEM}.
 }
 \arguments{
-  \item{x}{an object of class \code{npEM}, as output by \code{\link{npEMindrep}} 
+  \item{x}{an object of class \code{npEM}, as output by \code{\link{npEM}} 
   or \code{\link{spEMsymloc}}}
   \item{\dots}{further parameters that are passed to \code{\link{plot}}}
 }
@@ -21,7 +21,7 @@ component mean.
 }
 \seealso{
 \code{\link{plot.npEM}}, \code{\link{rnormmix}},
-\code{\link{npEMindrep}}, \code{\link{spEMsymloc}}
+\code{\link{npEM}}, \code{\link{spEMsymloc}}
 }
 \references{
 \item Bordes, L., Chauveau, D., and Vandekerkhove, P. (2007),

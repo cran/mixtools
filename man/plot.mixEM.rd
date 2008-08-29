@@ -2,8 +2,14 @@
 \title{Various Plots Pertaining to Mixture Models}
 \alias{plot.mixEM} 
 \usage{
-\method{plot}{mixEM}(x, loglik = TRUE, density = FALSE, 
-     w = 1.0, alpha = 0.05, marginal = FALSE, \dots)
+\method{plot}{mixEM}(x, whichplots = 1, 
+loglik = 1 \%in\% whichplots,
+density = 2 \%in\% whichplots,
+xlab1="Iteration", ylab1="Log-Likelihood",
+main1="Observed Data Log-Likelihood", col1=1, lwd1=2,
+xlab2=NULL, ylab2=NULL, main2=NULL, col2=NULL, 
+lwd2=2,
+alpha = 0.05, marginal = FALSE, ...)
 }
 
 \description{
@@ -11,10 +17,17 @@
 } 
 \arguments{
   \item{x}{An object of class \code{mixEM}.}
+  \item{whichplots}{vector telling which plots to produce:  1 = loglikelihood
+        plot, 2 = density plot.  Irrelevant if \code{loglik} and \code{density}
+        are specified.}
   \item{loglik}{If TRUE, a plot of the log-likelihood versus the EM iterations is given.}
   \item{density}{Graphics pertaining to certain mixture models.  The details are given below.}
-  \item{w}{A graphical parameter to control the height of the y-axis on the histogram when the
-  univariate mixture of normal component's density curves are overlaid.}
+  \item{xlab1, ylab1, main1, col1, lwd1}{Graphical parameters \code{xlab}, ..., \code{lwd}
+  to be passed to the loglikelihood plot.  Trying to change these parameters using
+  \code{xlab}, ..., \code{lwd} will result in an error, but all other graphical parameters
+  are passed directly to the plotting functions via ...}
+  \item{xlab2, ylab2, main2, col2, lwd2}{Same as \code{xlab1} etc. but for the
+  density plot}
   \item{alpha}{A vector of significance levels when constructing confidence ellipses and confidence bands for the mixture
   of multivariate normals and mixture of regressions cases, respectively.  The default is 0.05.}
   \item{marginal}{For the mixture of bivariate normals, should optional marginal histograms be included?}
