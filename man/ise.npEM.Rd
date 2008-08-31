@@ -7,7 +7,7 @@ ise.npEM(npEMout, component=1, block=1, truepdf, lower=-Inf,
 }
 \description{
 Computes the integrated squared error for a selected estimated density 
-from \code{\link{npEMindrep}} output (selected by specifying the component 
+from \code{\link{npEM}} output (selected by specifying the component 
 and block number), 
 relative to a true pdf that must be specified by the user.
 The range for the numerical integration must be specified.  This function
@@ -16,7 +16,7 @@ true and estimated densities.
 }
 \arguments{
   \item{npEMout}{An object of class \code{npEM} such as the output
-  of the \code{\link{npEMindrep}} function}
+  of the \code{\link{npEM}} function}
   \item{component, block}{Component and block of particular density to analyze
   from \code{npEMout}.}
   \item{truepdf}{an \R function taking a numeric first argument and 
@@ -24,7 +24,8 @@ true and estimated densities.
   non-finite element will generate an error.}
   \item{lower, upper}{the limits of integration.  Can be infinite.}
   \item{plots}{logical:  Should plots be produced?}
-  \item{...}{additional arguments to be passed to \code{truepdf}. 
+  \item{...}{additional arguments to be passed to \code{truepdf}
+  	(and that may be mandatory like, e.g., the \code{df = } argument of \code{dt}). 
   Remember to use argument names not matching those of \code{ise.npRM}.}
 }
 \value{
@@ -41,7 +42,7 @@ true and estimated densities.
 density estimate) function.
 }
 \seealso{
-\code{\link{npEMindrep}}, \code{\link{wkde}}, \code{\link{integrate}}
+\code{\link{npEM}}, \code{\link{wkde}}, \code{\link{integrate}}
 }
 \references{
 \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2007), An EM-like algorithm
@@ -62,7 +63,7 @@ x <- rmvnormmix(n, lambda, mu, sigma) # simulated data
 
 # fit the model with "arbitrary" initial centers
 centers <- matrix(c(0, 0, 0, 4, 4, 4), 2, 3, byrow=TRUE) 
-a <- npEMindrep(x, centers, blockid, eps=1e-8, verb=FALSE)
+a <- npEM(x, centers, blockid, eps=1e-8, verb=FALSE)
 
 # Calculate integrated squared error for j=2, b=1:
 j <- 2 # component
@@ -84,7 +85,7 @@ nblabsw <- 0 # no. of label switches
 for (mc in 1:nbrep) {
   print(paste("REPETITION", mc))
 	x <- rmvnormmix(n,lambda,mu,sigma) # simulated data
-  a <- npEMindrep(x, centers, verb=FALSE) #default:
+  a <- npEM(x, centers, verb=FALSE) #default:
 	if (a$lambda[1] > a$lambda[2]) nblabsw <- nblabsw + 1
 	for (j in 1:m) {  # for each component
 		for (k in 1:r) { # for each coordinate; not assuming iid!

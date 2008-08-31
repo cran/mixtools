@@ -6,7 +6,7 @@
 }
 \arguments{
   \item{x}{an object of class \code{npEM} such as a result of a call
-  to \code{\link{npEMindrep}}}
+  to \code{\link{npEM}}}
   \item{\dots}{Additional arguments to \code{\link{print}}}
 }
 \description{
@@ -22,13 +22,13 @@
   including the \code{data} and \code{posteriors} elements.
 }
 \seealso{ 
-\code{\link{npEMindrep}},
+\code{\link{npEM}},
 \code{\link{plot.npEM}}
 \code{\link{summary.npEM}}
 }
 \examples{
 data(Waterdata)
-npEMindrep(Waterdata, 3, bw=4, verb=FALSE) # Assume indep but not iid
+npEM(Waterdata, 3, bw=4, verb=FALSE) # Assume indep but not iid
 }
 \keyword{file}
 

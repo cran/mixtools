@@ -4,26 +4,27 @@
 #include <stdio.h>
 
 void kernelsmoothrepeated(int *nn, int *mm, int *rr, double *x, double *hh, double *z, double *f){
-  int n=*nn, m=*mm, r=*rr, i, k, j, ii, kk;
+  int n=*nn, i, ii;
+  int rn = *rr*n, mn=*mm*n, jn, kn, kkn;
   double sum1, sum2, tmp, h=*hh, xik;
-  double const1 = -1.0 / (2.0 * h * h);
-  double const2 = 0.39894228040143267794/(h*(double)r); /* .3989...=1/(sqrt(2*pi)) */
+  double const1 = -0.5 / (h * h);
+  double const2 = 0.39894228040143267794/(h*(double)(*rr)); /* .3989...=1/(sqrt(2*pi)) */
 
-  for(j=0; j<m; j++) {
+  for(jn=0; jn<mn; jn+=n) {
     for(i=0; i<n; i++) {
-      f[i + j*n] = 1.0;
-      for(k=0; k<r; k++) {
+      f[i + jn] = 1.0;
+      for(kn=0; kn<rn; kn+=n) {
         sum1 = 0.0;
-        xik = x[i + k*n];
+        xik = x[i + kn];
         for(ii=0; ii<n; ii++) {
           sum2 = 0.0;
-          for(kk=0; kk<r; kk++) {
-            tmp = xik - x[ii + kk*n];
+          for(kkn=0; kkn < rn; kkn+=n) {
+            tmp = xik - x[ii + kkn];
             sum2 += exp(tmp * tmp * const1); /* Using normal kernel */
           }
-          sum1 += z[ii + j*n] * sum2 * const2;
+          sum1 += z[ii + jn] * sum2;
         }
-        f[i + j*n] *= sum1;
+        f[i + jn] *= sum1 * const2;
       }
     }
   }

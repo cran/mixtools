@@ -1,17 +1,18 @@
 normalmixEM <-
 function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, arbmean = TRUE, arbvar = TRUE, 
           epsilon = 1e-08, maxit = 1000, maxrestarts=20, verb = FALSE, fast=FALSE) {
-  if(arbmean == FALSE && arbvar == FALSE){
-    stop("arbmean and arbvar cannot both be FALSE")
-  }
   x <- as.vector(x)
-  
+  tmp <- normalmix.init(x = x, lambda = lambda, mu = mu, s = sigma, 
+                        k = k, arbmean = arbmean, arbvar = arbvar)
+  lambda <- tmp$lambda 
+  mu <- tmp$mu 
+  sigma <- tmp$s
+  k <- tmp$k 
+  arbvar <- tmp$arbvar 
+  arbmean <- tmp$arbmean
   if (fast==TRUE && k==2 && arbmean==TRUE) {
-    tmp <- normalmix.init(x = x, lambda = lambda, mu = mu, s = sigma, 
-                          k = k, arbmean = arbmean, arbvar = arbvar)
-    a <- normalmixEM2comp (x, lambda=tmp$lambda[1], mu=tmp$mu, 
-                           sigsqrd=tmp$s^2,
-                           eps=epsilon, maxit=maxit)
+    a <- normalmixEM2comp (x, lambda=lambda[1], mu=mu, sigsqrd=sigma^2, 
+                           eps=epsilon, maxit=maxit, verb=verb)
   } else {
     n <- length(x)
     const <- n*log(2*pi)/2

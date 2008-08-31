@@ -1,7 +1,7 @@
 ## EM-like algorithm for a nonparametric univariate mixture model with
 ## symmetric components from a location family
 spEMsymloc <- function(x, mu0, bw = bw.nrd0(x), h=bw, eps = 1e-8, maxiter=100,
-                        stochastic = FALSE, verb = TRUE){
+                        stochastic = FALSE, verbose = FALSE){
   bw <- h # h is alternative bandwidth argument, for backward compatibility
   n <- length(x)
   if (length(mu0)>1) m <- length(mu0) # mu0=centers
@@ -53,17 +53,18 @@ spEMsymloc <- function(x, mu0, bw = bw.nrd0(x), h=bw, eps = 1e-8, maxiter=100,
       change <- c(lambda[iter,] - lambda[iter-1,], mu[iter,]-mu[iter-1,])
       finished <- finished | (max(abs(change)) < eps)
     }
-    if (verb) {
+    if (verbose) {
       t1 <- proc.time()
       cat("iteration ", iter, "  lambda ", round(lambda[iter,], 4), 
           "  mu ", round(mu[iter,], 4))
       cat(" time", (t1 - t0)[3], "\n")
     }
   }
-  tt1 <- proc.time()
-  cat("lambda ", round(lambda[iter,], 4))
-  cat(", total time", (tt1 - tt0)[3], "s\n")
-  
+  if (verbose) {
+    tt1 <- proc.time()
+    cat("lambda ", round(lambda[iter,], 4))
+    cat(", total time", (tt1 - tt0)[3], "s\n")
+  }
   if(stochastic) {
     return(structure(list(data=x, posteriors=sumpost/iter, lambda=lambda,
                           bandwidth=bw, lambdahat=colMeans(lambda), 

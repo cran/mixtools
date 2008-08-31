@@ -54,7 +54,7 @@ mydata<-rmvnormmix(n, lambda, mu, sigma)
 ## Now check to see if we can estimate mixture densities well:
 title <- paste("Does this resemble N(", mu[1,], ",1) and N(", mu[2,],",1)?",
                 sep="")
-plot(npEMindrep(mydata, 2), title=title)
+plot(npEM(mydata, 2), title=title)
 }
 
 \keyword{file}

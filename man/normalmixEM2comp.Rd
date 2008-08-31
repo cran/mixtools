@@ -2,7 +2,7 @@
 \title{Fast EM Algorithm for 2-Component Mixtures of Univariate Normals}
 \alias{normalmixEM2comp}
 \usage{
-normalmixEM2comp(x, lambda, mu, sigsqrd, eps= 1e-8, maxit = 1000)
+normalmixEM2comp(x, lambda, mu, sigsqrd, eps= 1e-8, maxit = 1000, verb=FALSE)
 }
 \description{
   Return EM algorithm output for mixtures of univariate normal distributions 
@@ -20,6 +20,7 @@ normalmixEM2comp(x, lambda, mu, sigsqrd, eps= 1e-8, maxit = 1000)
   \item{eps}{The convergence criterion.  Convergence is declared when the change in 
   the observed data log-likelihood increases by less than epsilon.}
   \item{maxit}{The maximum possible number of iterations.}
+  \item{verb}{If TRUE, then various updates are printed during each iteration of the algorithm.} 
 }
 \details{
   This code is written to be very fast, sometimes more than an order of magnitude

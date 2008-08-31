@@ -12,7 +12,7 @@
 } 
 \arguments{
   \item{x}{An object of class \code{npEM} such as the output
-  of the \code{\link{npEMindrep}} or \code{\link{spEMsymloc}} functions.}
+  of the \code{\link{npEM}} or \code{\link{spEMsymloc}} functions.}
   \item{u}{Vector of points at which the density is to be evaluated}
   \item{component}{Mixture component number; should be an integer from 1 to the
   number of columns of \code{x$posteriors}.}
@@ -35,7 +35,7 @@
 }
 
 \seealso{ 
-\code{\link{npEMindrep}}, \code{\link{spEMsymloc}}, \code{\link{plot.npEM}}
+\code{\link{npEM}}, \code{\link{spEMsymloc}}, \code{\link{plot.npEM}}
 } 
 
 \examples{ 

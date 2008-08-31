@@ -190,6 +190,41 @@ R.se1=apply(R.bs,1,sd)
 
 
 #####
+# Commented out by DRH on 8-29-2008 due to absence of gammamixEM function
+#    if (mix.type == "gammamixEM") {
+#        x <- em.fit$x
+#        n <- length(x)
+#        k <- length(em.fit$lambda)
+#        alpha <- em.fit$gamma.pars[1,]
+#        beta <- em.fit$gamma.pars[2,]
+#        lambda <- em.fit$lambda
+#        j = 0
+#        lambda.bs = NULL
+#	  alpha.bs = NULL
+#        beta.bs = NULL
+#        while (j < B) {
+#            j = j + 1
+#		comp = sample(1:k,size=n,replace=T,prob=lambda)
+#		x.sim = sapply(1:n,function(i) rgamma(1,shape=alpha[comp[i]],scale=beta[comp[i]]))
+#            em.bs = try(gammamixEM(x = x.sim, k = k, lambda = lambda, 
+#                alpha = alpha, beta = beta, ...), silent = TRUE)
+#            if (class(em.bs) == "try-error") {
+#                j = j - 1
+#            }
+#            else {
+#                lambda.bs = cbind(lambda.bs, em.bs$lambda)
+#                alpha.bs = cbind(alpha.bs, as.vector(em.bs$gamma.pars[1,]))
+#                beta.bs = cbind(beta.bs, as.vector(em.bs$gamma.pars[2,]))
+#            }
+#        }
+#        lambda.se = apply(lambda.bs, 1, sd)
+#	  alpha.se = apply(alpha.bs, 1, sd)
+#	  beta.se = apply(beta.bs, 1, sd)
+#        bs.list = list(lambda = lambda.bs, lambda.se = lambda.se, 
+#            alpha = alpha.bs, alpha.se = alpha.se, beta = beta.bs, beta.se = beta.se)
+#    }
+
+#####
     if (mix.type == "repnormmixEM") {
 
 
