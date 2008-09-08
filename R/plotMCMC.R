@@ -27,10 +27,9 @@ x<-mix.object$x
 p<-ncol(x)
 k<-mix.object$components
 theta<-mix.object$theta
-if(p!=2 || sum(x[,1])!=n){
+if(p!=2 || sum(x[,1])!=n){                                                                  
 stop(paste("This only works for simple linear regression!","\n"))
 }
-get(getOption("device"))()
 par(mfrow=c(1,1))
 plot(x[,2],y,main="Credible Regions",xlab="Predictor",ylab="Response")
 #plot(theta[-c(1:burnin),seq(1,2*k-1,by=2)],theta[-c(1:burnin),seq(2,2*k,by=2)],col=0)
