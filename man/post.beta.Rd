@@ -11,9 +11,9 @@ post.beta(y, x, p.beta, p.z)
 }
 \arguments{
   \item{y}{A list of N response trajectories with (possibly) varying dimensions of
-  length $n_i$.}
-  \item{x}{A list of N predictor values of dimension $n_i$.  Each trajectory in y has
-  it's own design vector.}
+  length \eqn{n_i}.}
+  \item{x}{A list of N predictor values of dimension \eqn{n_i}.  Each trajectory in y has
+  its own design vector.}
   \item{p.beta}{A list of N 2xk matrices giving the posterior intercept and slope values from the output of an
   EM algorithm.}
   \item{p.z}{An Nxk matrix of posterior membership probabilities from the output of an EM algorithm.}

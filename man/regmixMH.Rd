@@ -22,7 +22,7 @@ regmixMH(y, x, lambda = NULL, beta = NULL, s = NULL, k = 2,
     where p is the number of columns of x and k is number of components.
     If NULL, then \code{beta} has uniform standard normal entries.  If both
     \code{lambda} and \code{beta} are NULL, then number of components is determined by \code{s}.}
-  \item{s}{k-vector of standard deviations.  If NULL, then 1/\code{s}$^2$ has
+  \item{s}{k-vector of standard deviations.  If NULL, then \eqn{1/\code{s}^2} has
     random standard exponential entries.  If \code{lambda}, \code{beta}, and \code{s} are
     NULL, then number of components determined by \code{k}.}
   \item{k}{Number of components.  Ignored unless all of \code{lambda}, \code{beta},

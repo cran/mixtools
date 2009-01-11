@@ -45,9 +45,11 @@ density estimate) function.
 \code{\link{npEM}}, \code{\link{wkde}}, \code{\link{integrate}}
 }
 \references{
-\item Benaglia, T., Chauveau, D., and Hunter, D. R. (2007), An EM-like algorithm
-for semi- and non-parametric estimation in multivariate mixtures, Penn State
-Department of Statistics Technical Report 07-01.
+   \itemize{
+   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009), An EM-like algorithm
+   for semi- and non-parametric estimation in multivariate mixtures, 
+   Journal of Computational and Graphical Statistics (to appear).
+   }
 }
 \examples{
 # Mixture with mv gaussian model
@@ -74,7 +76,7 @@ ise.npEM(a, j, b, dnorm, lower=0, upper=10, plots=TRUE,
 
 
 # The following (lengthy) example recreates the normal multivariate 
-# mixture model simulation from Benaglia et al (2007).  
+# mixture model simulation from Benaglia et al (2009).  
 mu <- matrix(c(0, 0, 0, 3, 4, 5), m, r, byrow=TRUE) 
 nbrep <- 5  # Benaglia et al use 300 replications
 

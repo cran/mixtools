@@ -21,7 +21,7 @@ hmeEM(y, x, lambda = NULL, beta = NULL, sigma = NULL, w = NULL,
   \item{beta}{Initial value of \code{beta} parameters.  Should be a pxk matrix,
     where p is the number of columns of x and k is number of components.
     If NULL, then \code{beta} has standard normal entries according to a binning method done on the data.}
-  \item{sigma}{A vector of standard deviations.  If NULL, then 1/\code{sigma}$^2$ has
+  \item{sigma}{A vector of standard deviations.  If NULL, then \eqn{1/\code{sigma}^2} has
     random standard exponential entries according to a binning method done on the data.}
   \item{w}{A p-vector of coefficients for the way the mixing proportions are modeled.  See \code{lambda}.}
   \item{k}{Number of components.  Currently, only \code{k}=2 is accepted.}

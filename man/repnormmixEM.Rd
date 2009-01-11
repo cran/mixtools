@@ -21,7 +21,7 @@ repnormmixEM(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   \item{mu}{A k-vector of component means.  If NULL, then \code{mu} is determined by a
     normal distribution according to a binning method done on the data.  If both
     \code{lambda} and \code{mu} are NULL, then number of components is determined by \code{sigma}.}
-  \item{sigma}{A vector of standard deviations.  If NULL, then 1/\code{sigma}$^2$ has
+  \item{sigma}{A vector of standard deviations.  If NULL, then \eqn{1/\code{sigma}^2} has
     random standard exponential entries according to a binning method done on the data.
     If \code{lambda}, \code{mu}, and \code{sigma} are NULL, then number of components is determined by \code{k}.}
   \item{k}{Number of components.  Ignored unless all of \code{lambda}, \code{mu}, 

@@ -16,12 +16,14 @@ regmixEM.mixed(y, x, w = NULL, sigma = NULL, arb.sigma = TRUE,
 }
 \arguments{
   \item{y}{A list of N response trajectories with (possibly) varying dimensions of
-  length $n_i$.}
-  \item{x}{A list of N design matrices of dimensions $(n_i)\times p$.  Each trajectory in y has
-  it's own design matrix.}
-  \item{w}{A list of N known explanatory variables having dimensions $(n_i)\times q$. If \code{mixed} = FALSE,
+  length \eqn{n_i}.}
+  \item{x}{A list of N design matrices of dimensions \eqn{(n_i)\times p}{(n_i) x p}.  
+  Each trajectory in y has
+  its own design matrix.}
+  \item{w}{A list of N known explanatory variables having dimensions \eqn{(n_i)\times q}{(n-1) x q}. 
+  If \code{mixed} = FALSE,
   then \code{w} is replaced by a list of N zeros.}
-  \item{sigma}{A vector of standard deviations.  If NULL, then 1/\code{s}$^2$ has
+  \item{sigma}{A vector of standard deviations.  If NULL, then \eqn{1/s^2} has
     random standard exponential entries according to a binning method done on the data.}
   \item{arb.sigma}{If TRUE, then \code{sigma} is k-dimensional. Else a common standard deviation is assumed.}
   \item{alpha}{A q-vector of unknown regression parameters for the fixed effects.  If NULL and \code{mixed} = TRUE, then \code{alpha} is 

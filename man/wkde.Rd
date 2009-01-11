@@ -22,9 +22,11 @@ at a specified vector of points.
 \code{\link{npEM}}, \code{\link{ise.npEM}}
 }
 \references{
-\item Benaglia, T., Chauveau, D., and Hunter, D. R. (2007), An EM-like algorithm
-for semi- and non-parametric estimation in multivariate mixtures, Penn State
-Department of Statistics Technical Report 07-01.
+   \itemize{
+   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009), An EM-like algorithm
+   for semi- and non-parametric estimation in multivariate mixtures, 
+   Journal of Computational and Graphical Statistics (to appear).
+   }
 }
 \examples{
 # Mixture with mv gaussian model

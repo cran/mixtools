@@ -23,7 +23,7 @@ regmixEM.lambda(y, x, lambda = NULL, beta = NULL, sigma = NULL,
     If NULL, then \code{beta} has uniform standard normal entries.  If both
     \code{lambda} and \code{beta} are NULL, then number of components is determined by \code{sigma}.}
   \item{sigma}{k-vector of initial global values of standard deviations.  
-    If NULL, then 1/\code{sigma}$^2$ has random standard exponential entries.  
+    If NULL, then \eqn{1/\code{sigma}^2} has random standard exponential entries.  
     If \code{lambda}, \code{beta}, and \code{sigma} are NULL, then number of components is determined by \code{k}.}
   \item{k}{The number of components.  Ignored unless all of \code{lambda}, \code{beta},
     and \code{sigma} are NULL.}

@@ -21,7 +21,7 @@ regmixEM.chgpt(y, x, lambda = NULL, gamma = NULL, beta = NULL,
     If NULL, then \code{gamma} has standard normal entries according to a binning method done on the data.}
   \item{beta}{Initial value of \code{beta} parameters for the simple linear regression component.  
     Should be a 2-dimenstional vector. If NULL, then \code{beta} has standard normal entries according to a binning method done on the data.}
-  \item{sigma}{A vector of standard deviations.  If NULL, then 1/\code{sigma}$^2$ has
+  \item{sigma}{A vector of standard deviations.  If NULL, then \eqn{1/\code{sigma}^2} has
     random standard exponential entries according to a binning method done on the data.}
   \item{k}{Number of components.  Currently, this value must be set equal to 2.}
   \item{T}{The number of values to leave off for the range of all possible changepoints to be tested.}

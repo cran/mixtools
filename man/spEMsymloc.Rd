@@ -8,7 +8,7 @@ spEMsymloc(x, mu0, bw = bw.nrd0(x), h=bw, eps = 1e-8, maxiter = 100,
 
 \description{
   Returns semiparametric EM algorithm output (Bordes et al, 2007,
-  and Benaglia et al, 2007)  for location mixtures
+  and Benaglia et al, 2009)  for location mixtures
   of univariate data and symmetric component density.
 }
 \arguments{
@@ -36,7 +36,7 @@ spEMsymloc(x, mu0, bw = bw.nrd0(x), h=bw, eps = 1e-8, maxiter = 100,
   may be declared before \code{maxiter} iterations (see \code{eps} above).}
 
   \item{stochastic}{Flag, if FALSE (the default), runs the non-stochastic version
-      of the algorithm, as in Benaglia et al (2007). Set to TRUE to
+      of the algorithm, as in Benaglia et al (2009). Set to TRUE to
       run a stochastic version which simulates the posteriors at each
       iteration (as in Bordes et al, 2007),
    and runs for \code{maxiter} iterations.}
@@ -68,13 +68,15 @@ spEMsymloc(x, mu0, bw = bw.nrd0(x), h=bw, eps = 1e-8, maxiter = 100,
 \code{\link{npEM}}, \code{\link{plotseq.npEM}}
 }
 \references{
-\item Bordes, L., Chauveau, D., and Vandekerkhove, P. (2007),
-An EM algorithm for a semiparametric mixture model, 
-Computational Statistics and Data Analysis, 51: 5429-5443.
+   \itemize{
+   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009), An EM-like algorithm
+   for semi- and non-parametric estimation in multivariate mixtures, 
+   Journal of Computational and Graphical Statistics (to appear).
 
-\item Benaglia, T., Chauveau, D., and Hunter, D. R. (2007), An EM-like algorithm
-for semi- and non-parametric estimation in multivariate mixtures, Penn State
-Department of Statistics Technical Report 07-01.
+   \item Bordes, L., Chauveau, D., and Vandekerkhove, P. (2007),
+   An EM algorithm for a semiparametric mixture model, 
+   Computational Statistics and Data Analysis, 51: 5429-5443.
+   }
 }
 \examples{
 ## Example from a normal location mixture
