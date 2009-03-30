@@ -9,7 +9,7 @@ spEM(x, mu0, blockid = 1:ncol(x),
 }
 
 \description{
-  Returns semiparametric EM algorithm output (Benaglia et al, 2009) for mixtures
+  Returns semiparametric EM algorithm output (Benaglia et al, 2009a) for mixtures
   of multivariate (repeated measures) data where the coordinates of a row (case)
   in the data matrix are assumed to be independent, conditional on the mixture
   component (subpopulation) from which they are drawn.
@@ -42,7 +42,8 @@ spEM(x, mu0, blockid = 1:ncol(x),
   each iteration and for each component and block.  If \code{FALSE}, 
   use a separate bandwidth for each component and block, and update
   this bandwidth at each iteration of the algorithm using a suitably
-  modified \code{\link{bw.nrd0}} method.}
+  modified \code{\link{bw.nrd0}} method as described in 
+  Benaglia et al (2009b).}
   \item{h}{Alternative way to specify the bandwidth, to provide backward 
   compatibility.}
   \item{eps}{Tolerance limit for declaring algorithm convergence.  Convergence
@@ -94,11 +95,11 @@ spEM(x, mu0, blockid = 1:ncol(x),
 }
 \references{
    \itemize{
-   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009), An EM-like algorithm
+   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009a), An EM-like algorithm
    for semi- and non-parametric estimation in multivariate mixtures, 
    Journal of Computational and Graphical Statistics (to appear).
    
-   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009), Bandwidth
+   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009b), Bandwidth
    Selection in an EM-like algorithm for nonparametric multivariate mixtures,
    Technical Report.
    

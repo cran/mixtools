@@ -4,18 +4,18 @@
 \title{The Multivariate Normal Density}
 \description{
   Density and log-density for the multivariate normal distribution 
-  with mean equal to \code{mean}
+  with mean equal to \code{mu}
   and variance matrix equal to \code{sigma}.
 }
 \usage{
-dmvnorm(y, mean=NULL, sigma=NULL)
-logdmvnorm(y, mean=NULL, sigma=NULL)
+dmvnorm(y, mu=NULL, sigma=NULL)
+logdmvnorm(y, mu=NULL, sigma=NULL)
 }
 \arguments{
   \item{y}{Either a d-vector or an \eqn{n\times d}{n x d} matrix, where \eqn{d}
   is the dimension of the normal distribution and \eqn{n} is the number of
   points at which the density is to be evaluated.}
-  \item{mean}{\eqn{d}-vector:  Mean of the normal distribution (or NULL uses
+  \item{mu}{\eqn{d}-vector:  Mean of the normal distribution (or NULL uses
   the origin as default)}
   \item{sigma}{\eqn{d\times d}{d x d} matrix:  Variance matrix of the normal
   distribution (or NULL uses the identity matrix as default)}

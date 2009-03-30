@@ -6,19 +6,19 @@
 
 # Note:  These functions assume that each ROW of y is a separate position vector.
 # i.e., y is assumed to be nxd, where d=dimension
-dmvnorm <- function(y, mean=NULL, sigma=NULL) {
-  exp(logdmvnorm(y, mean=mean, sigma=sigma))
+dmvnorm <- function(y, mu=NULL, sigma=NULL) {
+  exp(logdmvnorm(y, mu=mu, sigma=sigma))
 }
 
-logdmvnorm <- function(y, mean=NULL, sigma=NULL) {
+
+logdmvnorm <- function(y, mu=NULL, sigma=NULL) {
   if (is.vector(y)) 
     y <- matrix(y, nrow=1)
   d <- ncol(y)
-  if (is.null(mean))
-    mean <- rep(0, d)
+  if (!is.null(mu))
+    y <- sweep(y, 2, mu, '-')
   if (is.null(sigma))
     sigma <- diag(d)
-  y <- sweep(y, 2, mean)
   k <- d * 1.8378770664093454836 # that constant is log(2*pi)
   a <- qr(sigma)
   logdet <- sum(log(abs(diag(a$qr))))
@@ -28,5 +28,4 @@ logdmvnorm <- function(y, mean=NULL, sigma=NULL) {
     mahaldist <- rowSums((y %*% qr.solve(a)) * y)
   -0.5*(mahaldist + logdet + k)
 }
-
 
