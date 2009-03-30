@@ -1,12 +1,20 @@
 ## Use an ECM algorithm (in the sense of Meng and Rubin, Biometrika 1993)
 ## to search for a local maximum of the likelihood surface for a 
 ## univariate finite mixture of normals with possible equality
-## constraints on the mean and stdev parameters.
-normalmixEM <-
-function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, 
+## constraints on the stdev parameters.
+
+## It is assumed here that there are three components and the three normal means
+## are equal to alpha, alpha-delta, and alpha+delta for unknown parameters
+## alpha and delta.
+## In other words, this function implements the specific model described in 
+## Thomas et al (2009), Extensions of Reliability Theory.
+## It is a modified version of normalmixEM.
+
+tauequivnormalmixEM <-
+function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 3, 
           mean.constr = NULL, sd.constr = NULL,
-          epsilon = 1e-08, maxit = 1000, maxrestarts=20, 
-          verb = FALSE, fast=FALSE, ECM = FALSE,
+          epsilon = 1e-08, maxit = 10000, maxrestarts=20, 
+          verb = FALSE, fast=FALSE, ECM = TRUE,
           arbmean = TRUE, arbvar = TRUE) {
   warn <- options(warn=-1) # Turn off warnings
   x <- as.vector(x)
@@ -22,11 +30,8 @@ function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
     a <- normalmixEM2comp (x, lambda=lambda[1], mu=mu, sigsqrd=sigma^2, 
                            eps=epsilon, maxit=maxit, verb=verb)
   } else {
-    z <- parse.constraints(mean.constr, k=k, allsame=!arbmean)
-    meancat <- z$category; meanalpha <- z$alpha
     z <- parse.constraints(sd.constr, k=k, allsame=!arbvar)
     sdcat <- z$category; sdalpha <- z$alpha
-    ECM <- ECM || any(meancat != 1:k) || any(sdcat != 1)
     n <- length(x)
     notdone <- TRUE
     while(notdone) {
@@ -57,18 +62,16 @@ function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
       while (diff > epsilon && iter < maxit) {
         # ECM loop, 1st M-step: condition on sigma, update lambda and mu
         lambda <- colMeans(postprobs)
-        mu[meancat==0] <- meanalpha[meancat==0]
-        if (max(meancat)>0) {
-          for(i in 1:max(meancat)) {
-            w <- which(meancat==i)
-            if (length(w)==1) {
-              mu[w] <- sum(postprobs[,w]*x) / (n*lambda[w])
-            } else {
-              tmp <- t(postprobs[,w])*(meanalpha[w]/sigma[w]^2)
-              mu[w] <- meanalpha[w] * sum(t(tmp)*x) / sum(tmp*meanalpha[w])
-            }
-          }
-        }
+        # Here is where the tau equivalence model is hard-wired:
+        tmp <- t(t(postprobs) * sigma^2) # calculate the (p_ij / sigma_j^2)
+        s1 <- sum(x * tmp)
+        s2 <- sum(x * (tmp[,3]-tmp[,2]))
+        B1 <- sum(tmp)
+        B2 <- sum(tmp[,3]-tmp[,2])
+        C2 <- sum(tmp[,2:3])
+        alpha <- (C2*s1 - B2*s2) / (C2*B1 - B2*B2)
+        delta <- (B1*s2 - B2*s1) / (C2*B1 - B2*B2)
+        mu <- c(alpha, alpha - delta, alpha + delta)
 
         if (ECM) {  # If ECM==FALSE, then this is a true EM algorithm and
                     # so we omit the E-step between the mu and sigma updates

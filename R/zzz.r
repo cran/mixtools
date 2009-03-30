@@ -18,6 +18,7 @@
 #   the other way works even outside the .First.lib function
     cat(pkg,'package version', info[,"Version"], '  Released', info[,"Date"], '\n')
     cat('Type help(package="mixtools") to get started.\n')
+    cat('This package is based upon work supported by the National Science Foundation under Grant No. SES-0518772.\n')
 }
 
 .Last.lib <- function(libpath){
