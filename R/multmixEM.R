@@ -1,11 +1,12 @@
 multmixEM <- function (y, lambda = NULL, theta = NULL, k = 2, maxit = 10000, 
     epsilon = 1e-08, verb = FALSE) {
+  if (class(y)=="list" && !is.null(y$y)) {
+    y <- y$y
+  }
   n <- nrow(y)
   p <- ncol(y)
   m <- colSums(y)
-  r <- rowSums(y)
-  if (any(r!=r[1])) stop("All row sums of y must be equal")  
-  mncoeffs <- lgamma(1+r[1]) - rowSums(lgamma(1+y))
+  r <- rowSums(y) # These need not all be the same
 
   tmp <- multmix.init(y=y, lambda=lambda, theta=theta, k=k)
   lambda <- tmp$lambda
@@ -14,33 +15,44 @@ multmixEM <- function (y, lambda = NULL, theta = NULL, k = 2, maxit = 10000,
   restarts<-0
   mustrestart <- FALSE
 
-  while (restarts < 15) {  
-    oldll <- -Inf  
-    num <- exp(y %*% t(log(pmax(theta,1e-100))) + outer(mncoeffs,log(lambda),"+"))
-    dens <- rowSums(num)
-    postz <- num/dens
-    newll <- sum(log(dens))
-    diff <- newll - oldll
+  llconstant <- sum(lgamma(r+1)) - sum(lgamma(y+1))
+  while (restarts < 15) {
     ll <- NULL
     iter <- 0
-    while ((iter < maxit) && diff > epsilon) {
+    diff <- epsilon+1 # to ensure entering main EM loop
+    # Normalize rows of theta matrix
+    theta <- theta/rowSums(theta)
+    theta <- pmax(theta, 1e-100) # ensure no zeros
+    # preparatory E-step prior to entering main EM loop
+    loglamcd <- log(lambda) + log(theta) %*% t(y) # kxn matrix of log(lambda * component densities)
+    z <- .C("multinompost", as.integer(n), as.integer(k),
+        as.double(loglamcd), post=double(n*k), loglik=as.double(llconstant),
+        PACKAGE = "mixtools")
+    post <- matrix(z$post, ncol=k)
+    newll <- z$loglik
+    while ((iter < maxit) && diff > epsilon) {  # main EM loop
       iter <- iter + 1
       oldll <- newll
       ll <- c(ll, oldll)
-      zty <- t(postz) %*% y
-      theta <- zty/apply(zty, 1, sum)
-      theta <- cbind(theta[,1:(p-1)],1-apply(as.matrix(theta[,1:(p-1)]),1,sum))
-      lambda <- apply(postz, 2, mean)
-      
-      num <- exp(y %*% t(log(pmax(theta,1e-100))) + outer(mncoeffs,log(lambda),"+"))
-      dens <- rowSums(num)
-      postz <- num/dens
-      newll <- sum(log(dens))
+      # M-step:  First update theta values (proportional to sum of posteriors * data)
+      theta <- t(post) %*% y
+      theta <- theta/rowSums(theta)
+      theta <- pmax(theta, 1e-100) # ensure no zeros
+      # M-step:  Update the lambdas as usual for a finite mixture
+      lambda <- colMeans(post)      
+      # E-step:  prepare to find posteriors using C function
+      loglamcd <- log(lambda) + log(theta) %*% t(y) # kxn matrix of log(lambda * component densities)
+      # E-step:  Call C function to return nxk matrix of posteriors along with loglikelihood
+      z <- .C("multinompost", as.integer(n), as.integer(k),
+              as.double(loglamcd), post=double(n*k), loglik=as.double(llconstant),
+              PACKAGE = "mixtools")
+      post <- matrix(z$post, ncol=k)
+      newll <- z$loglik
       diff <- newll - oldll      
       if (diff<0 || is.na(newll) || is.infinite(newll) || is.nan(newll)) {
         mustrestart <- TRUE
         break
-      }      
+      }
       if (verb) {
         cat("iteration=", iter, "diff=", diff, "log-likelihood", 
             ll[iter], "lambda", lambda, "\n") 
@@ -61,12 +73,15 @@ multmixEM <- function (y, lambda = NULL, theta = NULL, k = 2, maxit = 10000,
       theta[,p] <- 1-apply(as.matrix(theta[,1:(p-1)]),1,sum)
       colnames(theta) <- c(paste("theta", ".", 1:p, sep = ""))
       rownames(theta) <- c(paste("comp", ".", 1:k, sep = ""))
-      colnames(postz) <- c(paste("comp", ".", 1:k, sep = ""))
+      colnames(post) <- c(paste("comp", ".", 1:k, sep = ""))
       cat("number of iterations=", iter, "\n")
-      return(list(y=y, lambda = lambda, 
-                  theta = theta, loglik = sum(log(dens)), posterior = postz, 
-                  all.loglik=ll, restarts=restarts, ft="multmixEM"))
+      out <-list(y=y, lambda = lambda, 
+                  theta = theta, loglik = ll[length(ll)], posterior = post, 
+                  all.loglik=ll, restarts=restarts, ft="multmixEM")
+      class(out) <- "mixEM"
+      return(out)
     }
   }
   stop("Too many restarts!")
 }
+

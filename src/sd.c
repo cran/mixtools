@@ -4,7 +4,7 @@
 void C_mudepth (int *nn, int *tt, int *dd, double *mpt, 
               double *x, int *count, double *sdep) {
   int n=*nn, t=*tt, d=*dd;                
-  int i, j, k, m, l;
+  int i, j, k, l;
   double d1, d2, d3, d5, xik, xjk, mptlk;
   
   for (l=0; l<t; l++) {

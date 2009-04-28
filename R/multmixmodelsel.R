@@ -1,5 +1,8 @@
 multmixmodel.sel <- function (y, comps = NULL, ...) 
 {
+    if (class(y)=="list" && !is.null(y$y)) {
+      y <- y$y
+    }
     n = dim(y)[1]
     p = dim(y)[2]
     m = min(apply(y, 1, sum))
@@ -11,7 +14,8 @@ multmixmodel.sel <- function (y, comps = NULL, ...)
     if (is.null(comps)) 
         comps = 1:max.allowed.comp
     if (max(comps) > max.allowed.comp) {
-        stop(paste("No more than", max.allowed.comp, "components allowed"))
+        stop(paste("No more than", max.allowed.comp, "components allowed",
+                   "with", m, "multinomial trials"))
     }
     aic = NULL
     bic = NULL
@@ -31,7 +35,7 @@ multmixmodel.sel <- function (y, comps = NULL, ...)
         loglik = em$loglik
         lambda = em$lambda
         theta = em$theta
-        cat(em$iter, "iterations.\n")
+#        cat(em$iter, "iterations.\n")
       } else loglik = sum(log(exp(apply(y,1,ldmult,theta=theta))))
         aic = c(aic, loglik - (p * k - 1))
         bic = c(bic, loglik - log(n) * (p * k - 1)/2)

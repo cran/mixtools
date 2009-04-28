@@ -9,8 +9,11 @@ multmixEM(y, lambda = NULL, theta = NULL, k = 2,
   Return EM algorithm output for mixtures of multinomial distributions.
 }
 \arguments{
-  \item{y}{An nxp matrix of data (multinomial counts), where n is the
-  sample size and p is the number of multinomial bins.}
+  \item{y}{Either An nxp matrix of data (multinomial counts), where n is the
+  sample size and p is the number of multinomial bins, or the
+  output of the \code{\link{makemultdata}} function.  It is not necessary
+  that all of the rows contain the same number of multinomial trials (i.e.,
+  the rowsums of \code{y} need not be identical).}
   \item{lambda}{Initial value of mixing proportions.  Entries should sum to
     1.  This determines number of components.  If NULL, then \code{lambda} is
     random from uniform Dirichlet and number of
@@ -43,10 +46,12 @@ multmixEM(y, lambda = NULL, theta = NULL, k = 2,
 \code{\link{compCDF}}, \code{\link{makemultdata}}, \code{\link{multmixmodel.sel}}
 }
 \references{
-  McLachlan, G. J. and Peel, D. (2000) \emph{Finite Mixture Models}, John Wiley \& Sons, Inc.
+  \itemize{
+  \item McLachlan, G. J. and Peel, D. (2000) \emph{Finite Mixture Models}, John Wiley \& Sons, Inc.
   
-  Elmore, R. T., Hettmansperger, T. P. and Xuan, F. (2004) The Sign Statistic, One-Way Layouts
+  \item Elmore, R. T., Hettmansperger, T. P. and Xuan, F. (2004) The Sign Statistic, One-Way Layouts
   and Mixture Models, \emph{Statistical Science} \bold{19(4)}, 579--587.
+  }
 }
 \examples{
 ## The sulfur content of the coal seams in Texas
@@ -57,11 +62,10 @@ C<-c(1.56, 1.22, 1.32, 1.39, 1.33, 1.54, 1.04, 2.25, 1.49)
 D<-c(1.3, .75, 1.26, .69, .62, .9, 1.2, .32) 
 E<-c(.73, .8, .9, 1.24, .82, .72, .57, 1.18, .54, 1.3)
 
-## dis.coal<-makemultdata(A, B, C, D, E, 
-##                       cuts = median(c(A, B, C, D, E)))
-## em.out<-multmixEM(dis.coal$y, epsilon = 1e-3)
-## em.out[1:4]
-
+dis.coal<-makemultdata(A, B, C, D, E, 
+                       cuts = median(c(A, B, C, D, E)))
+em.out<-multmixEM(dis.coal)
+em.out[1:4]
 }
 
 \keyword{file}

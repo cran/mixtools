@@ -66,7 +66,8 @@ out2
 data(RTdata)
 out3<-makemultdata(RTdata, cuts = 
                    100*c(5, 10, 12, 14, 16, 20, 25, 30, 40, 50))
-out3$y
+dim(out3$y)
+out3$y[1:10,]
 }
 
 \keyword{file}

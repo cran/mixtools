@@ -36,7 +36,7 @@ regmixMH=function (y, x, lambda = NULL, beta = NULL, s = NULL, k = 2,
     new.pi.lambda <- c()
     accepts = 0
     theta <- matrix(c(beta, s, lambda), nrow = 1)
-    thetalist <- NULL
+    thetalist <- matrix(theta, sampsize, ncol(theta), byrow=TRUE)
     for (i in 2:sampsize) {
         pi.beta <- dnorm(beta, mu, sig)
         pi.sigma <- dexp(s)
@@ -74,7 +74,7 @@ regmixMH=function (y, x, lambda = NULL, beta = NULL, s = NULL, k = 2,
             accepts = accepts + 1
         }
         if (i%%thin == 0) 
-            thetalist = rbind(thetalist, theta)
+            thetalist[i,] = theta
     }
     cat(paste("Acceptance rate: ", 100 * accepts/sampsize, "%\n", 
         sep = ""))

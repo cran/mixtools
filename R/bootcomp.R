@@ -253,7 +253,7 @@ boot.comp <- function(y, x=NULL, N=NULL, max.comp=2, B=100, sig=0.05, arbmean=TR
         while(w==1){
           y.mean=apply(y,2,mean)
           y.cov=cov(y)
-          dens=dmvnorm(y,mean=y.mean,sigma=y.cov)
+          dens=dmvnorm(y,mu=y.mean,sigma=y.cov)
           Q0[i]=sum(log(dens[dens>0]))
           H1.fit=try(mvnormalmixEM(x=y,k=(i+1),arbmean=arbmean,arbvar=arbvar,...),silent=TRUE)
           if(class(H1.fit)=="try-error"){
@@ -268,7 +268,7 @@ boot.comp <- function(y, x=NULL, N=NULL, max.comp=2, B=100, sig=0.05, arbmean=TR
         while(j<B){
           j=j+1
           y.sim=rmvnorm(nrow(y), mu=apply(y,2,mean), sigma=y.cov)
-          dens.sim=dmvnorm(y.sim,mean=y.mean,sigma=y.cov)
+          dens.sim=dmvnorm(y.sim,mu=y.mean,sigma=y.cov)
           y.simout=sum(log(dens.sim[dens.sim>0]))
           em.out=try(mvnormalmixEM(x=y.sim,k=(i+1),arbmean=arbmean,arbvar=arbvar,...),silent=TRUE)
 					if(class(em.out)=="try-error"){
