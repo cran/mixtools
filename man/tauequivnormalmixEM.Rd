@@ -1,16 +1,15 @@
-\name{normalmixEM}
-\title{EM Algorithm for Mixtures of Univariate Normals}
-\alias{normalmixEM}
-\alias{parse.constraints}
+\name{tauequivnormalmixEM}
+\title{Special EM Algorithm for three-component tau equivalence model}
+\alias{tauequivnormalmixEM}
 \usage{
-normalmixEM (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, 
-             mean.constr = NULL, sd.constr = NULL,
-             epsilon = 1e-08, maxit = 1000, maxrestarts=20, 
-             verb = FALSE, fast=FALSE, ECM = FALSE,
-             arbmean = TRUE, arbvar = TRUE) 
+tauequivnormalmixEM (x, lambda = NULL, mu = NULL, sigma = NULL, k = 3, 
+          mean.constr = NULL, sd.constr = NULL,
+          epsilon = 1e-08, maxit = 10000, maxrestarts=20, 
+          verb = FALSE, fast=FALSE, ECM = TRUE,
+          arbmean = TRUE, arbvar = TRUE) 
 }
 \description{
-  Return EM algorithm output for mixtures of normal distributions.
+  Return EM algorithm output for a specific case of a three-component tau equivalence model
 }
 \details{
   This is the standard EM algorithm for normal mixtures that maximizes
@@ -52,18 +51,7 @@ normalmixEM (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   \item{k}{Number of components.  Initial value ignored unless \code{mu} 
   and \code{sigma} are both NULL.}
 
-  \item{mean.constr}{Equality constraints on the mean parameters, given as
-  a vector of length \code{k}.  Each vector entry helps specify the constraints,
-  if any, on the corresponding mean parameter:  If \code{NA}, the corresponding
-  parameter is unconstrained.  If numeric, the corresponding
-  parameter is fixed at that value.  If a character string consisting of
-  a single character preceded by a coefficient, such as \code{"0.5a"}
-  or \code{"-b"}, all parameters using the same single character in their
-  constraints will fix these parameters equal to the coefficient times
-  some the same free parameter.  For instance, if 
-  \code{mean.constr = c(NA, 0, "a", "-a")}, then the first mean parameter
-  is unconstrained, the second is fixed at zero, and the third and forth
-  are constrained to be equal and opposite in sign.}
+  \item{mean.constr}{Irrelevant; this argument is ignored.}
   
   \item{sd.constr}{Equality constraints on the standard deviation parameters.
   See \code{mean.constr}.}
@@ -97,7 +85,8 @@ normalmixEM (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   of Meng and Rubin (1993)?  If FALSE, the algorithm is a true EM algorithm;
   if TRUE, then every half-iteration alternately updates the means conditional
   on the variances or the variances conditional on the means, with an extra
-  E-step in between these updates.}
+  E-step in between these updates.  For \code{tauequivnormalmixEM}, it must
+  be TRUE.}
 
   \item{arbmean}{If TRUE, then the component densities are allowed to have different \code{mu}s. If FALSE, then
   a scale mixture will be fit.  Initial value ignored unless \code{mu} is NULL.}
@@ -125,12 +114,12 @@ normalmixEM (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   \item{ft}{A character vector giving the name of the function.}
 }
 \seealso{
-  \code{\link{mvnormalmixEM}}, \code{\link{normalmixEM2comp}}
+  \code{\link{normalmixEM}}, \code{\link{mvnormalmixEM}}, \code{\link{normalmixEM2comp}}
 }
 \references{
   \itemize{
-  \item McLachlan, G. J. and Peel, D. (2000) \emph{Finite Mixture Models}, 
-  John Wiley \& Sons, Inc.
+  \item Thomas, H., Lohaus, A., and Domsch, H. (2009) Extensions of Reliability
+        Theory, submitted to \emph{Festschrift in Honor of Tom Hettmansperger}.
   \item Meng, X.-L. and Rubin, D. B. (1993) Maximum Likelihood Estimation
   Via the ECM Algorithm:  A General Framework, \emph{Biometrika} 80(2):
   267-278.
