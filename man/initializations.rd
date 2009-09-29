@@ -1,7 +1,8 @@
 %gammamix things temporarily commented out by DRH on 8-29-2008 
+%gammamix things uncommented by DSY on 10-2-2009 
 \name{mixtools initializations}
 \alias{flaremix.init}
-%\alias{gammamix.init}
+\alias{gammamix.init}
 \alias{logisregmix.init}
 \alias{multmix.init}
 \alias{mvnormalmix.init}
@@ -20,8 +21,8 @@
 \usage{
 flaremix.init(y, x, lambda = NULL, beta = NULL, sigma = NULL,
               alpha = NULL)
-%gammamix.init(x, lambda = NULL, alpha = NULL, beta = NULL, 
-%              k = 2)
+gammamix.init(x, lambda = NULL, alpha = NULL, beta = NULL, 
+              k = 2)
 logisregmix.init(y, x, N, lambda = NULL, beta = NULL, k = 2)
 multmix.init(y, lambda = NULL, theta = NULL, k = 2)
 mvnormalmix.init(x, lambda = NULL, mu = NULL, sigma = NULL, 

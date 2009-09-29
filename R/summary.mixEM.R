@@ -28,6 +28,6 @@ summary.mixEM <- function(object, digits=6, ...){
                         "mvnormalmixEM" = c("lambda", paste("mu", 1:length(x$mu), sep="")))
 	cat("summary of", x$ft, "object:\n")
 	print(o, digits=digits)
-	cat("loglik at estimate: ", x$loglik)
+	cat("loglik at estimate: ", x$loglik, "\n")
 }
 
