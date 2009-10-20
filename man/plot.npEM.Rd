@@ -5,10 +5,10 @@
 \usage{
 \method{plot}{npEM}(x, blocks = NULL, hist=TRUE, addlegend = TRUE,
       scale=TRUE, title=NULL, breaks="Sturges", ylim=NULL, dens.col,
-      newplot = TRUE, \dots)
+      newplot = TRUE, pos.legend = "topright", cex.legend = 1, \dots)         
 \method{plot}{spEM}(x, blocks = NULL, hist=TRUE, addlegend = TRUE,
       scale=TRUE, title=NULL, breaks="Sturges", ylim=NULL, dens.col,
-      newplot = TRUE, \dots)
+      newplot = TRUE, pos.legend = "topright", cex.legend = 1, \dots)
 }
 \description{
     Takes an object of class \code{npEM} and returns a set of plots of the 
@@ -37,6 +37,10 @@
   \item{dens.col}{Color values to use for the individual component density
     functions, repeated as necessary.  Default value is \code{2:(m+1)}.}
   \item{newplot}{If TRUE, creates a new plot.}
+  \item{pos.legend}{Single argument specifying the 
+    position of the legend.  See `Details' section of
+  \code{\link{legend}}.}
+  \item{cex.legend}{Character expansion factor for \code{\link{legend}}.}
   \item{\dots}{Any remaining arguments are passed to the \code{\link{hist}} and 
   \code{\link{lines}} functions.}
 }

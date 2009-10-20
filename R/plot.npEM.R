@@ -1,6 +1,7 @@
 plot.spEM <- plot.npEM <- function(x, blocks = NULL, hist=TRUE, addlegend=TRUE,
                                    scale = TRUE, title=NULL, breaks="Sturges", 
-                                   ylim=NULL, dens.col, newplot=TRUE, ...) {
+                                   ylim=NULL, dens.col, newplot=TRUE, 
+                                   pos.legend="topright", cex.legend=1, ...) {
   r <- NCOL(x$data)
   m <- NCOL(x$posteriors)
   blockid <- x$blockid
@@ -59,7 +60,7 @@ plot.spEM <- plot.npEM <- function(x, blocks = NULL, hist=TRUE, addlegend=TRUE,
       pf <- lines
     }
     if (addlegend) {
-      legend("topright", legend=round(x$lambdahat,3), fill=dens.col)
+      legend(pos.legend, legend=round(x$lambdahat,3), fill=dens.col, cex=cex.legend)
       out$x[[i]]<-dx
       out$y[[i]]<-dy
     }
