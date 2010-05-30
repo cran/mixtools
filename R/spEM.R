@@ -10,7 +10,7 @@
 spEM <- function(x, mu0, blockid = 1:ncol(x),
                  bw=bw.nrd0(as.vector(as.matrix(x))), constbw = TRUE,
                  h=bw, eps=1e-8,
-                 maxiter=300, stochastic = FALSE, verb = TRUE){
+                 maxiter=500, stochastic = FALSE, verb = TRUE){
   bw <- h # h is alternative bandwidth argument, for backward compatibility
   x <- as.matrix(x)
   n <- nrow(x)      # number of subjects

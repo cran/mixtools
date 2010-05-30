@@ -28,7 +28,7 @@
 }
 \examples{
 data(Waterdata)
-npEM(Waterdata, 3, bw=4, verb=FALSE) # Assume indep but not iid
+\dontrun{npEM(Waterdata, 3, bw=4, verb=FALSE) # Assume indep but not iid}
 }
 \keyword{file}
 

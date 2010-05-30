@@ -47,11 +47,13 @@
 }
 \examples{
 data(Waterdata)
+\dontrun{
 a <- npEM(Waterdata, 3, bw=4) # Assume indep but not iid
 summary(a) 
 
 b <- npEM(Waterdata, 3, bw=4, blockid=rep(1,8)) # Now assume iid
-summary(b) 
+summary(b)
+}
 }
 \keyword{file}
 
