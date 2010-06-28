@@ -218,7 +218,7 @@ case, a possible parametric model is the {\em conditionally i.i.d.\
   normal model}, for which $\CF=\{\phi(\vec x_i) = \prod_{k=1}^r
 f(x_{ik}), \mbox{$f(t)$ density of $\CN(\mu,\sigma^2)$}\}$ (this model
 is included in \pkg{mixtools}; see Section~\ref{ss:nbcomp}).  An example
-of a (multivariate) nonparametric situation is $\CF=\{\phi(\vec x) =
+of a (multivariate) nonparametric situation is $\CF=\{\phi(\vec x_i) =
 \prod_{k=1}^r f(x_{ik}), \mbox{$f(t)$ a univariate density on $\bR$}\}$, in
 which case $\vec\f$ consists in a Euclidean part ($\vec\lb$) and a
 nonparametric part $(f_1,\ldots,f_m)$.

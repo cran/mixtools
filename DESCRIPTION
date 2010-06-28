@@ -1,6 +1,6 @@
 Package: mixtools
-Version: 0.4.3
-Date: October 2009
+Version: 0.4.4
+Date: June 2010
 Title: Tools for analyzing finite mixture models
 Author: Derek Young Tatiana Benaglia Didier Chauveau Ryan Elmore Tom
         Hettmansperger David Hunter Hoben Thomas Fengjuan Xuan
@@ -10,6 +10,6 @@ Description: A collection of R functions for analyzing finite mixture
         models.  This package is based upon work supported by the
         National Science Foundation under Grant No. SES-0518772.
 License: GPL (>= 2)
-Packaged: 2009-10-20 11:26:41 UTC; davidhunter
+Packaged: 2010-06-28 10:47:54 UTC; davidhunter
 Repository: CRAN
-Date/Publication: 2009-10-20 19:31:16
+Date/Publication: 2010-06-28 14:29:45

@@ -1,17 +1,16 @@
-\name{npEM}
-\title{Nonparametric EM-like Algorithm for Mixtures of Independent Repeated Measurements}
-\alias{npEM}
-\alias{npEMindrep}
-\alias{npEMindrepbw}
+\name{npMSL}
+\title{Nonparametric EM-like Algorithm for Mixtures of Independent Repeated Measurements - Maximum Smoothed Likelihood version}
+\alias{npMSL}
 \usage{
-npEM(x, mu0, blockid = 1:ncol(x), 
+npMSL(x, mu0, blockid = 1:ncol(x), 
      bw = bw.nrd0(as.vector(as.matrix(x))), samebw = TRUE, 
      h = bw, eps = 1e-8, 
-     maxiter = 500, stochastic = FALSE, verb = TRUE)
+     maxiter = 500, ngrid=200, verb = TRUE)
 }
 
 \description{
-  Returns nonparametric EM algorithm output (Benaglia et al, 2009a) for mixtures
+  Returns nonparametric Smoothed Likelihood algorithm output 
+  (Levine et al, 2010) for mixtures
   of multivariate (repeated measures) data where the coordinates of a row (case)
   in the data matrix are assumed to be independent, conditional on the mixture
   component (subpopulation) from which they are drawn.
@@ -27,7 +26,8 @@ npEM(x, mu0, blockid = 1:ncol(x),
   \link{kmeans}}
   \item{blockid}{A vector of length \eqn{r} identifying coordinates 
   (columns of \code{x}) that are
-  assumed to be identically distributed (i.e., in the same block).  For instance,
+  assumed to be identically distributed (i.e., in the same block).  
+  For instance,
   the default has all distinct elements, indicating that no two coordinates 
   are assumed identically distributed and thus a separate set of \eqn{m} 
   density estimates is produced for each column of \eqn{x}.  On the other hand,
@@ -50,25 +50,21 @@ npEM(x, mu0, blockid = 1:ncol(x),
   \code{lambda} vector (of mixing proportion estimates) does not exceed 
   \code{eps}.}
 
-  \item{maxiter}{The maximum number of iterations allowed, for both 
-  stochastic and non-stochastic versions; 
-  for non-stochastic algorithms (\code{stochastic = FALSE}), convergence
+  \item{maxiter}{The maximum number of iterations allowed, convergence
   may be declared before \code{maxiter} iterations (see \code{eps} above).}
   
-  \item{stochastic}{Flag, if FALSE (the default), runs the non-stochastic version
-      of the npEM algorithm, as in Benaglia et al (2009a). Set to TRUE to
-      run a stochastic version which simulates the posteriors at each
-      iteration, and runs for \code{maxiter} iterations.}
+  \item{ngrid}{Number of points in the discretization of the intervals over which are approximated the (univariate) integrals for non linear smoothing of the log-densities, as required in the E step of the npMSL algorithm,
+  see Levine et al (2010).}
 
   \item{verb}{If TRUE, print updates for every iteration of the algorithm as
   it runs}
 }
 \value{
-\code{npEM} returns a list of class \code{npEM} with the following items:
+\code{npMSL} returns a list of class \code{npEM} with the following items:
   \item{data}{The raw data (an \eqn{n\times r}{n x r} matrix).}
-  \item{posteriors}{An \eqn{n\times m}{n x m} matrix of posterior probabilities for
-   observation. If \code{stochastic = TRUE}, this matrix is computed 
-   from an average over the \code{maxiter} iterations.}
+  \item{posteriors}{An \eqn{n\times m}{n x m} matrix 
+   of posterior probabilities for
+   observation.}
   \item{bandwidth}{If \code{samebw==TRUE}, 
   same as the \code{bw} input argument; otherwise, value of \code{bw} matrix
   at final iteration.  This
@@ -78,16 +74,25 @@ npEM(x, mu0, blockid = 1:ncol(x),
   positive integer values.  Also needed by any method that produces density 
   estimates from the output.}
   \item{lambda}{The sequence of mixing proportions over iterations.}
-  \item{lambdahat}{The final mixing proportions if \code{stochastic = FALSE}, 
-  or the average mixing proportions if \code{stochastic = TRUE}.}
+  \item{lambdahat}{The final mixing proportions.}
   \item{loglik}{The sequence of log-likelihoods over iterations.}
+  \item{f}{An array of size \eqn{ngrid \times m \times l}{ngrid x m x l},
+  returning last values of density for component \eqn{j}
+  and block \eqn{k} over \code{grid} points.}
+  \item{meanNaN}{Average number of \code{NaN} that occured over iterations (for internal testing and control purpose).}
+  \item{meanUdfl}{Average number of "underflow" that occured over iterations (for internal testing and control purpose).}
 }
 \seealso{
-\code{\link{plot.npEM}}, \code{\link{normmixrm.sim}}, \code{\link{spEMsymloc}},
+\code{\link{npEM}}, \code{\link{plot.npEM}}, 
+\code{\link{normmixrm.sim}}, \code{\link{spEMsymloc}},
 \code{\link{spEM}}, \code{\link{plotseq.npEM}}
 }
 \references{
    \itemize{
+   \item Levine, M., Hunter, D. and Chauveau, D. (2010),
+   Maximum Smoothed Likelihood for Multivariate Mixtures,
+   Technical Report.
+   	   
    \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009a), An EM-like algorithm
    for semi- and non-parametric estimation in multivariate mixtures, 
    Journal of Computational and Graphical Statistics, 18, 505-526.
@@ -104,21 +109,27 @@ npEM(x, mu0, blockid = 1:ncol(x),
 
 \examples{
 ## Examine and plot water-level task data set.
-
-## First, try a 3-component solution where no two coordinates are
-## assumed i.d.
-data(Waterdata)
-\dontrun{
-a <- npEM(Waterdata, mu0=3, bw=4) # Assume indep but not iid
-plot(a) # This produces 8 plots, one for each coordinate
-}
-
-## Next, same thing but pairing clock angles that are directly opposite one
+## Block structure pairing clock angles that are directly opposite one
 ## another (1:00 with 7:00, 2:00 with 8:00, etc.)
+set.seed(111) # Ensure that results are exactly reproducible
+data(Waterdata)
+blockid <- c(4,3,2,1,3,4,1,2) # see Benaglia et al (2009a)
+
 \dontrun{
-b <- npEM(Waterdata, mu0=3, blockid=c(4,3,2,1,3,4,1,2), bw=4) # iid in pairs
-plot(b) # Now only 4 plots, one for each block
+a <- npEM(Waterdata, mu0=3, blockid=blockid, bw=4)  # npEM solution
+b <- npMSL(Waterdata, mu0=3, blockid=blockid, bw=4) # smoothed version
+
+# Comparisons on the 4 default plots, one for each block
+par(mfrow=c(2,2))
+for (l in 1:4){
+plot(a, blocks=l, breaks=5*(0:37)-92.5,
+	xlim=c(-90,90), xaxt="n",ylim=c(0,.035), xlab="")
+plot(b, blocks=l, hist=FALSE, newplot=FALSE, addlegend=FALSE, lty=2,
+	dens.col=1)
+axis(1, at=30*(1:7)-120, cex.axis=1)
+legend("topleft",c("npMSL"),lty=2, lwd=2)}
 }
+
 }
 
 

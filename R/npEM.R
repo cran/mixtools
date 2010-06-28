@@ -4,7 +4,7 @@ npEMindrep <- # npEMindrep is an alias (only for backward compatibility)
 npEM <- function(x, mu0, blockid = 1:ncol(x),
                        bw=bw.nrd0(as.vector(as.matrix(x))), samebw = TRUE,
                        h=bw, eps=1e-8,
-                       maxiter=300, stochastic = FALSE, verb = TRUE){
+                       maxiter=500, stochastic = FALSE, verb = TRUE){
   bw <- h # h is alternative bandwidth argument, for backward compatibility
   x <- as.matrix(x)
   n <- nrow(x)      # number of subjects
@@ -133,7 +133,7 @@ npEM <- function(x, mu0, blockid = 1:ncol(x),
 # Not sure whether the following function is really necessary:
 npEMindrepbw <- function (x, mu0, blockid = 1:ncol(x), bw =
                           bw.nrd0(as.vector(as.matrix(x))), eps = 1e-08, 
-                          maxiter = 300, stochastic = FALSE, verb = TRUE){
+                          maxiter = 500, stochastic = FALSE, verb = TRUE){
   npEM(x=x, mu0=mu0, blockid=blockid, bw=bw, samebw=FALSE, eps=eps,
        maxiter=maxiter, stochastic=stochastic, verb=verb)
 }
