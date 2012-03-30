@@ -23,10 +23,11 @@ repnormmixmodel.sel <- function (x, k = 2, ...)
         }
         for (i in 1:k) {
             if (i == 1) {
-                mu <- mean(x)
-                loglik <- log(prod(dnorm(x, mean = mu, sd = sd(x))))
-                emout <- list(mu = mu, stdev = sd(x), 
-                  lambda = 1, loglik = loglik)
+                avx <- as.vector(x)
+                mu <- mean(avx)
+                s <- sd(avx)
+                loglik <- sum(dnorm(avx, mean=mu, sd=s, log=TRUE))
+                emout <- list(mu=mu, stdev=s, lambda=1, loglik=loglik)
             }
             else emout <- repnormmixEM(x, k = i, ...)
             aic[i] <- AIC(emout)

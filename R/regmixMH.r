@@ -1,10 +1,11 @@
 regmixMH=function (y, x, lambda = NULL, beta = NULL, s = NULL, k = 2, 
-    addintercept = TRUE, mu = NULL, sig = NULL, sampsize = 1000, 
+    addintercept = TRUE, mu = NULL, sig = NULL, lam.hyp = NULL, sampsize = 1000, 
     omega = 0.01, thin = 1) 
 {
     if (addintercept) {
         x = cbind(1, x)
     }
+    XTX <- solve(t(x)%*%x) 
     n <- length(y)
     p <- ncol(x)
     if (is.null(s)) {
@@ -24,8 +25,10 @@ regmixMH=function (y, x, lambda = NULL, beta = NULL, s = NULL, k = 2,
         mu = 0 * beta
     }
     if (is.null(sig)) {
-        sig = 5 * sqrt(var(y)) + 0 * beta
+        sig = rep(5 * sqrt(var(y)),k)
     }
+    sig.beta = t(matrix(rep(sig,p),ncol=p)) * sqrt(matrix(rep(diag(XTX),k),ncol=k)) 
+    if(is.null(lam.hyp)) lam.hyp = rep(1,k)
     L.theta <- matrix(nrow = n, ncol = k)
     pi.beta <- matrix(nrow = p, ncol = k)
     pi.sigma <- c()
@@ -38,35 +41,35 @@ regmixMH=function (y, x, lambda = NULL, beta = NULL, s = NULL, k = 2,
     theta <- matrix(c(beta, s, lambda), nrow = 1)
     thetalist <- matrix(theta, sampsize, ncol(theta), byrow=TRUE)
     for (i in 2:sampsize) {
-        pi.beta <- dnorm(beta, mu, sig)
-        pi.sigma <- dexp(s)
-        pi.lambda <- dbeta(lambda, 1, 1)
-        L.theta <- dnorm(y - x %*% beta, 0, matrix(s, n, k, byrow = TRUE)) %*% 
-            matrix(lambda, k, 1)
-        Lik.theta <- prod(apply(L.theta, 1, sum))
-        prior <- prod(pi.beta) * prod(pi.sigma) * prod(pi.lambda)
-        f.theta <- Lik.theta * prior
-        new.beta <- beta + omega * matrix(rcauchy(k * p), p, 
-            k)
-        new.sigma <- log(s) + omega * rcauchy(k)
-        new.sigma <- exp(new.sigma)
-#        temp <- exp(log(lambda[1:(k - 1)]) - log(lambda[k]) + 
-#            omega * rcauchy(k - 1))
-#        new.lambda <- c(temp, 1)/(1 + sum(temp))
-	new.lambda <- lambda.pert(lambda,omega*rcauchy(k-1))
-        new.pi.beta <- dnorm(new.beta, mu, sig)
-        new.pi.sigma <- dexp(new.sigma)
-        new.pi.lambda <- dbeta(new.lambda, 1, 1)
+        log.pi.beta <- dnorm(beta, mu, sig.beta, log=TRUE)
+        log.pi.sigma <- dexp(s, 1/sig, log=TRUE)
+        log.pi.lambda <- sum((lam.hyp-1)*log(lambda)) - lgamma(lam.hyp) +
+                         lgamma(sum(lam.hyp)) # Dirichlet log-density
+#        log.pi.lambda <- log(ddirichlet(lambda, lam.hyp)) 
+        L.theta <- dnorm(y - x %*% beta, 0, matrix(s, n, k, byrow = TRUE)
+                         ) %*% matrix(lambda, k, 1)
+        log.Lik.theta <- sum(log(L.theta))
+        log.prior <- sum(log.pi.beta) + sum(log.pi.sigma) + sum(log.pi.lambda)
+        log.f.theta <- log.Lik.theta + log.prior
+        new.beta <- beta + omega * matrix(rcauchy(k * p), p, k)
+        new.sigma <- log(s) + omega * rcauchy(k) 
+        new.sigma <- exp(new.sigma) 
+	  new.lambda <- lambda.pert(lambda, omega*rcauchy(k)) 
+        log.new.pi.beta <- dnorm(new.beta, mu, sig.beta, log=TRUE) 
+        log.new.pi.sigma <- dexp(new.sigma, 1/sig, log=TRUE) 
+        log.new.pi.lambda <- sum((lam.hyp-1)*log(new.lambda)) - lgamma(lam.hyp) +
+                              lgamma(sum(lam.hyp)) # Dirichlet log-density
+#        log.new.pi.lambda <- log(ddirichlet(new.lambda, lam.hyp)) 
         new.L.theta <- dnorm(y - x %*% new.beta, 0, matrix(new.sigma, 
             n, k, byrow = TRUE)) %*% matrix(new.lambda, k, 1)
-        new.Lik.theta <- prod(apply(new.L.theta, 1, sum))
-        new.prior <- prod(new.pi.beta) * prod(new.pi.sigma) * 
-            prod(new.pi.lambda)
-        new.f.theta <- new.Lik.theta * new.prior
+        log.new.Lik.theta <- sum(log(new.L.theta))
+        log.new.prior <- sum(log.new.pi.beta) + sum(log.new.pi.sigma) + 
+            sum(log.new.pi.lambda)
+        log.new.f.theta <- log.new.Lik.theta + log.new.prior
         new.theta <- c(new.beta, new.sigma, new.lambda)
-        a <- new.f.theta/f.theta
-        r <- runif(1)
-        if (a > r) {
+        a <- log.new.f.theta - log.f.theta
+        r <- log(runif(1))
+        if (a > r & !is.na(a)) {
             theta <- new.theta
             beta <- new.beta
             s <- new.sigma

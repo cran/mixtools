@@ -86,6 +86,7 @@ poisregmixEM = function (y, x, lambda = NULL, beta = NULL, k = 2, addintercept =
         cat("WARNING! NOT CONVERGENT!", "\n")
     }
     cat("number of iterations=", iter, "\n")
+	beta <- matrix(beta,ncol=k)
 rownames(beta) <- c(paste("beta", ".", 0:(p-1), sep = ""))
 colnames(beta) <- c(paste("comp", ".", 1:k, sep = ""))
 colnames(z) <- c(paste("comp", ".", 1:k, sep = ""))

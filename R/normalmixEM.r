@@ -29,6 +29,7 @@ function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
     ECM <- ECM || any(meancat != 1:k) || any(sdcat != 1)
     n <- length(x)
     notdone <- TRUE
+    restarts <- 0
     while(notdone) {
       # Initialize everything
       notdone <- FALSE
@@ -42,7 +43,6 @@ function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
       diff <- epsilon+1
       iter <- 0
       postprobs <- matrix(nrow = n, ncol = k)
-      restarts <- 0
       mu <- rep(mu, k)[1:k]
       sigma <- rep(sigma,k)[1:k]
       # Initialization E-step here:

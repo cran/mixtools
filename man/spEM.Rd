@@ -13,7 +13,7 @@ spEM(x, mu0, blockid = 1:ncol(x),
   of multivariate (repeated measures) data where the coordinates of a row (case)
   in the data matrix are assumed to be independent, conditional on the mixture
   component (subpopulation) from which they are drawn.
-  For now, this algorithm only implements model (17) in 
+  For now, this algorithm only implements model (4.7) in 
   Benaglia et al, in which each component and block has exactly
   the same (nonparametric) shape and they differ only by location and scale.
 }
@@ -72,7 +72,10 @@ spEM(x, mu0, blockid = 1:ncol(x),
    from an average over the \code{maxiter} iterations.}
   \item{bandwidth}{If \code{constbw==TRUE}, 
   same as the \code{bw} input argument; otherwise, value of \code{bw} matrix
-  at final iteration.  This
+  at final iteration (since for now this algorithm only implements 
+  model (4.7) in Benaglia et al, the bandwidth matrix is reduced to a single
+  bandwith scalar).  
+  This
   information is needed by any method that produces density estimates from the
   output.}
   \item{blockid}{Same as the \code{blockid} input argument, but recoded to have
@@ -97,7 +100,7 @@ spEM(x, mu0, blockid = 1:ncol(x),
    \itemize{
    \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009a), An EM-like algorithm
    for semi- and non-parametric estimation in multivariate mixtures, 
-   Journal of Computational and Graphical Statistics (to appear).
+   Journal of Computational and Graphical Statistics, 18, 505-526.
    
    \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009b), Bandwidth
    Selection in an EM-like algorithm for nonparametric multivariate mixtures,

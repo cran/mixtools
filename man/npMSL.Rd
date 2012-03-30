@@ -10,7 +10,7 @@ npMSL(x, mu0, blockid = 1:ncol(x),
 
 \description{
   Returns nonparametric Smoothed Likelihood algorithm output 
-  (Levine et al, 2010) for mixtures
+  (Levine et al, 2011) for mixtures
   of multivariate (repeated measures) data where the coordinates of a row (case)
   in the data matrix are assumed to be independent, conditional on the mixture
   component (subpopulation) from which they are drawn.
@@ -54,7 +54,7 @@ npMSL(x, mu0, blockid = 1:ncol(x),
   may be declared before \code{maxiter} iterations (see \code{eps} above).}
   
   \item{ngrid}{Number of points in the discretization of the intervals over which are approximated the (univariate) integrals for non linear smoothing of the log-densities, as required in the E step of the npMSL algorithm,
-  see Levine et al (2010).}
+  see Levine et al (2011).}
 
   \item{verb}{If TRUE, print updates for every iteration of the algorithm as
   it runs}
@@ -89,9 +89,9 @@ npMSL(x, mu0, blockid = 1:ncol(x),
 }
 \references{
    \itemize{
-   \item Levine, M., Hunter, D. and Chauveau, D. (2010),
+   \item Levine, M., Hunter, D. and Chauveau, D. (2011),
    Maximum Smoothed Likelihood for Multivariate Mixtures,
-   Technical Report.
+   Biometrika 98(2): 403-416.
    	   
    \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009a), An EM-like algorithm
    for semi- and non-parametric estimation in multivariate mixtures, 

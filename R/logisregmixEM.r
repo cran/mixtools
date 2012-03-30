@@ -102,6 +102,7 @@ logisregmixEM=function (y, x, N = NULL, lambda = NULL, beta = NULL, k = 2,
     if (iter == maxit) {
         cat("WARNING! NOT CONVERGENT!", "\n")
     }
+	beta <- matrix(beta,ncol=k)
     rownames(beta) <- c(paste("beta", ".", 0:(p - 1), sep = ""))
     colnames(beta) <- c(paste("comp", ".", 1:k, sep = ""))
     colnames(z) <- c(paste("comp", ".", 1:k, sep = ""))

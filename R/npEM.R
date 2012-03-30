@@ -66,7 +66,7 @@ npEM <- function(x, mu0, blockid = 1:ncol(x),
     fkernel <- matrix(1, n, m)
     h <- bw # This is for samebw == TRUE
     for (k in 1:max(u)) {
-      r2 <- sum(u == k)
+      r2 <- sum(u == k)	# block size
       if (!samebw) {
         wts <- apply(z.tmp, 2, function(z) rep(z/r2, r2))
         variances <- colSums(wts * outer(xx[[k]], colSums(wts * xx[[k]]), '-')^2)

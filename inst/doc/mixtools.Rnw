@@ -1603,7 +1603,7 @@ received additional funding from Le Studium, an agency of the Centre
 National de la Recherche Scientifique of France.
 
 
-\bibliography{vignette}
+\bibliography{mixtools}
 
 
 \end{document}
