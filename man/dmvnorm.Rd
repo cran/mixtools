@@ -12,17 +12,17 @@ dmvnorm(y, mu=NULL, sigma=NULL)
 logdmvnorm(y, mu=NULL, sigma=NULL)
 }
 \arguments{
-  \item{y}{Either a d-vector or an \eqn{n\times d}{n x d} matrix, where \eqn{d}
+  \item{y}{Either a \eqn{d} - vector or an \eqn{n\times d}{n x d} matrix, where \eqn{d}
   is the dimension of the normal distribution and \eqn{n} is the number of
   points at which the density is to be evaluated.}
-  \item{mu}{\eqn{d}-vector:  Mean of the normal distribution (or NULL uses
+  \item{mu}{\eqn{d} - vector:  Mean of the normal distribution (or NULL uses
   the origin as default)}
-  \item{sigma}{\eqn{d\times d}{d x d} matrix:  Variance matrix of the normal
+  \item{sigma}{This \eqn{d\times d}{d x d} matrix is the variance matrix of the normal
   distribution (or NULL uses the identity matrix as default)}
 }
 \value{
-  \code{dmvnorm} gives the densities,
-  \code{logdmvnorm} gives the logarithm of the densities
+  \code{dmvnorm} gives the densities, while
+  \code{logdmvnorm} gives the logarithm of the densities.
 }
 \details{
 This code is written to be efficient, using the qr-decomposition of the 

@@ -18,7 +18,7 @@ kern.T(x, xi, h)
 }
 
 \arguments{
-  \item{x}{A vector of values to which local modelling techniques are applied.}
+  \item{x}{A vector of values to which local modeling techniques are applied.}
   \item{xi}{An n-vector of data values.}
   \item{h}{The bandwidth controlling the size of the window used for the
   local estimation around \code{x}.}

@@ -1,6 +1,4 @@
 ## nonparametric algorithm for Smoothed Likelihood Maximization 
-## 
-## current (internal) version 3 
 ## implementing block structure
 npMSL <- function(x, mu0, blockid = 1:ncol(x),
                        bw=bw.nrd0(as.vector(as.matrix(x))), samebw = TRUE,
@@ -35,7 +33,7 @@ npMSL <- function(x, mu0, blockid = 1:ncol(x),
   finished <- FALSE
   lambda <- matrix(0, nrow = maxiter, ncol = m)
   loglik <- NULL
-  total_udfl <- 0; total_nan <- 0 # for keeping track and output result
+  total_udfl <- 0; total_nan <- 0 # for internal checks
 
   tmp <- 1:n
   xtra <- (max(x)-min(x))/10
@@ -73,12 +71,12 @@ npMSL <- function(x, mu0, blockid = 1:ncol(x),
     f <- array(z$new.f, c(ngrid, m, B)) # check sum(f == 0)
 # print(apply(f,2:3,sum) * Delta)
 # print(max(abs(f-f2)))
-    
 #    browser()
 
     ## E-step (for next iteration)
     z=.C("npMSL_Estep", as.integer(ngrid), as.integer(n),
-       as.integer(m), as.integer(r), as.integer(u),
+       as.integer(m), as.integer(r), 
+       as.integer(B), as.integer(u),
        as.double(bw),
        as.double(x), as.double(grid), f=as.double(f),
        as.double(lambda[iter,]), post=as.double(z.hat),
@@ -124,4 +122,5 @@ npMSL <- function(x, mu0, blockid = 1:ncol(x),
 			meanNaN = total_nan/(n*m*r*iter)), # average nan
                     class="npEM")) # define a "NEMS" class ?
 }
+
 

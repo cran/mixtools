@@ -12,7 +12,7 @@
   \item{\code{GNP}}{The gross national product per capita in 1996.}
   \item{\code{CO2}}{The estimated carbon dioxide emission per capita in 1996.}
   \item{\code{country}}{An abbreviation pertaining to the country measured 
-  (e.g., "GRC" = Greece and "CH" = China).}
+  (e.g., "GRC" = Greece and "CH" = Switzerland).}
 }
 }
 \references{

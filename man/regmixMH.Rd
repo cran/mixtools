@@ -3,8 +3,8 @@
 \alias{regmixMH}
 \usage{
 regmixMH(y, x, lambda = NULL, beta = NULL, s = NULL, k = 2,
-         addintercept = TRUE, mu = NULL, sig = NULL, 
-         sampsize = 1000, omega = .01, thin = 1)
+         addintercept = TRUE, mu = NULL, sig = NULL, lam.hyp = NULL,
+         sampsize = 1000, omega = 0.01, thin = 1)
 }
 
 \description{
@@ -35,6 +35,9 @@ regmixMH(y, x, lambda = NULL, beta = NULL, s = NULL, k = 2,
   \item{sig}{The prior hyperparameter of same size as \code{beta};
     the standard deviations of \code{beta} components.  If NULL, these are 
     all set to five times the overall standard deviation of y.}
+  \item{lam.hyp}{The prior hyperparameter of length \code{k} for the mixing proportions (i.e.,
+	these are hyperparameters for the Dirichlet distribution).  If NULL, these are generated from a standard uniform
+	distribution and then scaled to sum to 1.}
   \item{sampsize}{Size of posterior sample returned.}
   \item{omega}{Multiplier of step size to control M-H acceptance rate.
     Values closer to zero result in higher acceptance rates, generally.}
