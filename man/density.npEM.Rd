@@ -45,6 +45,7 @@ Minutes <- faithful$waiting
 hist(Minutes, freq=FALSE)
 
 ## Superimpose equal-variance normal mixture fit:
+set.seed(100)
 nm <- normalmixEM(Minutes, mu=c(50,80), sigma=5, arbvar=FALSE, fast=TRUE)
 x <- seq(min(Minutes), max(Minutes), len=200)
 for (j in 1:2) 

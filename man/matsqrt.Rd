@@ -20,7 +20,7 @@ This function is called by \code{regcr}.
 \code{\link{regcr}}
 }
 \examples{
-a<-matrix(c(1, -0.2, -0.2, 1), 2, 2)
+a <- matrix(c(1, -0.2, -0.2, 1), 2, 2)
 matsqrt(a)
 
 }

@@ -108,6 +108,7 @@ npEM(x, mu0, blockid = 1:ncol(x),
 ## First, try a 3-component solution where no two coordinates are
 ## assumed i.d.
 data(Waterdata)
+set.seed(100)
 \dontrun{
 a <- npEM(Waterdata, mu0=3, bw=4) # Assume indep but not iid
 plot(a) # This produces 8 plots, one for each coordinate

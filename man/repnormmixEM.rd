@@ -62,8 +62,9 @@ repnormmixEM(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
 ## EM output for the water-level task data set.
 
 data(Waterdata)
-water<-t(as.matrix(Waterdata))
-em.out<-repnormmixEM(water, k = 2, verb = TRUE, epsilon = 1e-03)
+set.seed(100)
+water <- t(as.matrix(Waterdata))
+em.out <- repnormmixEM(water, k = 2, verb = TRUE, epsilon = 1e-03)
 em.out
 }
 

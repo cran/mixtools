@@ -64,8 +64,9 @@ regmixEM.lambda(y, x, lambda = NULL, beta = NULL, sigma = NULL,
 
 data(NOdata)
 attach(NOdata)
-out1<-regmixEM.lambda(Equivalence, NO)
-out2<-regmixEM.lambda(Equivalence, NO, k = 3)
+set.seed(100)
+out1 <- regmixEM.lambda(Equivalence, NO)
+out2 <- regmixEM.lambda(Equivalence, NO, k = 3)
 c(out1$loglik, out2$loglik)
 
 }

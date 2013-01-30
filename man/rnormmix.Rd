@@ -28,11 +28,12 @@ Simulate from a mixture of univariate normal distributions.
 \examples{
 ##Generate data from a 2-component mixture of normals.
 
-n<-500
-lambda<-rep(1, 2)/2
-mu<-c(0, 5)
-sigma<-rep(1, 2)
-mixnorm.data<-rnormmix(n, lambda, mu, sigma)
+set.seed(100)
+n <- 500
+lambda <- rep(1, 2)/2
+mu <- c(0, 5)
+sigma <- rep(1, 2)
+mixnorm.data <- rnormmix(n, lambda, mu, sigma)
 
 ##A histogram of the simulated data.
 

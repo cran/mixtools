@@ -113,6 +113,7 @@ spEM(x, mu0, blockid = 1:ncol(x),
 }
 \examples{
 ## simulate a 2-component gaussian mixture with 3 iid repeated measures
+set.seed(100)
 mu <- matrix(c(0, 15), 2, 3)
 sigma <- matrix(c(1, 5), 2, 3)
 x <- rmvnormmix(300, lambda = c(.4,.6), mu = mu, sigma = sigma)

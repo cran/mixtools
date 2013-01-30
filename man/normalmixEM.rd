@@ -1,7 +1,6 @@
 \name{normalmixEM}
 \title{EM Algorithm for Mixtures of Univariate Normals}
 \alias{normalmixEM}
-\alias{parse.constraints}
 \usage{
 normalmixEM (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, 
              mean.constr = NULL, sd.constr = NULL,
@@ -125,7 +124,8 @@ normalmixEM (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   \item{ft}{A character vector giving the name of the function.}
 }
 \seealso{
-  \code{\link{mvnormalmixEM}}, \code{\link{normalmixEM2comp}}
+  \code{\link{mvnormalmixEM}}, \code{\link{normalmixEM2comp}},
+  \code{\link{normalmixMMlc}}
 }
 \references{
   \itemize{
@@ -141,6 +141,7 @@ normalmixEM (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
 
 data(faithful)
 attach(faithful)
+set.seed(100)
 system.time(out<-normalmixEM(waiting, arbvar = FALSE, epsilon = 1e-03))
 out
 system.time(out2<-normalmixEM(waiting, arbvar = FALSE, epsilon = 1e-03, fast=TRUE))

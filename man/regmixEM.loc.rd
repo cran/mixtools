@@ -63,10 +63,11 @@ regmixEM.loc(y, x, lambda = NULL, beta = NULL, sigma = NULL,
 
 data(NOdata)
 attach(NOdata)
-out1<-regmixEM.loc(Equivalence, NO, kernl.h = 2, 
-                   epsilon = 1e-02, verb = TRUE)
-out2<-regmixEM.loc(Equivalence, NO, kernl.h = 2, k = 3,
-                   epsilon = 1e-02, verb = TRUE)
+set.seed(100)
+out1 <- regmixEM.loc(Equivalence, NO, kernl.h = 2, 
+                     epsilon = 1e-02, verb = TRUE)
+out2 <- regmixEM.loc(Equivalence, NO, kernl.h = 2, k = 3,
+                     epsilon = 1e-02, verb = TRUE)
 c(out1$loglik, out2$loglik)
 
 }

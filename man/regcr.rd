@@ -47,7 +47,7 @@ asymptotic normal approximation.}
   \item{boundary}{A matrix of points in beta, or intercept-slope, space
     arrayed along the boundary of the confidence or credible region.}
   \item{upper}{A matrix of points in x-y space arrayed along the upper
-    confidence or crebible limit for the regression line.}
+    confidence or credible limit for the regression line.}
   \item{lower}{A matrix of points in x-y space arrayed along the lower
     confidence or credible limit for the regression line.}
 }
@@ -60,13 +60,14 @@ asymptotic normal approximation.}
 
 data(NOdata)
 attach(NOdata)
-beta<-matrix(c(1.3, -0.1, 0.6, 0.1), 2, 2)
-sigma<-c(.02, .05)
-MH.out<-regmixMH(Equivalence, NO, beta = beta, s = sigma, 
-                 sampsize = 2500, omega = .0013)
+set.seed(100)
+beta <- matrix(c(1.3, -0.1, 0.6, 0.1), 2, 2)
+sigma <- c(.02, .05)
+MH.out <- regmixMH(Equivalence, NO, beta = beta, s = sigma, 
+                   sampsize = 2500, omega = .0013)
 attach(data.frame(MH.out$theta))
-beta.c1<-cbind(beta0.1[2400:2499], beta1.1[2400:2499])
-beta.c2<-cbind(beta0.2[2400:2499], beta1.2[2400:2499])
+beta.c1 <- cbind(beta0.1[2400:2499], beta1.1[2400:2499])
+beta.c2 <- cbind(beta0.2[2400:2499], beta1.2[2400:2499])
 plot(NO, Equivalence)
 regcr(beta.c1, x = NO, nonparametric = TRUE, plot = TRUE, 
       col = 2)

@@ -47,6 +47,7 @@
 }
 \examples{
 data(Waterdata)
+set.seed(100)
 \dontrun{
 a <- npEM(Waterdata, 3, bw=4) # Assume indep but not iid
 summary(a) 

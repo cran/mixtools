@@ -35,8 +35,9 @@ boot.se(em.fit, B = 100, arbmean = TRUE, arbvar = TRUE,
 
 data(NOdata)
 attach(NOdata)
-em.out<-regmixEM(Equivalence, NO, arbvar = FALSE)
-out.bs<-boot.se(em.out, B = 15, arbvar = FALSE)
+set.seed(100)
+em.out <- regmixEM(Equivalence, NO, arbvar = FALSE)
+out.bs <- boot.se(em.out, B = 15, arbvar = FALSE)
 out.bs
 
 }

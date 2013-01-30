@@ -15,7 +15,7 @@ multmixmodel.sel(y, comps = NULL, ...)
   sample size and p is the number of multinomial bins, or the
   output of the \code{\link{makemultdata}} function.  It is not necessary
   that all of the rows contain the same number of multinomial trials (i.e.,
-  the rowsums of \code{y} need not be identical).}
+  the row sums of \code{y} need not be identical).}
   \item{comps}{Vector containing the numbers of components to consider.
     If NULL, this is set to be 1:(max possible), where (max possible) is
     floor((m+1)/2) and m is the minimum row sum of y.}
@@ -32,8 +32,9 @@ multmixmodel.sel(y, comps = NULL, ...)
 \examples{
 ##Data generated using the multinomial cutpoint method.
 
-x<-matrix(rpois(70, 6), 10, 7) 
-x.new<-makemultdata(x, cuts = 5)
+set.seed(100)
+x <- matrix(rpois(70, 6), 10, 7) 
+x.new <- makemultdata(x, cuts = 5)
 multmixmodel.sel(x.new$y, comps = c(1,2), epsilon = 1e-03)
 
 }

@@ -42,6 +42,7 @@ test.equality(y, x = NULL, arbmean = TRUE, arbvar = FALSE,
 
 data(faithful)
 attach(faithful)
+set.seed(100)
 test.equality(y = waiting, arbmean = FALSE, arbvar = TRUE)
 
 }

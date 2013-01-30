@@ -20,7 +20,7 @@ flaremixEM(y, x, lambda = NULL, beta = NULL, sigma = NULL,
   \item{x}{An n-vector of predictor values.  An intercept term will be added by default.}
   \item{lambda}{Initial value of mixing proportions.  Entries should sum to 1.}
   \item{beta}{Initial value of \code{beta} parameters.  Should be a 2x2 matrix where the columns
-    corresond to the component.}
+    correspond to the component.}
   \item{sigma}{A vector of standard deviations.}
   \item{alpha}{A scalar for the exponential component's rate.}
   \item{nu}{A vector specifying the barrier constants to use.  The first barrier constant where the algorithm
@@ -52,27 +52,28 @@ flaremixEM(y, x, lambda = NULL, beta = NULL, sigma = NULL,
 \examples{
 ## Simulation output.
 
+set.seed(100)
 j=1
 while(j == 1){
-    x1=runif(30, 0, 10)
-    x2=runif(20, 10, 20)
-    x3=runif(30, 20, 30)
-    y1=3+4*x1+rnorm(30, sd = 1)
-    y2=3+4*x2+rexp(20, rate = .05)
-    y3=3+4*x3+rnorm(30, sd = 1)
-    x=c(x1, x2, x3)
-    y=c(y1, y2, y3)
-    nu=(1:30)/2
+    x1 <- runif(30, 0, 10)
+    x2 <- runif(20, 10, 20)
+    x3 <- runif(30, 20, 30)
+    y1 <- 3+4*x1+rnorm(30, sd = 1)
+    y2 <- 3+4*x2+rexp(20, rate = .05)
+    y3 <- 3+4*x3+rnorm(30, sd = 1)
+    x <- c(x1, x2, x3)
+    y <- c(y1, y2, y3)
+    nu <- (1:30)/2
 
-    out=try(flaremixEM(y, x, beta = c(3, 4), nu = nu,
-            lambda = c(.75, .25), sigma = 1), silent = TRUE)
+    out <- try(flaremixEM(y, x, beta = c(3, 4), nu = nu,
+               lambda = c(.75, .25), sigma = 1), silent = TRUE)
     if(class(out) == "try-error"){
-        j=1
-    } else j=2
+        j <- 1
+    } else j <- 2
 }
 
 out[4:7]
-plot(x, y)
+plot(x, y, pch = 19)
 abline(out$beta)
 
 

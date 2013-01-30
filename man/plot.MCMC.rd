@@ -31,10 +31,11 @@
 
 data(NOdata)
 attach(NOdata)
-beta<-matrix(c(1.3, -0.1, 0.6, 0.1), 2, 2)
-sigma<-c(.02, .05)
-MH.out<-regmixMH(Equivalence, NO, beta = beta, s = sigma, 
-                 sampsize = 2500, omega = .0013)
+set.seed(100)
+beta <- matrix(c(1.3, -0.1, 0.6, 0.1), 2, 2)
+sigma <- c(.02, .05)
+MH.out <- regmixMH(Equivalence, NO, beta = beta, s = sigma, 
+                   sampsize = 2500, omega = .0013)
 plot(MH.out, summary.plots = TRUE, burnin = 2450, 
      alpha = 0.01)
 }

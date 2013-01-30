@@ -22,7 +22,7 @@ regmixEM(y, x, lambda = NULL, beta = NULL, sigma = NULL, k = 2,
     where p is the number of columns of x and k is number of components.
     If NULL, then \code{beta} has standard normal entries according to a binning method done on the data.  If both
     \code{lambda} and \code{beta} are NULL, then number of components is determined by \code{sigma}.}
-  \item{sigma}{A vector of standard deviations.  If NULL, then \eqn{1/\code{sigma}^2} has
+  \item{sigma}{A vector of standard deviations.  If NULL, then 1/\code{sigma}^2 has
     random standard exponential entries according to a binning method done on the data.
     If \code{lambda}, \code{beta}, and \code{sigma} are
     NULL, then number of components is determined by \code{k}.}
@@ -68,7 +68,8 @@ regmixEM(y, x, lambda = NULL, beta = NULL, sigma = NULL, k = 2,
  
 data(NOdata)
 attach(NOdata)
-em.out<-regmixEM(Equivalence, NO, verb = TRUE, epsilon = 1e-04)
+set.seed(100)
+em.out <- regmixEM(Equivalence, NO, verb = TRUE, epsilon = 1e-04)
 em.out[3:6]
 }
 

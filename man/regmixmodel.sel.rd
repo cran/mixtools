@@ -42,6 +42,7 @@ regmixmodel.sel(x, y, w = NULL, k = 2, type = c("fixed",
 
 data(NOdata)
 attach(NOdata)
+set.seed(100)
 regmixmodel.sel(x = NO, y = Equivalence, k = 3, type = "fixed")
 }
 
