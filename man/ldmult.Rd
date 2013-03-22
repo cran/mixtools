@@ -24,8 +24,8 @@ This function is called by \code{multmixEM}.
 \code{\link{multmixEM}}
 }
 \examples{
-y<-c(2, 2, 10)
-theta<-c(.2, .3, .5)
+y <- c(2, 2, 10)
+theta <- c(0.2, 0.3, 0.5)
 ldmult(y, theta)
 
 }

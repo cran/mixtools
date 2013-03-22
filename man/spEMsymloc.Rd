@@ -80,9 +80,10 @@ spEMsymloc(x, mu0, bw = bw.nrd0(x), h=bw, eps = 1e-8, maxiter = 100,
 }
 \examples{
 ## Example from a normal location mixture
-n<-200
+set.seed(100)
+n <- 200
 lambda <- c(1/3,2/3)
-mu<-c(0, 4); sigma<-rep(1, 2)
+mu <- c(0, 4); sigma<-rep(1, 2)
 x <- rnormmix(n, lambda, mu, sigma)
 out.stoc <- spEMsymloc(x, mu0=c(-1, 2), stochastic=TRUE)
 out.nonstoc <- spEMsymloc(x, mu0=c(-1, 2))

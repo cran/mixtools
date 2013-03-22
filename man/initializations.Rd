@@ -8,11 +8,12 @@
 \alias{mvnormalmix.init}
 \alias{normalmix.init}
 \alias{poisregmix.init}
-\alias{regmix.chgpt.init}
+%\alias{regmix.chgpt.init}
 \alias{regmix.init}
 \alias{regmix.lambda.init}
 \alias{regmix.mixed.init}
 \alias{repnormmix.init}
+\alias{segregmix.init}
 
 \title{Initializations for Various EM Algorithms in 'mixtools'}
 \description{
@@ -30,8 +31,8 @@ mvnormalmix.init(x, lambda = NULL, mu = NULL, sigma = NULL,
 normalmix.init(x, lambda = NULL, mu = NULL, s = NULL, k = 2, 
                arbmean = TRUE, arbvar = TRUE)
 poisregmix.init(y, x, lambda = NULL, beta = NULL, k = 2)
-regmix.chgpt.init(y, x, lambda = NULL, beta = NULL,
-                  gamma = NULL, sigma = NULL, t = NULL, k = 2)
+%regmix.chgpt.init(y, x, lambda = NULL, beta = NULL,
+%                  gamma = NULL, sigma = NULL, t = NULL, k = 2)
 regmix.init(y, x, lambda = NULL, beta = NULL, s = NULL, k = 2, 
             addintercept = TRUE, arbmean = TRUE, arbvar=TRUE)
 regmix.lambda.init(y, x, lambda = NULL, beta = NULL, s = NULL,
@@ -44,6 +45,8 @@ regmix.mixed.init(y, x, w = NULL, sigma = NULL,
                   addintercept.random = TRUE)
 repnormmix.init(x, lambda = NULL, mu = NULL, s = NULL, k = 2, 
                 arbmean = TRUE, arbvar = TRUE)
+segregmix.init(y, x, lambda = NULL, beta = NULL, s = NULL, k = 2,
+               seg.Z, psi, psi.locs = NULL)
 }
 
 \details{

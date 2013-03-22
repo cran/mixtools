@@ -53,6 +53,7 @@ density estimate) function.
 }
 \examples{
 # Mixture with mv gaussian model
+set.seed(100)
 m <- 2 # no. of components
 r <- 3 # no. of repeated measures (coordinates)
 lambda <- c(0.4, 0.6)

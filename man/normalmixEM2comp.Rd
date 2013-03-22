@@ -56,8 +56,10 @@ normalmixEM2comp(x, lambda, mu, sigsqrd, eps= 1e-8, maxit = 1000, verb=FALSE)
 }
 \examples{
 ##Analyzing the Old Faithful geyser data with a 2-component mixture of normals.
+
 data(faithful)
 attach(faithful)
+set.seed(100)
 system.time(out <- normalmixEM2comp(waiting, lambda=.5, 
             mu=c(50,80), sigsqrd=100))
 out$all.loglik # Note:  must be monotone increasing

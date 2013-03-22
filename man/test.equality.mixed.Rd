@@ -38,6 +38,7 @@ test.equality.mixed(y, x, w=NULL, arb.R = TRUE,
 ##Test of equal variances in the simulated data set.
 
 data(RanEffdata)
+set.seed(100)
 x<-lapply(1:length(RanEffdata), function(i) 
           matrix(RanEffdata[[i]][, 2:3], ncol = 2))
 x<-x[1:15]

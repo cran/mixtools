@@ -185,7 +185,7 @@ void npMSL_Estep_bw(
   /* two_h_squared =2*(*hh)*(*hh); */
   /* double Delta = (grid[2]-grid[1]) / *hh / sqrt(2*3.14159265358979);*/
   double gsq2pi = (grid[2]-grid[1]) / sqrt(2*3.14159265358979); 
-  double t1, t2, Delta;
+  double t1, Delta;
   double epsi=1e-323;	/* smallest number; maybe machine-dependent ? */
   double epsi2=1e-100;	/* assumed small enough for cancelling log(0) */ 
  

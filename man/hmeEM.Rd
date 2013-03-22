@@ -61,8 +61,9 @@ hmeEM(y, x, lambda = NULL, beta = NULL, sigma = NULL, w = NULL,
  
 data(NOdata)
 attach(NOdata)
-em.out<-regmixEM(Equivalence, NO)
-hme.out<-hmeEM(Equivalence, NO, beta = em.out$beta)
+set.seed(100)
+em.out <- regmixEM(Equivalence, NO)
+hme.out <- hmeEM(Equivalence, NO, beta = em.out$beta)
 hme.out[3:7]
 }
 

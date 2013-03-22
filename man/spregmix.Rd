@@ -94,6 +94,7 @@ spregmix(lmformula, bw = NULL, constbw = FALSE,
 \examples{
 data(tonedata)
 ## By default, the bandwidth will adapt and the error density is assumed symmetric
+set.seed(100)
 a=spregmix(tuned~stretchratio, bw=.2, data=tonedata, verb=TRUE)
 
 ## Look at the sp mixreg solution:

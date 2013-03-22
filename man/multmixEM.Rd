@@ -13,7 +13,7 @@ multmixEM(y, lambda = NULL, theta = NULL, k = 2,
   sample size and p is the number of multinomial bins, or the
   output of the \code{\link{makemultdata}} function.  It is not necessary
   that all of the rows contain the same number of multinomial trials (i.e.,
-  the rowsums of \code{y} need not be identical).}
+  the row sums of \code{y} need not be identical).}
   \item{lambda}{Initial value of mixing proportions.  Entries should sum to
     1.  This determines number of components.  If NULL, then \code{lambda} is
     random from uniform Dirichlet and number of
@@ -56,15 +56,16 @@ multmixEM(y, lambda = NULL, theta = NULL, k = 2,
 \examples{
 ## The sulfur content of the coal seams in Texas
 
-A<-c(1.51, 1.92, 1.08, 2.04, 2.14, 1.76, 1.17)
-B<-c(1.69, 0.64, .9, 1.41, 1.01, .84, 1.28, 1.59) 
-C<-c(1.56, 1.22, 1.32, 1.39, 1.33, 1.54, 1.04, 2.25, 1.49) 
-D<-c(1.3, .75, 1.26, .69, .62, .9, 1.2, .32) 
-E<-c(.73, .8, .9, 1.24, .82, .72, .57, 1.18, .54, 1.3)
+set.seed(100)
+A <- c(1.51, 1.92, 1.08, 2.04, 2.14, 1.76, 1.17)
+B <- c(1.69, 0.64, .9, 1.41, 1.01, .84, 1.28, 1.59) 
+C <- c(1.56, 1.22, 1.32, 1.39, 1.33, 1.54, 1.04, 2.25, 1.49) 
+D <- c(1.3, .75, 1.26, .69, .62, .9, 1.2, .32) 
+E <- c(.73, .8, .9, 1.24, .82, .72, .57, 1.18, .54, 1.3)
 
-dis.coal<-makemultdata(A, B, C, D, E, 
-                       cuts = median(c(A, B, C, D, E)))
-em.out<-multmixEM(dis.coal)
+dis.coal <- makemultdata(A, B, C, D, E, 
+                         cuts = median(c(A, B, C, D, E)))
+em.out <- multmixEM(dis.coal)
 em.out[1:4]
 }
 

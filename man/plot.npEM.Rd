@@ -66,6 +66,7 @@
 ## First, try a 3-component solution where no two coordinates are
 ## assumed i.d.
 data(Waterdata)
+set.seed(100)
 \dontrun{
 a <- npEM(Waterdata, 3, bw=4)
 par(mfrow=c(2,4))

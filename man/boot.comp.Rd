@@ -67,10 +67,11 @@ boot.comp(y, x = NULL, N = NULL, max.comp = 2, B = 100,
 ## Bootstrapping to test the number of components on the RTdata.
 
 data(RTdata)
-x<-as.matrix(RTdata[, 1:3])
-y<-makemultdata(x, cuts = quantile(x, (1:9)/10))$y
-a<-boot.comp(y = y, max.comp = 1, B = 5, mix.type = "multmix", 
-             epsilon = 1e-3)
+set.seed(100)
+x <- as.matrix(RTdata[, 1:3])
+y <- makemultdata(x, cuts = quantile(x, (1:9)/10))$y
+a <- boot.comp(y = y, max.comp = 1, B = 5, mix.type = "multmix", 
+               epsilon = 1e-3)
 a$p.values
 
 }

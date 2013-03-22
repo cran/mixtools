@@ -17,7 +17,7 @@ void KDEloc2(
                    x_i - mu_ij for 1<=i<=n and 1<=j<=m   */ 
 ) {
   int nn=*n, mm=*m, i, j, a, b;
-  double sum, u1, u2, tmp1, tmp2, hh=*h;
+  double sum, u1, u2, tmp1, hh=*h;
   double const1 = -1.0 / (2.0 * hh * hh);
   double const2 = 0.39894228040143267794/(hh*(double)nn); /* .3989...=1/(sqrt(2*pi)) */
   

@@ -25,7 +25,8 @@
 \seealso{\code{\link{regcr}}
 }
 \examples{
-  x<-matrix(rnorm(200),nc = 2)
+  set.seed(100)
+  x <- matrix(rnorm(200),nc = 2)
   depth(x[1:3, ], x)
 }
 \note{\code{depth} is used in \code{regcr}.}
