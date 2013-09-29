@@ -1,0 +1,12 @@
+Changes in mixtools 1.0.0 
+============================
+* 2013-10-05
+
+* Started a NEWS file as of this version. New capabilities include:
+
+* A normalmixMMlc() function was added, for mixtures of univariate Normals with linear constraints on both the means and the variances parameters, requiring a MM-type algorithm.
+
+* A spEMsymlocN01() function was added, implementing a specific semiparametric EM-like algorithm for univariate mixture in False Discovery Rate (FDR) estimation, in which setup one component is known and set to the standard normal whereas the second component is semiparametric. Functions for plotting the results from this algorithm and for FDR estimation from its output have also been added.
+
+* Some documentation (Rd) files have been updated for examples, and some reference papers in EM-related Rd files have been updated.
+

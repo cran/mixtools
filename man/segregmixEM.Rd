@@ -22,7 +22,7 @@ segregmixEM(y, x, lambda = NULL, beta = NULL, sigma = NULL,
     components is determined by \code{beta}.}
   \item{beta}{Initial value of \code{beta} parameters.  This is a list of length \code{k} such that each element must contain a vector having length consistent with the defined changepoint structure. See \code{seg.Z}, \code{psi}, and \code{psi.loc} below. If NULL, then \code{beta} has standard normal entries according to a binning method done on the data.  If both
     \code{lambda} and \code{beta} are NULL, then number of components is determined by \code{sigma}.}
-  \item{sigma}{A vector of standard deviations.  If NULL, then \eqn{1/\code{sigma}^2} has
+  \item{sigma}{A vector of standard deviations.  If NULL, then 1/\code{sigma}^2 has
     random standard exponential entries according to a binning method done on the data.
     If \code{lambda}, \code{beta}, and \code{sigma} are
     NULL, then number of components is determined by \code{k}.}
@@ -72,14 +72,50 @@ segregmixEM(y, x, lambda = NULL, beta = NULL, sigma = NULL,
 As of version 0.4.6, this more general function has replaced the now defunct \code{regmixEM.chgpt} and associated internal functions.
 }
 \examples{
+\dontrun{
+## Simulated example.
+
+set.seed(100)
+x <- 1:20
+y1 <- 3 + x + rnorm(20)
+y2 <- 3 - x - 5*(x - 15)*(x > 15) + rnorm(20)
+y <- c(y1, y2)
+x <- c(x, x)
+
+set.seed(100)
+be <- list(c(3, -1, -5), c(3, 1))
+s <- c(1, 1)
+psi.locs <- list(comp.1 = list(x = 15), comp.2 = NULL)
+out <- segregmixEM(y, cbind(1,x), verb = TRUE, k = 2,
+                   beta = be, sigma = s, lambda = c(1, 1)/2, 
+                   seg.Z = list(~x, NULL), psi = rbind(1, 0),
+                   psi.locs = psi.locs, epsilon = 0.9)
+
+z <- seq(0, 21, len = 40)
+plot(x, y, col = apply(out$post, 1, which.max) + 1, pch = 19, 
+	   cex.lab = 1.4, cex = 1.4)
+b <- out$beta
+d <- out$psi.locs
+lines(z, b[[1]][1] + b[[1]][2] * z + b[[1]][3] * 
+      (z - d[[1]][[1]]) * (z > d[[1]][[1]]) , col = 2, lwd = 2)
+lines(z, b[[2]][1] + b[[2]][2] * z, col = 3, lwd = 2)
+abline(v = out$psi.locs[[1]][1], col = 2, lty = 2)
+}
+
+\dontrun{
 ## Example using the NOdata.
  
 data(NOdata)
 attach(NOdata)
 
 set.seed(100)
+be <- list(c(1.30, -0.13, 0.08), c(0.56, 0.09))
+s <- c(0.02, 0.04)
+psi.locs <- list(comp.1 = list(NO = 1.57), comp.2 = NULL)
 out <- segregmixEM(Equivalence, cbind(NO), verb = TRUE, k = 2,
-	  							 seg.Z = list(~NO, NULL), psi = rbind(1, 0))
+                   beta = be, sigma = s, lambda = c(1, 1)/2, 
+                   seg.Z = list(~NO, NULL), psi = rbind(1, 0),
+                   psi.locs = psi.locs, epsilon = 0.1)
 
 z <- seq(0, 5, len = 1000)
 plot(NOdata, col = apply(out$post, 1, which.max) + 1, pch = 19, 
@@ -92,6 +128,7 @@ lines(z, b[[2]][1] + b[[2]][2] * z, col = 3, lwd = 2)
 abline(v = out$psi.locs[[1]][1], col = 2, lty = 2)
 
 detach(NOdata)
+}
 }
 
 

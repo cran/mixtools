@@ -11,7 +11,7 @@ npEM(x, mu0, blockid = 1:ncol(x),
 }
 
 \description{
-  Returns nonparametric EM algorithm output (Benaglia et al, 2009a) for mixtures
+  Returns nonparametric EM algorithm output (Benaglia et al, 2009) for mixtures
   of multivariate (repeated measures) data where the coordinates of a row (case)
   in the data matrix are assumed to be independent, conditional on the mixture
   component (subpopulation) from which they are drawn.
@@ -42,7 +42,7 @@ npEM(x, mu0, blockid = 1:ncol(x),
   use a separate bandwidth for each component and block, and update
   this bandwidth at each iteration of the algorithm using a suitably
   modified \code{\link{bw.nrd0}} method as described in 
-  Benaglia et al (2009b).}
+  Benaglia et al (2011).}
   \item{h}{Alternative way to specify the bandwidth, to provide backward 
   compatibility.}
   \item{eps}{Tolerance limit for declaring algorithm convergence.  Convergence
@@ -56,7 +56,7 @@ npEM(x, mu0, blockid = 1:ncol(x),
   may be declared before \code{maxiter} iterations (see \code{eps} above).}
   
   \item{stochastic}{Flag, if FALSE (the default), runs the non-stochastic version
-      of the npEM algorithm, as in Benaglia et al (2009a). Set to TRUE to
+      of the npEM algorithm, as in Benaglia et al (2009). Set to TRUE to
       run a stochastic version which simulates the posteriors at each
       iteration, and runs for \code{maxiter} iterations.}
 
@@ -88,17 +88,23 @@ npEM(x, mu0, blockid = 1:ncol(x),
 }
 \references{
    \itemize{
-   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009a), An EM-like algorithm
+   \item Benaglia, T., Chauveau, D., and Hunter, D. R., An EM-like algorithm
    for semi- and non-parametric estimation in multivariate mixtures, 
-   Journal of Computational and Graphical Statistics, 18, 505-526.
-
-   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009b), 
-   Bandwidth Selection in an EM-like algorithm for nonparametric 
-   multivariate mixtures, Technical Report.
+   Journal of Computational and Graphical Statistics, 18, 505-526, 2009.
    
-   \item Bordes, L., Chauveau, D., and Vandekerkhove, P. (2007),
+   \item Benaglia, T., Chauveau, D., Hunter, D. R., and Young, D.
+	mixtools: An R package for analyzing finite mixture models.
+	Journal of Statistical Software, 32(6):1-29, 2009.
+
+   \item Benaglia, T., Chauveau, D. and Hunter, D.R.
+ 	Bandwidth Selection in an EM-like algorithm for nonparametric multivariate mixtures.
+	Nonparametric Statistics and Mixture Models: A Festschrift in
+  	Honor of Thomas P. Hettmansperger. World Scientific Publishing Co., 
+  	pages 15-27, 2011.
+
+   \item Bordes, L., Chauveau, D., and Vandekerkhove, P.,
    An EM algorithm for a semiparametric mixture model, 
-   Computational Statistics and Data Analysis, 51: 5429-5443.
+   Computational Statistics and Data Analysis, 51: 5429-5443, 2007.
    }
 }
 

@@ -9,7 +9,7 @@ spEM(x, mu0, blockid = 1:ncol(x),
 }
 
 \description{
-  Returns semiparametric EM algorithm output (Benaglia et al, 2009a) for mixtures
+  Returns semiparametric EM algorithm output (Benaglia et al, 2009) for mixtures
   of multivariate (repeated measures) data where the coordinates of a row (case)
   in the data matrix are assumed to be independent, conditional on the mixture
   component (subpopulation) from which they are drawn.
@@ -43,7 +43,7 @@ spEM(x, mu0, blockid = 1:ncol(x),
   use a separate bandwidth for each component and block, and update
   this bandwidth at each iteration of the algorithm using a suitably
   modified \code{\link{bw.nrd0}} method as described in 
-  Benaglia et al (2009b).}
+  Benaglia et al (2011).}
   \item{h}{Alternative way to specify the bandwidth, to provide backward 
   compatibility.}
   \item{eps}{Tolerance limit for declaring algorithm convergence.  Convergence
@@ -98,20 +98,22 @@ spEM(x, mu0, blockid = 1:ncol(x),
 }
 \references{
    \itemize{
-   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009a), An EM-like algorithm
+   \item Benaglia, T., Chauveau, D., and Hunter, D. R., An EM-like algorithm
    for semi- and non-parametric estimation in multivariate mixtures, 
-   Journal of Computational and Graphical Statistics, 18, 505-526.
+   Journal of Computational and Graphical Statistics, 18, 505-526, 2009.
    
-   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009b), Bandwidth
-   Selection in an EM-like algorithm for nonparametric multivariate mixtures,
-   Technical Report.
+   \item Benaglia, T., Chauveau, D. and Hunter, D.R.
+ 	Bandwidth Selection in an EM-like algorithm for nonparametric multivariate mixtures.
+	Nonparametric Statistics and Mixture Models: A Festschrift in
+  	Honor of Thomas P. Hettmansperger. World Scientific Publishing Co., 
+  	pages 15-27, 2011.
    
-   \item Bordes, L., Chauveau, D., and Vandekerkhove, P. (2007),
+   \item Bordes, L., Chauveau, D., and Vandekerkhove, P.,
    An EM algorithm for a semiparametric mixture model, 
-   Computational Statistics and Data Analysis, 51: 5429-5443.
+   Computational Statistics and Data Analysis, 51: 5429-5443, 2007.
    }
 }
-\examples{
+\examples{\dontrun{
 ## simulate a 2-component gaussian mixture with 3 iid repeated measures
 set.seed(100)
 mu <- matrix(c(0, 15), 2, 3)
@@ -123,7 +125,7 @@ d <- spEM(x, mu0 = 2, blockid = rep(1,3), constbw = FALSE)
 d2 <- spEM(x, mu0 = 2, blockid = rep(1,3), constbw = TRUE)
 plot(d, xlim=c(-10, 40), ylim = c(0, .16), xlab = "", breaks = 30,
      cex.lab=1.5, cex.axis=1.5, addlegend=FALSE)
-plot(d2, newplot=FALSE, addlegend=FALSE, lty=2)
+plot(d2, newplot=FALSE, addlegend=FALSE, lty=2)}
 }
 
 
