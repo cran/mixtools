@@ -92,7 +92,7 @@ function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
               sigma[w] <- sqrt(sum(postprobs[,w]*res[,w]) / (n*lambda[w]))
             } else {
               tmp <- t(postprobs[,w]) / sdalpha[w]
-              sigma[w] <- sqrt(sdalpha[w] * sum(t(tmp) * res[,w])/ (n * sum(lambda[w])))
+              sigma[w] <- sdalpha[w] * sqrt(sum(t(tmp) * res[,w])/ (n * sum(lambda[w])))
             }
           }
           if(any(sigma < 1e-08)) {

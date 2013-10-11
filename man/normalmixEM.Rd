@@ -125,7 +125,7 @@ normalmixEM (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
 }
 \seealso{
   \code{\link{mvnormalmixEM}}, \code{\link{normalmixEM2comp}},
-  \code{\link{normalmixMMlc}}
+  \code{\link{normalmixMMlc}}, \code{\link{spEMsymloc}}
 }
 \references{
   \itemize{
@@ -134,6 +134,11 @@ normalmixEM (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   \item Meng, X.-L. and Rubin, D. B. (1993) Maximum Likelihood Estimation
   Via the ECM Algorithm:  A General Framework, \emph{Biometrika} 80(2):
   267-278.
+  
+  \item Benaglia, T., Chauveau, D., Hunter, D. R., and Young, D.
+	mixtools: An R package for analyzing finite mixture models.
+	Journal of Statistical Software, 32(6):1-29, 2009.
+
   }
 }
 \examples{

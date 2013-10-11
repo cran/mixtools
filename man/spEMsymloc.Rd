@@ -65,13 +65,18 @@ spEMsymloc(x, mu0, bw = bw.nrd0(x), h=bw, eps = 1e-8, maxiter = 100,
 }
 \seealso{
 \code{\link{plot.npEM}}, \code{\link{rnormmix}},
-\code{\link{npEM}}, \code{\link{plotseq.npEM}}
+\code{\link{npEM}}, \code{\link{spEMsymlocN01}}, \code{\link{plotseq.npEM}}
 }
 \references{
    \itemize{
-   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009), An EM-like algorithm
+   \item Benaglia, T., Chauveau, D., and Hunter, D. R., An EM-like algorithm
    for semi- and non-parametric estimation in multivariate mixtures, 
-   Journal of Computational and Graphical Statistics (to appear).
+   Journal of Computational and Graphical Statistics, 18, 505-526, 2009.
+   
+   \item Benaglia, T., Chauveau, D., Hunter, D. R., and Young, D.
+	mixtools: An R package for analyzing finite mixture models.
+	Journal of Statistical Software, 32(6):1-29, 2009.
+
 
    \item Bordes, L., Chauveau, D., and Vandekerkhove, P. (2007),
    An EM algorithm for a semiparametric mixture model, 

@@ -12,6 +12,7 @@ summary.mixEM <- function(object, digits=6, ...){
               "logisregmixEM" = rbind(x$lambda, x$beta),
               "poisregmixEM" = rbind(x$lambda, x$beta),
               "mvnormalmixEM" = rbind(x$lambda, matrix(unlist(x$mu), byrow=TRUE, nrow=length(x$lambda))),
+              "normalmixMMlc" = rbind(x$lambda, x$mu, x$sigma),
               stop("Unknown mixEM object of type ", x$ft))
   colnames(o) <- paste("comp",1:ncol(o))
   rownames(o) <- switch(x$ft,
@@ -25,9 +26,11 @@ summary.mixEM <- function(object, digits=6, ...){
                         "regmixEM.chgpt" = c("lambda", "sigma"),
                         "logisregmixEM" = c("lambda", paste("beta", 1:nrow(x$beta), sep="")),
                         "poisregmixEM" = c("lambda", paste("beta", 1:nrow(x$beta), sep="")),
-                        "mvnormalmixEM" = c("lambda", paste("mu", 1:length(x$mu), sep="")))
+                        "mvnormalmixEM" = c("lambda", paste("mu", 1:length(x$mu), sep="")),
+                        "normalmixMMlc" = c("lambda", "mu", "sigma"))
 	cat("summary of", x$ft, "object:\n")
 	print(o, digits=digits)
 	cat("loglik at estimate: ", x$loglik, "\n")
 }
+
 

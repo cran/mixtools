@@ -11,9 +11,9 @@ normalmixMMlc  (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
           	verb = FALSE) 
 }
 \description{
-  Return EC-MM algorithm output for mixtures of normal distributions
+  Return EC-MM (see below) algorithm output for mixtures of normal distributions
   with linear constraints on the means and variances parameters,
-  as in Chauveau and Hunter (2011).
+  as in Chauveau and Hunter (2013).
   The linear constraint for the means is of the form
   \eqn{\mu = M \beta + C}, where \eqn{M} and \eqn{C} are matrix 
   and vector specified as parameters.
@@ -27,7 +27,8 @@ normalmixMMlc  (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   with linear constraints on the means and variances parameters.
   EC-MM here means that this algorithm is similar to 
   an ECM algorithm as in Meng and Rubin (1993), 
-  except that it uses conditional MM-steps 
+  except that it uses conditional MM 
+  (Minorization-Maximization)-steps
   instead of simple M-steps. Conditional means that it 
   alternates between maximizing with respect to the \code{mu}
   and \code{lambda} while holding \code{sigma} fixed, and maximizing with
@@ -60,7 +61,7 @@ normalmixMMlc  (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
 
   \item{mean.constr}{First, simplest way to define 
   	  equality constraints on the mean parameters, given as
-  a vector of length \code{k}, like in \code{\link{mvnormalmixEM}}.  
+  a vector of length \code{k}, like in \code{\link{normalmixEM}}.  
   Each vector entry helps specify the constraints,
   if any, on the corresponding mean parameter:  If \code{NA}, the corresponding
   parameter is unconstrained.  If numeric, the corresponding
@@ -73,22 +74,19 @@ normalmixMMlc  (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   is unconstrained, the second is fixed at zero, and the third and forth
   are constrained to be equal and opposite in sign.
   Note: if there are no linear constraints for the variances, it is
-  more efficient to use directly \code{\link{mvnormalmixEM}}.}
+  more efficient to use directly \code{\link{normalmixEM}}.}
   
-  \item{mean.lincstr}{\eqn{k\times p}
-  	  matrix \eqn{M} in the linear constraint for the means
+  \item{mean.lincstr}{Matrix \eqn{M} \eqn{(k,p)} in the linear constraint for the means
   	equation \eqn{\mu = M \beta + C}, with \eqn{p \le k}.}
 
-  \item{mean.constant}{\eqn{k}-vector of constants \eqn{C} 
+  \item{mean.constant}{Vector of \eqn{k} constants \eqn{C} 
   			in the linear constraint for the means
   			equation \eqn{\mu = M \beta + C}.}
 
-  \item{var.lincstr}{\eqn{k\times q}
-  	  matrix \eqn{A} in the linear constraint for the
-  	  inverse variances equation \eqn{\pi = A \gamma}, 
-  	with \eqn{q \le k}.}
+  \item{var.lincstr}{Matrix \eqn{A} \eqn{(k,q)} in the linear constraint for the
+  	  inverse variances equation \eqn{\pi = A \gamma}, with \eqn{q \le k}.}
   
-  	\item{gparam}{\eqn{q}-vector of starting values
+  	\item{gparam}{Vector of \eqn{q} starting values
   		for the \eqn{\gamma} parameter in the
   	  linear constraint for the inverse variances.
   	  This parameter is required.}
@@ -134,18 +132,18 @@ normalmixMMlc  (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   \item{ft}{A character vector giving the name of the function.}
 }
 \seealso{
-  \code{\link{mvnormalmixEM}}, \code{\link{normalmixEM2comp}}
+ \code{\link{normalmixEM}}, \code{\link{mvnormalmixEM}}, \code{\link{normalmixEM2comp}}
 }
 \references{
   \itemize{
   \item McLachlan, G. J. and Peel, D. (2000) \emph{Finite Mixture Models}, 
-  John Wiley \& Sons, Inc.
+  John Wiley & Sons, Inc.
   \item Meng, X.-L. and Rubin, D. B. (1993) Maximum Likelihood Estimation
   Via the ECM Algorithm:  A General Framework, \emph{Biometrika} 80(2):
   267-278.
-  \item Chauveau, D. and Hunter, D.R. (2011)
+  \item Chauveau, D. and Hunter, D.R. (2013)
   	ECM and MM algorithms for mixtures with constrained parameters,
-  	\emph{HAL preprint number ???}.
+  	\emph{preprint \url{http://hal.archives-ouvertes.fr/hal-00625285}}.
   \item Thomas, H., Lohaus, A., and Domsch, H. (2011), 
   	Extensions of Reliability Theory, in 
   	Nonparametric Statistics and Mixture Models: A Festschrift in
@@ -153,14 +151,45 @@ normalmixMMlc  (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   	pp. 309-316.
   }
 }
+
+
+\author{Didier Chauveau}
+
+
 \examples{
-##Analyzing the Habituation data From Thomas et al (2011)
-## with a 3-component mixture of normals with linear constraints.
+## Analyzing synthetic data as in the tau equivalent model  
+## From Thomas et al (2011), see also Chauveau and Hunter (2013)
+## a 3-component mixture of normals with linear constraints.
+lbd <- c(0.6,0.3,0.1); m <- length(lbd)
+sigma <- sig0 <- sqrt(c(1,9,9))
+# means constaints mu = M beta
+M <- matrix(c(1,1,1,0,1,-1), 3, 2)
+beta <- c(1,5) # unknown constained mean
+mu0 <- mu <- as.vector(M \%*\% beta)
+# linear constraint on the inverse variances pi = A.g
+A <- matrix(c(1,1,1,0,1,0), m, 2, byrow=TRUE)
+iv0 <- 1/(sig0^2)
+g0 <- c(iv0[2],iv0[1] - iv0[2]) # gamma^0 init 
 
-data(Habituationdata)
-attach(Habituationdata)
-
-# to be continued...
+# simulation and EM fits
+set.seed(40); n=100; x <- rnormmix(n,lbd,mu,sigma)
+s <- normalmixEM(x,mu=mu0,sigma=sig0) # plain EM
+# EM with var and mean linear constraints
+sc <- normalmixMMlc(x, lambda=lbd, mu=mu0, sigma=sig0,
+					mean.lincstr=M, var.lincstr=A, gparam=g0)
+# plot and compare both estimates
+dnormmixt <- function(t, lam, mu, sig){
+	m <- length(lam); f <- 0
+	for (j in 1:m) f <- f + lam[j]*dnorm(t,mean=mu[j],sd=sig[j])
+	f}
+t <- seq(min(x)-2, max(x)+2, len=200)
+hist(x, freq=FALSE, col="lightgrey", 
+		ylim=c(0,0.3), ylab="density",main="")
+lines(t, dnormmixt(t, lbd, mu, sigma), col="darkgrey", lwd=2) # true
+lines(t, dnormmixt(t, s$lambda, s$mu, s$sigma), lty=2) 
+lines(t, dnormmixt(t, sc$lambda, sc$mu, sc$sigma), col=1, lty=3)
+legend("topleft", c("true","plain EM","constr EM"), 
+	col=c("darkgrey",1,1), lty=c(1,2,3), lwd=c(2,1,1))
 }
 
 \keyword{file}
