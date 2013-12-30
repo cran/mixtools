@@ -37,7 +37,7 @@ data(NOdata)
 attach(NOdata)
 set.seed(100)
 em.out <- regmixEM(Equivalence, NO, arbvar = FALSE)
-out.bs <- boot.se(em.out, B = 15, arbvar = FALSE)
+out.bs <- boot.se(em.out, B = 10, arbvar = FALSE)
 out.bs
 
 }

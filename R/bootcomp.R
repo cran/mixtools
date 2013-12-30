@@ -1,4 +1,4 @@
-boot.comp=function (y, x = NULL, N = NULL, max.comp = 2, B = 100, sig = 0.05, 
+boot.comp <- function (y, x = NULL, N = NULL, max.comp = 2, B = 100, sig = 0.05, 
     arbmean = TRUE, arbvar = TRUE, mix.type = c("logisregmix", 
         "multmix", "mvnormalmix", "normalmix", "poisregmix", 
         "regmix", "regmix.mixed", "repnormmix"), hist = TRUE, 
@@ -476,12 +476,12 @@ boot.comp=function (y, x = NULL, N = NULL, max.comp = 2, B = 100, sig = 0.05,
                   else {
                     if (arbvar == FALSE) {
                       y.sim = sapply(1:length(y), function(i) rnorm(1, 
-                        mean = H0.fit$mu[(wt[, i] == 1)], 
+                        mean = H0.fit$mu[i, (wt[, i] == 1)], 
                         sd = H0.fit$sigma))
                     }
                     else {
                       y.sim = sapply(1:length(y), function(i) rnorm(1, 
-                        mean = H0.fit$mu[(wt[, i] == 1)], 
+                        mean = H0.fit$mu[i, (wt[, i] == 1)], 
                         sd = H0.fit$sigma[wt[, i] == 1]))
                     }
                   }
@@ -590,10 +590,13 @@ boot.comp=function (y, x = NULL, N = NULL, max.comp = 2, B = 100, sig = 0.05,
                 while (j < B) {
                   j = j + 1
                   wt = rmultinom(nrow(y), size = 1, prob = H0.fit$lambda)
-                  y.sim = t(sapply(1:nrow(y), function(i) rmultinom(1, 
-                    size = n.i[i], prob = H0.fit$theta[(wt[, 
+#                  y.sim = t(sapply(1:nrow(y), function(i) rmultinom(1, 
+#                    size = n.i[i], prob = H0.fit$theta[(wt[, 
+#                      i] == 1), ])))
+                  new.y.sim = t(sapply(1:nrow(y), function(i) rmultinom(1, 
+                    size = n.i, prob = H0.fit$theta[(wt[, 
                       i] == 1), ])))
-                  new.y.sim = 0
+#                  new.y.sim = 0
                   em.out.0 = try(multmixEM(y = new.y.sim, k = i, 
                     ...), silent = TRUE)
                   em.out.1 = try(multmixEM(y = new.y.sim, k = (i + 
