@@ -65,7 +65,7 @@ segregmixEM(y, x, lambda = NULL, beta = NULL, sigma = NULL,
 \code{\link{regmixEM}}
 }
 \references{
-  Young, D. S. (2013) Mixtures of Regressions with Changepoints, \emph{Statistics and Computing} 
+  Young, D. S. (2014) Mixtures of Regressions with Changepoints, \emph{Statistics and Computing} 
   \bold{to appear}.
 }
 \note{
