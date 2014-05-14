@@ -65,8 +65,7 @@ segregmixEM(y, x, lambda = NULL, beta = NULL, sigma = NULL,
 \code{\link{regmixEM}}
 }
 \references{
-  Young, D. S. (2014) Mixtures of Regressions with Changepoints, \emph{Statistics and Computing} 
-  \bold{to appear}.
+  Young, D. S. (2014) Mixtures of Regressions with Changepoints, \emph{Statistics and Computing}, \bold{24(2)}, 265--281.
 }
 \note{
 As of version 0.4.6, this more general function has replaced the now defunct \code{regmixEM.chgpt} and associated internal functions.

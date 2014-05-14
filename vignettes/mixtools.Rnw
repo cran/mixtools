@@ -85,7 +85,7 @@
 %% in the following format:
 \Address{
 Didier Chauveau\\
-Laboratoire MAPMO - UMR 6628 - F\'ed\'eration Denis Poisson\\
+Laboratoire MAPMO - UMR 7349 - F\'ed\'eration Denis Poisson\\
 Universit\'e d'Orl\'eans\\
 BP 6759, 45067 Orl\'eans cedex 2, FRANCE.\\
 E-mail: \email{didier.chauveau@univ-orleans.fr} \\

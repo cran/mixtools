@@ -476,12 +476,12 @@ boot.comp <- function (y, x = NULL, N = NULL, max.comp = 2, B = 100, sig = 0.05,
                   else {
                     if (arbvar == FALSE) {
                       y.sim = sapply(1:length(y), function(i) rnorm(1, 
-                        mean = H0.fit$mu[i, (wt[, i] == 1)], 
+                        mean = H0.fit$mu[(wt[, i] == 1)], 
                         sd = H0.fit$sigma))
                     }
                     else {
                       y.sim = sapply(1:length(y), function(i) rnorm(1, 
-                        mean = H0.fit$mu[i, (wt[, i] == 1)], 
+                        mean = H0.fit$mu[(wt[, i] == 1)], 
                         sd = H0.fit$sigma[wt[, i] == 1]))
                     }
                   }

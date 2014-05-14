@@ -1,9 +1,9 @@
-be227872037784ad7f4f61f35a91b866 *DESCRIPTION
+1b340eb632bbf8ea7cb45300a3095199 *DESCRIPTION
 b9b8b18a61b41298e58c7a6d6d6832ae *NAMESPACE
-5c7198194f68556de6b77d6a0f8097f1 *NEWS
+b3782c2d4b520166366e97961faac60e *NEWS
 7bc970dd52130215d463c8b97013e4a3 *R/FDR_spEM.R
 13dd98fd3d2a18d733dc7c1bb00cbd4a *R/augx.R
-f1fcbfd2d1d53240538a3900e2b7e9bd *R/bootcomp.R
+e61e4cdf3da986462083ca2adb9ec4c9 *R/bootcomp.R
 38e1440e139a165151d224284a45e86b *R/bootse.R
 99dbcce1ed200436d59d035818a844da *R/compcdf.R
 e2442e00a19de3f3c7d1b2938e61bc2f *R/ddirichlet.R
@@ -91,8 +91,8 @@ f4d36947145afcfdf9e30a29e3e1a9eb *data/NOdata.RData
 6cd786ef84b29976ad2c0aafea83129e *data/tonedata.RData
 81ed8cd286158732e9ca35685af628a9 *inst/CITATION
 e8ddaa58fc5d17227fc60f71f885271f *inst/doc/mixtools.R
-f75fa13d404d4c667546940853ac814c *inst/doc/mixtools.Rnw
-de117f07c4c4b27e86aa4c1414d1e0d8 *inst/doc/mixtools.pdf
+0c0bc5d0703a37dfa1124516a986a143 *inst/doc/mixtools.Rnw
+e6c05085cb7be714c812f3c2f7a600d7 *inst/doc/mixtools.pdf
 c297fde137d94e6a31727fe8981297c9 *man/CO2data.Rd
 a07ffa6092f579070260a585852c0667 *man/Habituationdata.Rd
 77a4dd3afd03f955b9d6d2f3ef376f7b *man/NOdata.Rd
@@ -154,7 +154,7 @@ c29479fa11b7586ff76bb550e738be68 *man/repnormmixmodel.sel.Rd
 283ccd2e22e6bc187d3b412eb3aa1859 *man/rmvnorm.Rd
 8d5d09c74c26bda2196fcb17cecf4f07 *man/rmvnormmix.Rd
 6c10958f200a83428bb5648c3454e2ef *man/rnormmix.Rd
-c0f495f0704cd33b4f8c55d928a7b50f *man/segregmixEM.Rd
+c13dd8b7b8df7f76f61ed4bd76a96f22 *man/segregmixEM.Rd
 61f993cbb217ef0ba2f36c258852e83d *man/spEM.Rd
 a153dd396a846a291b6daed95f97bda4 *man/spEMsymloc.Rd
 df04b145c354efa76a5c7686d0c60099 *man/spEMsymlocN01.Rd
@@ -180,5 +180,5 @@ c0841c25090c2cc258b4974369238512 *src/normpost.c
 be44205ac88c111860311fde52e4d859 *src/npMSL.c
 76b054fa664e4c8fa5c6dcb6fb956b91 *src/sd.c
 9f56ca76cc30332bda95b27f8ece61bd *src/z.c
-f75fa13d404d4c667546940853ac814c *vignettes/mixtools.Rnw
+0c0bc5d0703a37dfa1124516a986a143 *vignettes/mixtools.Rnw
 e5c863f2c48e1fe3edde3fff78763a18 *vignettes/mixtools.bib
