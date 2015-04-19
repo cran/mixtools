@@ -36,8 +36,8 @@ plotFDR (post1, post2 = NULL, lg1 = "FDR 1", lg2 = NULL, title = NULL,
 \references{
 	   \itemize{
 	\item Chauveau, D., Saby, N., Orton, T. G., Lemercier B., Walter, C. and Arrouys, D.
-	Large-scale simultaneous hypothesis testing in soil monitoring:
-	A semi-parametric mixture approach, preprint (2013).
+	Large-scale simultaneous hypothesis testing in monitoring carbon content 
+  from French soil database -- A semi-parametric mixture approach, Geoderma 219-220 (2014), 117-124.
 	}
 }
 

@@ -1,5 +1,7 @@
 \documentclass[nojss]{jss}
-\usepackage{amsmath, amssymb, graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+%% need no \usepackage{Sweave.sty}
 
 %\VignetteIndexEntry{mixtools for mixture models} 
 
@@ -121,6 +123,7 @@ E-mail:  \email{dsy109@psu.edu}
 
 
 \begin{document}
+\SweaveOpts{concordance=FALSE}
 
 %% include your article here, just as usual
 %% Note that you should use the \pkg{}, \proglang{} and \code{} commands.
@@ -931,7 +934,7 @@ for (mc in 1:S) {
      for (k in 1:r) {
      ISE[j, k] <- ISE[j, k] + ise.npEM(a, j, k, dnorm,
          lower = mu[j, k] - 5, upper = mu[j, k] + 5, plots = FALSE,
-         mean = mu[j, k], sd = sigma[j, k])$value
+         mean = mu[j, k], sd = sigma[j, k])$value #$
     }
   }
 }
@@ -955,7 +958,7 @@ plot(a)
 
 <<gauss3rm, echo=FALSE, results=hide>>=
 pdf("gauss3rm.pdf", paper="special", width=10, height=5)
-par(mfrow=c(1,3))
+par(mfrow=c(1,3), ask=F)
 plot(a)
 dev.off()
 @
@@ -1214,7 +1217,11 @@ groups could clarify potential development paths of lower GNP countries.
 \subsection{EM algorithms for mixtures of regressions}
 
 A standard EM algorithm, as described in Section~\ref{section:EM}, may
-be used to find a local maximum of the likelihood surface.  The E-step
+be used to find a local maximum of the likelihood surface.  
+\citet{deveaux1989} describes EM algorithms for mixtures of
+regressions in more detail, including proposing a method for
+choosing a starting point in the parameter space.
+The E-step
 is the same as for any finite mixture model EM algorithm; i.e., the
 $p_{ij}^{(t)}$ values are updated according to equation
 (\ref{posteriors})---or, in reality, equation
@@ -1417,13 +1424,13 @@ specified in \code{regmixEM.loc} with \code{kern.l = "Beta"} and
 specify with \code{kernl.h = 20}.
 
 For this implementation of the IGLE algorithm, we set the parameter
-estimates obtained from the mixture of regressions EM algorithm as
+estimates and posterior probability estimates 
+obtained from the mixture of regressions EM algorithm as
 starting values for $\hat{\vec{\beta}}_{1}$, $\hat{\vec{\beta}}_{2}$,
-$\hat{\sigma}_{1}$, and $\hat{\sigma}_{2}$, and set the starting values
-for $\lambda(x_{i})$ to be 0.5 for all $x_{i}$.
+$\hat{\sigma}_{1}$, $\hat{\sigma}_{2}$, and $\lambda(x_{i})$.
 <<CO2igle>>=
 CO2igle <- regmixEM.loc(CO2, GNP, beta = CO2reg$beta, sigma = CO2reg$sigma,
-                        lambda = matrix(.5, 28, 2), kern.l = "Beta",
+                        lambda = CO2reg$posterior, kern.l = "Beta",
                         kernl.h = 20, kernl.g = 3)
 @
 

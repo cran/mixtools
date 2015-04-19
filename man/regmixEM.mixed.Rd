@@ -72,6 +72,9 @@ regmixEM.mixed(y, x, w = NULL, sigma = NULL, arb.sigma = TRUE,
 \references{
   Xu, W. and Hedeker, D. (2001) A Random-Effects Mixture Model for Classifying Treatment Response in
   Longitudinal Clinical Trials, \emph{Journal of Biopharmaceutical Statistics}, \bold{11(4)}, 253--273.
+
+  Young, D. S. and Hunter, D. R. (2015) Random Effects Regression Mixtures for Analyzing Infant Habituation,
+  \emph{Journal of Applied Statistics}, to appear.
 }
 \examples{
 ## EM output for simulated data from 2-component mixture of random effects.

@@ -63,7 +63,7 @@ repnormmixEM(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
 
 data(Waterdata)
 set.seed(100)
-water <- t(as.matrix(Waterdata))
+water <- t(as.matrix(Waterdata[,3:10]))
 em.out <- repnormmixEM(water, k = 2, verb = TRUE, epsilon = 1e-03)
 em.out
 }

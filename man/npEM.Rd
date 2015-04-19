@@ -88,23 +88,23 @@ npEM(x, mu0, blockid = 1:ncol(x),
 }
 \references{
    \itemize{
-   \item Benaglia, T., Chauveau, D., and Hunter, D. R., An EM-like algorithm
+   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009), An EM-like algorithm
    for semi- and non-parametric estimation in multivariate mixtures, 
-   Journal of Computational and Graphical Statistics, 18, 505-526, 2009.
+   Journal of Computational and Graphical Statistics, 18, 505-526.
    
-   \item Benaglia, T., Chauveau, D., Hunter, D. R., and Young, D.
+   \item Benaglia, T., Chauveau, D., Hunter, D. R., and Young, D. (2009),
 	mixtools: An R package for analyzing finite mixture models.
-	Journal of Statistical Software, 32(6):1-29, 2009.
+	Journal of Statistical Software, 32(6):1-29.
 
-   \item Benaglia, T., Chauveau, D. and Hunter, D.R.
- 	Bandwidth Selection in an EM-like algorithm for nonparametric multivariate mixtures.
-	Nonparametric Statistics and Mixture Models: A Festschrift in
+   \item Benaglia, T., Chauveau, D. and Hunter, D.R. (2011),
+   Bandwidth Selection in an EM-like algorithm for nonparametric multivariate mixtures.
+  Nonparametric Statistics and Mixture Models: A Festschrift in
   	Honor of Thomas P. Hettmansperger. World Scientific Publishing Co., 
-  	pages 15-27, 2011.
+  	pages 15-27.
 
-   \item Bordes, L., Chauveau, D., and Vandekerkhove, P.,
+   \item Bordes, L., Chauveau, D., and Vandekerkhove, P. (2007),
    An EM algorithm for a semiparametric mixture model, 
-   Computational Statistics and Data Analysis, 51: 5429-5443, 2007.
+   Computational Statistics and Data Analysis, 51: 5429-5443.
    }
 }
 
@@ -116,14 +116,14 @@ npEM(x, mu0, blockid = 1:ncol(x),
 data(Waterdata)
 set.seed(100)
 \dontrun{
-a <- npEM(Waterdata, mu0=3, bw=4) # Assume indep but not iid
+a <- npEM(Waterdata[,3:10], mu0=3, bw=4) # Assume indep but not iid
 plot(a) # This produces 8 plots, one for each coordinate
 }
 
 ## Next, same thing but pairing clock angles that are directly opposite one
 ## another (1:00 with 7:00, 2:00 with 8:00, etc.)
 \dontrun{
-b <- npEM(Waterdata, mu0=3, blockid=c(4,3,2,1,3,4,1,2), bw=4) # iid in pairs
+b <- npEM(Waterdata[,3:10], mu0=3, blockid=c(4,3,2,1,3,4,1,2), bw=4) # iid in pairs
 plot(b) # Now only 4 plots, one for each block
 }
 }

@@ -33,7 +33,7 @@ repnormmixmodel.sel(x, k = 2, ...)
 ## Assessing the number of components for the water-level task data set.
 
 data(Waterdata)
-water<-t(as.matrix(Waterdata))
+water<-t(as.matrix(Waterdata[,3:10]))
 set.seed(100)
 out <- repnormmixmodel.sel(water, k = 3, epsilon = 1e-01)
 out

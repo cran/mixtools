@@ -1,3 +1,16 @@
+Changes in mixtools 1.0.3
+============================
+* 2015-04-17
+
+* Updated the maintainer's contact e-mail.
+
+* Added a new npMSL() version, with k-fold cross-validation.
+
+* Fixed some errors in the examples due to change in format to the Waterdata dataset.
+
+* Updated some references.
+
+
 Changes in mixtools 1.0.2
 ============================
 * 2014-05-13

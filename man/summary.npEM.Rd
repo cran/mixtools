@@ -49,10 +49,10 @@
 data(Waterdata)
 set.seed(100)
 \dontrun{
-a <- npEM(Waterdata, 3, bw=4) # Assume indep but not iid
+a <- npEM(Waterdata[,3:10], 3, bw=4) # Assume indep but not iid
 summary(a) 
 
-b <- npEM(Waterdata, 3, bw=4, blockid=rep(1,8)) # Now assume iid
+b <- npEM(Waterdata[,3:10], 3, bw=4, blockid=rep(1,8)) # Now assume iid
 summary(b)
 }
 }

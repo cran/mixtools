@@ -16,7 +16,7 @@ multmixEM <- function (y, lambda = NULL, theta = NULL, k = 2, maxit = 10000,
   mustrestart <- FALSE
 
   llconstant <- sum(lgamma(r+1)) - sum(lgamma(y+1))
-  while (restarts < 15) {
+  while (restarts < 50) {
     ll <- NULL
     iter <- 0
     diff <- epsilon+1 # to ensure entering main EM loop
@@ -30,6 +30,11 @@ multmixEM <- function (y, lambda = NULL, theta = NULL, k = 2, maxit = 10000,
         PACKAGE = "mixtools")
     post <- matrix(z$post, ncol=k)
     newll <- z$loglik
+	tmp.post <- (post==0)
+	if(any(apply(tmp.post,2,sum)==n)){
+		diff <- epsilon
+		mustrestart <- TRUE
+	}
     while ((iter < maxit) && diff > epsilon) {  # main EM loop
       iter <- iter + 1
       oldll <- newll

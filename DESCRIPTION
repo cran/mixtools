@@ -1,9 +1,9 @@
 Package: mixtools
-Version: 1.0.2
-Date: May 14 2014
-Title: Tools for analyzing finite mixture models
+Version: 1.0.3
+Date: 2015-04-18
+Title: Tools for Analyzing Finite Mixture Models
 Authors@R: c(person("Derek", "Young", role = c("aut", "cre"),
-	email = "dsy109@stat.psu.edu"),
+	email = "derek.young@uky.edu"),
 	person("Tatiana", "Benaglia", role = "aut"),
 	person("Didier", "Chauveau", role = "aut"),
 	person("David", "Hunter", role = "aut"),
@@ -11,10 +11,10 @@ Authors@R: c(person("Derek", "Young", role = c("aut", "cre"),
 	person("Thomas", "Hettmansperger", role = "ctb"),
 	person("Hoben", "Thomas", role = "ctb"),
 	person("Fengjuan", "Xuan", role = "ctb"))
-Depends: R (>= 2.10.0), boot, MASS, segmented
+Depends: R (>= 2.10.0), boot, MASS, segmented, stats
 Description: A collection of R functions for analyzing finite mixture models.  This package is based upon work supported by the National Science Foundation under Grant No. SES-0518772.
 License: GPL (>= 2)
-Packaged: 2014-05-14 00:49:51 UTC; dsy109
+Packaged: 2015-04-18 15:40:02 UTC; dsy109
 Author: Derek Young [aut, cre],
   Tatiana Benaglia [aut],
   Didier Chauveau [aut],
@@ -23,7 +23,7 @@ Author: Derek Young [aut, cre],
   Thomas Hettmansperger [ctb],
   Hoben Thomas [ctb],
   Fengjuan Xuan [ctb]
-Maintainer: Derek Young <dsy109@stat.psu.edu>
+Maintainer: Derek Young <derek.young@uky.edu>
 NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2014-05-14 07:27:27
+Date/Publication: 2015-04-19 07:59:23

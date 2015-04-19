@@ -25,7 +25,11 @@ at a specified vector of points.
    \itemize{
    \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009), An EM-like algorithm
    for semi- and non-parametric estimation in multivariate mixtures, 
-   Journal of Computational and Graphical Statistics (to appear).
+   Journal of Computational and Graphical Statistics, 18, 505-526.
+   
+   \item Benaglia, T., Chauveau, D., Hunter, D. R., and Young, D. (2009),
+  mixtools: An R package for analyzing finite mixture models.
+	Journal of Statistical Software, 32(6):1-29.
    }
 }
 \examples{

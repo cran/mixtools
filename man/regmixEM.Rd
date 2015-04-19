@@ -58,6 +58,9 @@ regmixEM(y, x, lambda = NULL, beta = NULL, sigma = NULL, k = 2,
 \code{\link{regcr}}, \code{\link{regmixMH}}
 }
 \references{
+de Veaux, R. D. (1989), Mixtures of Linear Regressions,
+  \emph{Computational Statistics and Data Analysis} 8, 227-245.
+
   Hurn, M., Justel, A. and Robert, C. P. (2003) Estimating Mixtures of Regressions, \emph{Journal 
   of Computational and Graphical Statistics} \bold{12(1)}, 55--79.
   

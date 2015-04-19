@@ -4,8 +4,9 @@
 \usage{
 npMSL(x, mu0, blockid = 1:ncol(x), 
      bw = bw.nrd0(as.vector(as.matrix(x))), samebw = TRUE, 
-     h = bw, eps = 1e-8, 
-     maxiter = 500, ngrid=200, verb = TRUE)
+     bwmethod = "S", h = bw, eps = 1e-8, 
+     maxiter=500, bwiter = maxiter, nbfold = NULL,
+     ngrid=200, post=NULL, verb = TRUE)
 }
 
 \description{
@@ -33,16 +34,28 @@ npMSL(x, mu0, blockid = 1:ncol(x),
   density estimates is produced for each column of \eqn{x}.  On the other hand,
   if \code{blockid=rep(1,ncol(x))}, then the coordinates in each row 
   are assumed conditionally i.i.d.}
+  
   \item{bw}{Bandwidth for density estimation, equal to the standard deviation 
   of the kernel density.  By default, a simplistic application of the 
   default \code{\link{bw.nrd0}} 
   bandwidth used by \code{\link{density}} to the entire dataset.}
+  
   \item{samebw}{Logical:  If \code{TRUE}, use the same bandwidth for
   each iteration and for each component and block.  If \code{FALSE}, 
   use a separate bandwidth for each component and block, and update
-  this bandwidth at each iteration of the algorithm using a suitably
+  this bandwidth at each iteration of the algorithm 
+  until \code{bwiter} is reached (see below). Two adaptation methods are provided, 
+  see \code{bwmethod} below.}
+  
+  \item{bwmethod}{Define the adaptive bandwidth strategy when \code{samebw = FALSE}, in which case
+  the bandwidth depends on each component, block, and iteration of the algorithm.
+  If set to "S" (the default), adaptation is done using a suitably
   modified \code{\link{bw.nrd0}} method as described in 
-  Benaglia et al (2009b).}
+  Benaglia et al (2011).
+  If set to "CV", an adaptive \eqn{k}-fold Cross Validation method is applied,
+  as described in Chauveau et al (2014), where \code{nbfold} is the number of subsamples.
+  This corresponds to a Leave-\eqn{[n/nbfold]}-Out CV.
+  }
   \item{h}{Alternative way to specify the bandwidth, to provide backward 
   compatibility.}
   \item{eps}{Tolerance limit for declaring algorithm convergence.  Convergence
@@ -53,9 +66,18 @@ npMSL(x, mu0, blockid = 1:ncol(x),
   \item{maxiter}{The maximum number of iterations allowed, convergence
   may be declared before \code{maxiter} iterations (see \code{eps} above).}
   
+  \item{bwiter}{The maximum number of iterations allowed for adaptive bandwidth stage,
+  when \code{samebw = FALSE}. If set to \code{0}, then the initial bandwidth matrix is used without adaptation.}
+
+  \item{nbfold}{A parameter passed to the internal function \code{wbs.kCV}, which controls the weighted bandwidth selection by k-fold cross-validation.}
+
+  
   \item{ngrid}{Number of points in the discretization of the intervals over which are approximated the (univariate) integrals for non linear smoothing of the log-densities, as required in the E step of the npMSL algorithm,
   see Levine et al (2011).}
 
+  \item{post}{If non-NULL, an \eqn{n\times m}{n x m} matrix specifying the initial 
+  posterior probability vectors for each of the observations, i.e., the
+  initial values to start the EM-like algorithm.}
   \item{verb}{If TRUE, print updates for every iteration of the algorithm as
   it runs}
 }
@@ -88,22 +110,25 @@ npMSL(x, mu0, blockid = 1:ncol(x),
 \code{\link{spEM}}, \code{\link{plotseq.npEM}}
 }
 \references{
-   \itemize{
-   \item Levine, M., Hunter, D. and Chauveau, D. (2011),
-   Maximum Smoothed Likelihood for Multivariate Mixtures,
-   Biometrika 98(2): 403-416.
-   	   
-   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009a), An EM-like algorithm
+   \itemize{   	   
+   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009), An EM-like algorithm
    for semi- and non-parametric estimation in multivariate mixtures, 
    Journal of Computational and Graphical Statistics, 18, 505-526.
 
-   \item Benaglia, T., Chauveau, D., and Hunter, D. R. (2009b), 
-   Bandwidth Selection in an EM-like algorithm for nonparametric 
-   multivariate mixtures, Technical Report.
+   \item Benaglia, T., Chauveau, D. and Hunter, D.R. (2011),
+   Bandwidth Selection in an EM-like algorithm for nonparametric multivariate mixtures.
+	Nonparametric Statistics and Mixture Models: A Festschrift in
+  	Honor of Thomas P. Hettmansperger. World Scientific Publishing Co., 
+  	pages 15-27.
+
    
-   \item Bordes, L., Chauveau, D., and Vandekerkhove, P. (2007),
-   An EM algorithm for a semiparametric mixture model, 
-   Computational Statistics and Data Analysis, 51: 5429-5443.
+   \item Chauveau D., Hunter D. R. and Levine M. (2014),
+  Semi-Parametric Estimation for Conditional Independence Multivariate Finite Mixture Models.
+  Preprint (under revision).
+    
+  \item Levine, M., Hunter, D. and Chauveau, D. (2011),
+   Maximum Smoothed Likelihood for Multivariate Mixtures,
+   Biometrika 98(2): 403-416.
    }
 }
 
@@ -116,8 +141,8 @@ data(Waterdata)
 blockid <- c(4,3,2,1,3,4,1,2) # see Benaglia et al (2009a)
 
 \dontrun{
-a <- npEM(Waterdata, mu0=3, blockid=blockid, bw=4)  # npEM solution
-b <- npMSL(Waterdata, mu0=3, blockid=blockid, bw=4) # smoothed version
+a <- npEM(Waterdata[,3:10], mu0=3, blockid=blockid, bw=4)  # npEM solution
+b <- npMSL(Waterdata[,3:10], mu0=3, blockid=blockid, bw=4) # smoothed version
 
 # Comparisons on the 4 default plots, one for each block
 par(mfrow=c(2,2))

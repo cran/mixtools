@@ -73,7 +73,7 @@ mult4 <- multmixEM (watermult, lambda = rep (1, 4) / 4, theta = theta4)
 
 
 ###################################################
-### code chunk number 10: mixtools.Rnw:572-578 (eval = FALSE)
+### code chunk number 10: mixtools.Rnw:575-581 (eval = FALSE)
 ###################################################
 ## cdf3 <- compCDF(Waterdata, mult3$posterior, lwd=2, lab=c(7, 5, 7),
 ##                 xlab="Angle in degrees", ylab="Component CDFs",
@@ -190,7 +190,7 @@ for (mc in 1:S) {
      for (k in 1:r) {
      ISE[j, k] <- ISE[j, k] + ise.npEM(a, j, k, dnorm,
          lower = mu[j, k] - 5, upper = mu[j, k] + 5, plots = FALSE,
-         mean = mu[j, k], sd = sigma[j, k])$value
+         mean = mu[j, k], sd = sigma[j, k])$value #$
     }
   }
 }
@@ -214,7 +214,7 @@ summary(a)
 ### code chunk number 22: gauss3rm
 ###################################################
 pdf("gauss3rm.pdf", paper="special", width=10, height=5)
-par(mfrow=c(1,3))
+par(mfrow=c(1,3), ask=F)
 plot(a)
 dev.off()
 
@@ -330,7 +330,7 @@ dev.off()
 
 
 ###################################################
-### code chunk number 32: mixtools.Rnw:1275-1277
+### code chunk number 32: mixtools.Rnw:1282-1284
 ###################################################
 data("CO2data")
 attach(CO2data)
@@ -373,7 +373,7 @@ for(i in 1:2){
 ### code chunk number 37: CO2igle
 ###################################################
 CO2igle <- regmixEM.loc(CO2, GNP, beta = CO2reg$beta, sigma = CO2reg$sigma,
-                        lambda = matrix(.5, 28, 2), kern.l = "Beta",
+                        lambda = CO2reg$posterior, kern.l = "Beta",
                         kernl.h = 20, kernl.g = 3)
 
 

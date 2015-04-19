@@ -1,5 +1,6 @@
 #include <R.h>
 #include <Rmath.h>
+#define MAX(a,b) ((a) > (b) ? (a) : (b))
 
 /* In the npMSL algorithm (formerly NEMS), it is necessary to store 
    the values of each 
@@ -51,7 +52,7 @@ void npMSL_Estep(
   int i, j, k, ell, a;
   double sum, conv, xik, *fjl, two_h_squared =2*(*hh)*(*hh);
   double Delta = (grid[2]-grid[1]) / *hh / sqrt(2*3.14159265358979);
-  double t1;
+  double t1, expminus500=exp(-500);
   double epsi=1e-323;	/* smallest number; maybe machine-dependent ? */
   double epsi2=1e-100;	/* assumed small enough for cancelling log(0) */ 
  
@@ -70,16 +71,16 @@ void npMSL_Estep(
         xik=data[i + n*k];
         conv = 0.0;	
         for (a = 0; a<ngrid; a++) {  /* numerical int checking underflows */
-		t1 = exp(-(xik - grid[a])*(xik-grid[a])/two_h_squared);
+          t1 = MAX(expminus500, exp(-(xik-grid[a])*(xik-grid[a])/two_h_squared)); /* value of kernel */
 
-		if (fjl[a] > epsi) { /* no underflow pb */
-			conv += t1 * log(fjl[a]);
-		}
-		else if (t1 < epsi2) { /* assume kernel cancels log(0) part */
-			*nb_udfl +=1;  /* count underlow replaced by 0 */
-		}
-		else *nb_nan +=1; /* kernel *may* be not small enough ! */
-       }
+          if (fjl[a] > epsi) { /* no underflow pb */
+            conv += t1 * log(fjl[a]);
+          }
+          else if (t1 < epsi2) { /* assume kernel cancels log(0) part */
+            *nb_udfl +=1;  /* count underflow replaced by 0 */
+          }
+          else *nb_nan +=1; /* kernel *may* be not small enough ! */
+        }
         conv *= Delta; /* Delta is the normalizing constant */
         conv = exp(conv); /* conv now = Nf_{jb_k}(xik) */
         post[i + n*j] *= conv; /* numerator = lambda_j*prod_k Nf_{jb_k}(xik) */
@@ -119,7 +120,7 @@ void npMSL_Mstep(
     ) {
   int n=*nn, m=*mm, r=*rr, ngrid=*nngrid, B=*BB, i, j, k, ell, a;
   double sum, xik, *fjl, two_h_squared =2*(*hh)*(*hh);
-  double pij, gridpt;
+  double pij, gridpt, expminus500=exp(-500);
   double normconst = 0.39894228040143267794/ *hh; /* 0.39...=1/(sqrt(2*pi)) */
  
   for (j=0; j<m; j++) { 	/* for each component */
@@ -138,7 +139,7 @@ void npMSL_Mstep(
 	   for (i=0; i<n; i++) {
 	     xik = data[i + n*k];  /* n obs for coordinate k */
 	     pij = post[i + n*j];
-	     sum += pij * exp(-(xik - gridpt)*(xik-gridpt)/two_h_squared); 
+	     sum += pij * MAX(expminus500, exp(-(xik - gridpt)*(xik-gridpt)/two_h_squared)); 
            /* Numerator: Take p_{ij} 
 	      times the normal density at (x_{ik}-gridpt) */
            /* denom computed from n*lambda[j]*BlS[ell] 
@@ -146,8 +147,7 @@ void npMSL_Mstep(
 	   } /* for each i */
 	 }
 	} /* for each k belonging to block ell */
-        fjl[a] = normconst * sum / (n*lambda[j]*BlS[ell]) ; 
-		
+        fjl[a] = MAX(expminus500, normconst * sum / (n*lambda[j]*BlS[ell])) ; 
         /* Note that each fjl "density" should now be correctly normalized;
            normconst is the normalizing constant for a normal 
 	   kernel function */           
@@ -185,7 +185,7 @@ void npMSL_Estep_bw(
   /* two_h_squared =2*(*hh)*(*hh); */
   /* double Delta = (grid[2]-grid[1]) / *hh / sqrt(2*3.14159265358979);*/
   double gsq2pi = (grid[2]-grid[1]) / sqrt(2*3.14159265358979); 
-  double t1, Delta;
+  double t1, Delta, expminus500=exp(-500);
   double epsi=1e-323;	/* smallest number; maybe machine-dependent ? */
   double epsi2=1e-100;	/* assumed small enough for cancelling log(0) */ 
  
@@ -208,16 +208,16 @@ void npMSL_Estep_bw(
         Delta = gsq2pi / hjl;        
         conv = 0.0;	
         for (a = 0; a<ngrid; a++) {  /* numerical int checking underflows */
-		t1 = exp(-(xik - grid[a])*(xik-grid[a])/two_h_squared);
+          t1 = MAX(expminus500, exp(-(xik - grid[a])*(xik-grid[a])/two_h_squared));
 
-		if (fjl[a] > epsi) { /* no underflow pb */
-			conv += t1 * log(fjl[a]);
-		}
-		else if (t1 < epsi2) { /* assume kernel cancels log(0) part */
-			*nb_udfl +=1;  /* count underlow replaced by 0 */
-		}
-		else *nb_nan +=1; /* kernel *may* be not small enough ! */
-       }
+          if (fjl[a] > epsi) { /* no underflow pb */
+            conv += t1 * log(fjl[a]);
+          }
+          else if (t1 < epsi2) { /* assume kernel cancels log(0) part */
+            *nb_udfl +=1;  /* count underlow replaced by 0 */
+          }
+          else *nb_nan +=1; /* kernel *may* be not small enough ! */
+        }
         conv *= Delta; /* Delta is the normalizing constant */
         conv = exp(conv); /* conv now = Nf_{jb_k}(xik) */
         post[i + n*j] *= conv; /* numerator = lambda_j*prod_k Nf_{jb_k}(xik) */
@@ -254,7 +254,7 @@ void npMSL_Mstep_bw(
   int n=*nn, m=*mm, r=*rr, ngrid=*nngrid, B=*BB, i, j, k, ell, a;
   double sum, xik, *fjl; /* two_h_squared =2*(*hh)*(*hh); */
   double hjl, two_h_squared; /* adaptive bw depends on j and ell */
-  double pij, gridpt;
+  double pij, gridpt, expminus500=exp(-500);
   double invsq2pi = 0.39894228040143267794; /* 0.39...=1/(sqrt(2*pi)) */
   double normconst;
   /* normconst = 0.39894228040143267794/ *hh in the samebw case */
@@ -278,7 +278,7 @@ void npMSL_Mstep_bw(
 	   for (i=0; i<n; i++) {
 	   	 xik = data[i + n*k];  /* n obs for coordinate k */
 	   	 pij = post[i + n*j];
-	   	 sum += pij * exp(-(xik - gridpt)*(xik-gridpt)/two_h_squared); 
+	   	 sum += pij * MAX(expminus500, exp(-(xik - gridpt)*(xik-gridpt)/two_h_squared));
            /* Numerator: Take p_{ij} 
 	      times the normal density at (x_{ik}-gridpt) */
            /* denom += pij; obsolete: computed from n*lambda[j]*BlS[ell] 
@@ -286,7 +286,7 @@ void npMSL_Mstep_bw(
 	   	} /* for each i */
 	  }
 	} /* for each k belonging to block ell */
-        fjl[a] = normconst * sum / (n*lambda[j]*BlS[ell]) ; 
+        fjl[a] = MAX(expminus500, normconst * sum / (n*lambda[j]*BlS[ell])); 
 		
         /* Note that each fjl "density" should now be correctly normalized;
            normconst is the normalizing constant for a normal 

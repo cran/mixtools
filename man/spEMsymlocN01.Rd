@@ -48,7 +48,7 @@ spEMsymlocN01 (x, mu0 = 2, bw = bw.nrd0(x), h=bw, eps = 1e-8,
 	alternative hypothesis, with typically very small p-values and consequently
 	negative values for probit(p) data. This model only assumes
 	that these individuals come from an unspecified but symmetric density with a location parameter,
-	as in Bordes and Vandekerkhove (2010) and Chauveau et al. (2013).}
+	as in Bordes and Vandekerkhove (2010) and Chauveau et al. (2014).}
 
 \value{
 	\code{spEMsymlocN01} returns a list of class \code{spEMN01} with the following items:
@@ -75,9 +75,10 @@ spEMsymlocN01 (x, mu0 = 2, bw = bw.nrd0(x), h=bw, eps = 1e-8,
    Mathematical Methods of Statistics, 19(1):22-41
 	
 	\item Chauveau, D., Saby, N., Orton, T. G., Lemercier B., 
-		Walter, C. and Arrouys, D.
-	Large-scale simultaneous hypothesis testing in soil monitoring:
-	A semi-parametric mixture approach, preprint (2013).
+		Walter, C. and Arrouys, D. (2014)
+    Large-scale simultaneous hypothesis testing in monitoring carbon
+    content from french soil database: A semi-parametric mixture approach.
+    Geoderma 219-220 (2014): 117-124.
 	}
 }
 

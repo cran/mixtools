@@ -29,7 +29,7 @@
 \examples{
 data(Waterdata)
 set.seed(100)
-\dontrun{npEM(Waterdata, 3, bw=4, verb=FALSE) # Assume indep but not iid}
+\dontrun{npEM(Waterdata[,3:10], 3, bw=4, verb=FALSE) # Assume indep but not iid}
 }
 \keyword{file}
 
