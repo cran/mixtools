@@ -2,11 +2,11 @@
 \title{EM Algorithm for Mixtures of Univariate Normals}
 \alias{normalmixEM}
 \usage{
-normalmixEM (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, 
-             mean.constr = NULL, sd.constr = NULL,
-             epsilon = 1e-08, maxit = 1000, maxrestarts=20, 
-             verb = FALSE, fast=FALSE, ECM = FALSE,
-             arbmean = TRUE, arbvar = TRUE) 
+normalmixEM(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, 
+            mean.constr = NULL, sd.constr = NULL,
+            epsilon = 1e-08, maxit = 1000, maxrestarts=20, 
+            verb = FALSE, fast=FALSE, ECM = FALSE,
+            arbmean = TRUE, arbvar = TRUE) 
 }
 \description{
   Return EM algorithm output for mixtures of normal distributions.

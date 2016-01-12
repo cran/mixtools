@@ -31,7 +31,7 @@ multmixmodel.sel <- function (y, comps = NULL, ...)
         theta <- tmp$theta
         lambda <- tmp$lambda
       if (k!=1){
-      em = multmixEM(y, lambda = lambda, theta = theta, k = k)
+      em = multmixEM(y, lambda = lambda, theta = theta, k = k, ...)
         loglik = em$loglik
         lambda = em$lambda
         theta = em$theta

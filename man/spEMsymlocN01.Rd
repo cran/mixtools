@@ -11,8 +11,8 @@ FDR estimation on probit transform (\code{qnorm}) of p-values arising from multi
 
 
 \usage{
-spEMsymlocN01 (x, mu0 = 2, bw = bw.nrd0(x), h=bw, eps = 1e-8,
-			maxiter = 100, verbose = FALSE, plotf = FALSE)}
+spEMsymlocN01(x, mu0 = 2, bw = bw.nrd0(x), h=bw, eps = 1e-8,
+              maxiter = 100, verbose = FALSE, plotf = FALSE)}
 
 \arguments{
   \item{x}{A vector of length n consisting of the data, probit transform of pvalues, preferably sorted.}

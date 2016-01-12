@@ -74,7 +74,7 @@ regmixEM.mixed(y, x, w = NULL, sigma = NULL, arb.sigma = TRUE,
   Longitudinal Clinical Trials, \emph{Journal of Biopharmaceutical Statistics}, \bold{11(4)}, 253--273.
 
   Young, D. S. and Hunter, D. R. (2015) Random Effects Regression Mixtures for Analyzing Infant Habituation,
-  \emph{Journal of Applied Statistics}, to appear.
+  \emph{Journal of Applied Statistics}, \bold{42(7)}, 1421--1441.
 }
 \examples{
 ## EM output for simulated data from 2-component mixture of random effects.

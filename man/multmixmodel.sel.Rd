@@ -19,7 +19,7 @@ multmixmodel.sel(y, comps = NULL, ...)
   \item{comps}{Vector containing the numbers of components to consider.
     If NULL, this is set to be 1:(max possible), where (max possible) is
     floor((m+1)/2) and m is the minimum row sum of y.}
-  \item{...}{Additional arguments passed to \code{multmixEM}.}
+  \item{...}{Arguments passed to \code{multmixEM} that control convergence of the underlying EM algorithm.}
 }
 \value{
   \code{multmixmodel.sel} returns a table summarizing the AIC, BIC, CAIC, ICL, and log-likelihood

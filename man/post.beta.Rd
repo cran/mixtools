@@ -28,6 +28,10 @@ post.beta(y, x, p.beta, p.z)
 \seealso{
 \code{\link{regmixEM.mixed}}, \code{\link{plot.mixEM}}
 }
+\references{
+  Young, D. S. and Hunter, D. R. (2015) Random Effects Regression Mixtures for Analyzing Infant Habituation,
+  \emph{Journal of Applied Statistics}, \bold{42(7)}, 1421--1441.
+}
 \examples{
 ## EM output for simulated data from 2-component mixture of random effects.
 

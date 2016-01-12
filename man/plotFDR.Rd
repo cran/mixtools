@@ -12,14 +12,14 @@ Plot of the true FDR can be added if complete data are available
 (typically in simulation studies).}
 
 \usage{
-plotFDR (post1, post2 = NULL, lg1 = "FDR 1", lg2 = NULL, title = NULL, 
-		compH0 = 1, alpha = 0.1, complete.data = NULL, pctfdr = 0.3)
+plotFDR(post1, post2 = NULL, lg1 = "FDR 1", lg2 = NULL, title = NULL, 
+        compH0 = 1, alpha = 0.1, complete.data = NULL, pctfdr = 0.3)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{post1}{The posterior probabilities from objects such as the output
-  	from \code{\link{spEMsymlocN01}}.}
-  \item{post2}{A second object like \code{post1} if comparison is desired.}
+  \item{post1}{The matrix of posterior probabilities from objects such as the output
+  	from \code{\link{spEMsymlocN01}}. The rows need to be sorted by increasing pvalues.}
+  \item{post2}{A second object like \code{post1} if comparison is desired, also sorted by increasing pvalues.}
   \item{lg1}{Text describing the FDR estimate in \code{post1}.}
   \item{lg2}{Text describing the FDR estimate in \code{post2} if provided.}
   \item{title}{Plot title, a default is provided if \code{NULL}.}

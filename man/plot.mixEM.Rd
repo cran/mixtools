@@ -3,13 +3,12 @@
 \alias{plot.mixEM} 
 \usage{
 \method{plot}{mixEM}(x, whichplots = 1, 
-loglik = 1 \%in\% whichplots,
-density = 2 \%in\% whichplots,
-xlab1="Iteration", ylab1="Log-Likelihood",
-main1="Observed Data Log-Likelihood", col1=1, lwd1=2,
-xlab2=NULL, ylab2=NULL, main2=NULL, col2=NULL, 
-lwd2=2,
-alpha = 0.05, marginal = FALSE, ...)
+     loglik = 1 \%in\% whichplots,
+     density = 2 \%in\% whichplots,
+     xlab1="Iteration", ylab1="Log-Likelihood",
+     main1="Observed Data Log-Likelihood", col1=1, lwd1=2,
+     xlab2=NULL, ylab2=NULL, main2=NULL, col2=NULL, 
+     lwd2=2, alpha = 0.05, marginal = FALSE, ...)
 }
 
 \description{

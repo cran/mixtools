@@ -6,10 +6,10 @@
   Functions to compute weighted quantiles and the weighted interquartile range.
   }
 \usage{
-wquantile(wt=rep(1,length(x)), x, probs, already.sorted = FALSE, 
+wquantile(wt = rep(1,length(x)), x, probs, already.sorted = FALSE, 
           already.normalized = FALSE)
-wIQR(wt=rep(1,length(x)), x, already.sorted = FALSE, 
-          already.normalized = FALSE)
+wIQR(wt = rep(1,length(x)), x, already.sorted = FALSE, 
+     already.normalized = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

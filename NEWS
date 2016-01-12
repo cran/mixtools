@@ -1,3 +1,12 @@
+Changes in mixtools 1.0.4
+============================
+* 2016—01-11
+
+* Added mvnpEM() and some related functions, which are multivariate blocks extension to the npEM() function.
+
+* Updated some help files.
+
+
 Changes in mixtools 1.0.3
 ============================
 * 2015-04-17

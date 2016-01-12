@@ -3,12 +3,11 @@
 	with linear constraints}
 \alias{normalmixMMlc}
 \usage{
-normalmixMMlc  (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
-		mean.constr = NULL,
-	  	mean.lincstr = NULL, mean.constant = NULL,
-	  	var.lincstr = NULL, gparam = NULL,
-          	epsilon = 1e-08, maxit = 1000, maxrestarts=20, 
-          	verb = FALSE) 
+normalmixMMlc(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
+              mean.constr = NULL, mean.lincstr = NULL, 
+              mean.constant = NULL, var.lincstr = NULL, 
+              gparam = NULL, epsilon = 1e-08, maxit = 1000, 
+              maxrestarts=20, verb = FALSE) 
 }
 \description{
   Return EC-MM (see below) algorithm output for mixtures of normal distributions

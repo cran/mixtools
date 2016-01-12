@@ -3,10 +3,10 @@
 \alias{npMSL}
 \usage{
 npMSL(x, mu0, blockid = 1:ncol(x), 
-     bw = bw.nrd0(as.vector(as.matrix(x))), samebw = TRUE, 
-     bwmethod = "S", h = bw, eps = 1e-8, 
-     maxiter=500, bwiter = maxiter, nbfold = NULL,
-     ngrid=200, post=NULL, verb = TRUE)
+      bw = bw.nrd0(as.vector(as.matrix(x))), samebw = TRUE, 
+      bwmethod = "S", h = bw, eps = 1e-8, 
+      maxiter=500, bwiter = maxiter, nbfold = NULL,
+      ngrid=200, post=NULL, verb = TRUE)
 }
 
 \description{

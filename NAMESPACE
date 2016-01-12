@@ -16,11 +16,22 @@ S3method(density, npEM)
 S3method(density, spEM)
 S3method(plot, mixEM)
 S3method(plot, mixMCMC)
+S3method(plot, mvnpEM)
 S3method(plot, npEM)
 S3method(plot, spEM)
 S3method(plot, spEMN01)
 S3method(plotseq, npEM)
+S3method(print, mvnpEM)
 S3method(print, npEM)
+S3method(print, summary.mvnpEM)
 S3method(print, summary.npEM)
 S3method(summary, mixEM)
+S3method(summary, mvnpEM)
 S3method(summary, npEM)
+
+# Import from
+importFrom("grDevices", "chull")
+importFrom("graphics", "abline", "barplot", "hist", "layout",
+  "layout.show", "legend", "lines", "par", "plot", "points",
+  "segments", "title")
+importFrom("utils", "packageDescription", "tail")

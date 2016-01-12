@@ -3,7 +3,7 @@
 \alias{spEMsymloc}
 \usage{
 spEMsymloc(x, mu0, bw = bw.nrd0(x), h=bw, eps = 1e-8, maxiter = 100, 
-    stochastic = FALSE, verbose = FALSE)
+           stochastic = FALSE, verbose = FALSE)
 }
 
 \description{
