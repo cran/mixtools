@@ -9,7 +9,6 @@
 */
 void KDEsymloc1comp(
      int *n, /* Sample size */
-     int *m, /* Number of components, probably not used here */
      double *mean, /* component 2 mean estimate, scalar */
      double *lambda, /* component 2 weigtht, scalar */
      double *x, /* data:  vector of length n */
@@ -19,7 +18,7 @@ void KDEsymloc1comp(
      double *f  /* KDE evaluated at n vector of points, namely,
                    x_i - mu  for 1<=i<=n  */ 
 ) {
-  int nn=*n, mm=*m, i, j, a;
+  int nn=*n, i, j, a;
   double sum, u1, u2, tmp1, tmp2, hh=*h, mu=*mean, lbd=*lambda;
   double const1 = -1.0 / (2.0 * hh * hh);
   double const2 = 0.39894228040143267794/(2.0*hh*(double)nn*lbd); 
@@ -29,18 +28,12 @@ void KDEsymloc1comp(
   for(a=0; a<nn; a++) {
       sum = 0.0;
       u1 = x[a]-mu;
-  /*  Rprintf("x[%d]=%f: ", a, x[a]);
-      Rprintf("u1=%f\n", u1); */
-      
       for(i=0; i<nn; i++) {
  	  j = 1;  /* only component 2 = j index 1 is considered */
           u2 = x[i] - mu;
           tmp1 = u1 - u2;
           tmp2 = - u1 - u2;
           /* Use normal kernel and symmetrization */
-          
- /*       Rprintf("exp1()=%f  ", exp(tmp1 * tmp1 * const1));
-          Rprintf("exp2()=%f\n", exp(tmp2 * tmp2 * const1)); */
           
           sum += z[i + j*nn] * (exp(tmp1 * tmp1 * const1) + 
                                 exp(tmp2 * tmp2 * const1));

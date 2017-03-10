@@ -17,7 +17,7 @@ depth <- function(pts,x,Cx=var(x)){
 #                as.single(1:nrow(pts)),
 #                PACKAGE="mixtools")
 # Now rewritten in C:
-  y <- .C("C_mudepth",
+  y <- .C(C_mudepth,
                 as.integer(nrow(x)),
                 as.integer(nrow(pts)),
                 as.integer(ncol(x)),

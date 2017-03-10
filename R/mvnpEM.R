@@ -76,7 +76,7 @@ mvnpEM <- function (x, mu0, blockid = 1:ncol(x), samebw = TRUE,
         d = dl[l]
         tmp=as.matrix(bw[bk==l,bk==l]) # updated here, not sqrt anymore
         h=as.vector(diag(tmp));
-        ans <- .C("mvwkde_samebw", n = as.integer(n),d = as.integer(d), 
+        ans <- .C(C_mvwkde_samebw, n = as.integer(n),d = as.integer(d), 
                   m = as.integer(m), h = as.double(h), x=as.double(xx[[l]]), 
                   u=as.double(xx[[l]]), z=as.double(wts), f=double(n*m))
         fl = matrix(ans$f,n,m) # f_jl estimate
@@ -103,7 +103,7 @@ mvnpEM <- function (x, mu0, blockid = 1:ncol(x), samebw = TRUE,
       for (l in 1:B){
         d = dl[l];
         H = as.matrix(bw[, bk==l]);
-        ans <- .C("mvwkde_adaptbw", n = as.integer(n),d = as.integer(d), 
+        ans <- .C(C_mvwkde_adaptbw, n = as.integer(n),d = as.integer(d), 
                   m = as.integer(m), H = as.double(H), x=as.double(xx[[l]]), 
                   u=as.double(xx[[l]]), z=as.double(wts), f=double(n*m))
         fl = matrix(ans$f,n,m)# f_jl estimate
@@ -152,9 +152,9 @@ mvnpEM <- function (x, mu0, blockid = 1:ncol(x), samebw = TRUE,
 #######################################################
 # plot marginal (univariate) wkde's  from mvnpEM output
 # a plot.mvnpEM method for mvnpEM class
-# mu, v: true parameters, for gaussian models only
+# lambda, mu, v: true parameters, for gaussian true models only
 # ... passed to hist first level plotting
-plot.mvnpEM <- function(x, truenorm=FALSE, mu=NULL, v=NULL,
+plot.mvnpEM <- function(x, truenorm=FALSE, lambda=NULL, mu=NULL, v=NULL,
                         lgdcex =1,
                         ...) {
   mix.object <- x

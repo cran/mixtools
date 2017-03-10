@@ -72,9 +72,9 @@ npMSL_old <- function(x, mu0, blockid = 1:ncol(x),
       orderx[[k]] = order(xx[[k]]) # only needed for IQR calculation for bw
     }
   }
-  CftEstep <- ifelse(samebw, "npMSL_Estep", "npMSL_Estep_bw")
+  ## CftEstep <- ifelse(samebw, "npMSL_Estep", "npMSL_Estep_bw") #Called directly below
   # CftEstep <- "npMSL_Estep_bw" # temporary, for testing only the M-step  
-  CftMstep <- ifelse(samebw, "npMSL_Mstep", "npMSL_Mstep_bw")
+  ## CftMstep <- ifelse(samebw, "npMSL_Mstep", "npMSL_Mstep_bw") #Called directly below
   
   while (!finished) { # Algorithm main iteration loop
     iter <- iter + 1
@@ -108,14 +108,30 @@ npMSL_old <- function(x, mu0, blockid = 1:ncol(x),
         } 
     } # end of bw adaptive stage
 
-        
-    z=.C(CftMstep, as.integer(ngrid), as.integer(n),
-       as.integer(m), as.integer(r), 
-       as.integer(B), as.integer(BlS), as.integer(u),
-       as.double(bw), as.double(x), as.double(grid), 
-       new.f=as.double(f), 
-       as.double(lambda[iter,]), 
-       as.double(z.hat))
+    if(samebw){
+      z <- .C(C_npMSL_Mstep, as.integer(ngrid), as.integer(n),
+           as.integer(m), as.integer(r), 
+           as.integer(B), as.integer(BlS), as.integer(u),
+           as.double(bw), as.double(x), as.double(grid), 
+           new.f=as.double(f), 
+           as.double(lambda[iter,]), 
+           as.double(z.hat), PACKAGE = "mixtools")
+    } else{
+      z <- .C(C_npMSL_Mstep_bw, as.integer(ngrid), as.integer(n),
+           as.integer(m), as.integer(r), 
+           as.integer(B), as.integer(BlS), as.integer(u),
+           as.double(bw), as.double(x), as.double(grid), 
+           new.f=as.double(f), 
+           as.double(lambda[iter,]), 
+           as.double(z.hat), PACKAGE = "mixtools")
+    }
+#    z=.C(CftMstep, as.integer(ngrid), as.integer(n),
+#       as.integer(m), as.integer(r), 
+#       as.integer(B), as.integer(BlS), as.integer(u),
+#       as.double(bw), as.double(x), as.double(grid), 
+#       new.f=as.double(f), 
+#       as.double(lambda[iter,]), 
+#       as.double(z.hat))
        
     f <- array(z$new.f, c(ngrid, m, B)) # check sum(f == 0)
 # print(apply(f,2:3,sum) * Delta)
@@ -123,14 +139,33 @@ npMSL_old <- function(x, mu0, blockid = 1:ncol(x),
 #    browser()
 
     ## E-step (for next iteration)
-    z=.C(CftEstep, as.integer(ngrid), as.integer(n),
-       as.integer(m), as.integer(r), 
-       as.integer(B), as.integer(u),
-       as.double(bw),
-       as.double(x), as.double(grid), f=as.double(f),
-       as.double(lambda[iter,]), post=as.double(z.hat),
-       loglik = double(1),
-       nb_udfl = as.integer(nb_udfl), nb_nan = as.integer(nb_nan))
+    if(samebw){
+      z <- .C(C_npMSL_Estep, as.integer(ngrid), as.integer(n),
+           as.integer(m), as.integer(r), 
+           as.integer(B), as.integer(u),
+           as.double(bw),
+           as.double(x), as.double(grid), f=as.double(f),
+           as.double(lambda[iter,]), post=as.double(z.hat),
+           loglik = double(1),
+           nb_udfl = as.integer(nb_udfl), nb_nan = as.integer(nb_nan), PACKAGE = "mixtools")
+    } else{
+      z <- .C(C_npMSL_Estep_bw, as.integer(ngrid), as.integer(n),
+              as.integer(m), as.integer(r), 
+              as.integer(B), as.integer(u),
+              as.double(bw),
+              as.double(x), as.double(grid), f=as.double(f),
+              as.double(lambda[iter,]), post=as.double(z.hat),
+              loglik = double(1),
+              nb_udfl = as.integer(nb_udfl), nb_nan = as.integer(nb_nan), PACKAGE = "mixtools")
+    }
+#    z=.C(CftEstep, as.integer(ngrid), as.integer(n),
+#       as.integer(m), as.integer(r), 
+#       as.integer(B), as.integer(u),
+#       as.double(bw),
+#       as.double(x), as.double(grid), f=as.double(f),
+#       as.double(lambda[iter,]), post=as.double(z.hat),
+#       loglik = double(1),
+#       nb_udfl = as.integer(nb_udfl), nb_nan = as.integer(nb_nan))
 
     nb_udfl = z$nb_udfl; nb_nan = z$nb_nan; 
     total_udfl <- total_udfl + nb_udfl
@@ -335,9 +370,9 @@ npMSL <- function(x, mu0, blockid = 1:ncol(x),
       orderx[[k]] = order(xx[[k]]) # only needed for IQR calculation for bw
     }
   }
-  CftEstep <- ifelse(samebw, "npMSL_Estep", "npMSL_Estep_bw")
+  ## CftEstep <- ifelse(samebw, "npMSL_Estep", "npMSL_Estep_bw") #Called directly below.
   # CftEstep <- "npMSL_Estep_bw" # temporary, for testing only the M-step  
-  CftMstep <- ifelse(samebw, "npMSL_Mstep", "npMSL_Mstep_bw")
+  ## CftMstep <- ifelse(samebw, "npMSL_Mstep", "npMSL_Mstep_bw") #Called directly below.
   
   while (!finished) {
     iter <- iter + 1
@@ -386,15 +421,31 @@ npMSL <- function(x, mu0, blockid = 1:ncol(x),
     } # end of bw adaptive stage
     
     
+    if(samebw){
+      z <- .C(C_npMSL_Mstep, as.integer(ngrid), as.integer(n),
+              as.integer(m), as.integer(r), 
+              as.integer(B), as.integer(BlS), as.integer(u),
+              as.double(bw), as.double(x), as.double(grid), 
+              new.f=as.double(f), 
+              as.double(lambda[iter,]), 
+              as.double(z.hat), PACKAGE = "mixtools")
+    } else{
+      z <- .C(C_npMSL_Mstep_bw, as.integer(ngrid), as.integer(n),
+              as.integer(m), as.integer(r), 
+              as.integer(B), as.integer(BlS), as.integer(u),
+              as.double(bw), as.double(x), as.double(grid), 
+              new.f=as.double(f), 
+              as.double(lambda[iter,]), 
+              as.double(z.hat), PACKAGE = "mixtools")
+    }    
     
-    
-    z=.C(CftMstep, as.integer(ngrid), as.integer(n),
-         as.integer(m), as.integer(r), 
-         as.integer(B), as.integer(BlS), as.integer(u),
-         as.double(bw), as.double(x), as.double(grid), 
-         new.f=as.double(f), 
-         as.double(lambda[iter,]), 
-         as.double(z.hat))
+#    z=.C(CftMstep, as.integer(ngrid), as.integer(n),
+#         as.integer(m), as.integer(r), 
+#         as.integer(B), as.integer(BlS), as.integer(u),
+#         as.double(bw), as.double(x), as.double(grid), 
+#         new.f=as.double(f), 
+#         as.double(lambda[iter,]), 
+#         as.double(z.hat))
     
     f <- array(z$new.f, c(ngrid, m, B)) # check sum(f == 0)
     # print(apply(f,2:3,sum) * Delta)
@@ -402,14 +453,33 @@ npMSL <- function(x, mu0, blockid = 1:ncol(x),
     #    browser()
     
     ## E-step (for next iteration)
-    z=.C(CftEstep, as.integer(ngrid), as.integer(n),
-         as.integer(m), as.integer(r), 
-         as.integer(B), as.integer(u),
-         as.double(bw),
-         as.double(x), as.double(grid), f=as.double(f),
-         as.double(lambda[iter,]), post=as.double(z.hat),
-         loglik = double(1),
-         nb_udfl = as.integer(nb_udfl), nb_nan = as.integer(nb_nan))
+    if(samebw){
+      z <- .C(C_npMSL_Estep, as.integer(ngrid), as.integer(n),
+              as.integer(m), as.integer(r), 
+              as.integer(B), as.integer(u),
+              as.double(bw),
+              as.double(x), as.double(grid), f=as.double(f),
+              as.double(lambda[iter,]), post=as.double(z.hat),
+              loglik = double(1),
+              nb_udfl = as.integer(nb_udfl), nb_nan = as.integer(nb_nan), PACKAGE = "mixtools")
+    } else{
+      z <- .C(C_npMSL_Estep_bw, as.integer(ngrid), as.integer(n),
+              as.integer(m), as.integer(r), 
+              as.integer(B), as.integer(u),
+              as.double(bw),
+              as.double(x), as.double(grid), f=as.double(f),
+              as.double(lambda[iter,]), post=as.double(z.hat),
+              loglik = double(1),
+              nb_udfl = as.integer(nb_udfl), nb_nan = as.integer(nb_nan), PACKAGE = "mixtools")
+    }
+#    z=.C(CftEstep, as.integer(ngrid), as.integer(n),
+#         as.integer(m), as.integer(r), 
+#         as.integer(B), as.integer(u),
+#         as.double(bw),
+#         as.double(x), as.double(grid), f=as.double(f),
+#         as.double(lambda[iter,]), post=as.double(z.hat),
+#         loglik = double(1),
+#         nb_udfl = as.integer(nb_udfl), nb_nan = as.integer(nb_nan))
     
     nb_udfl = z$nb_udfl; nb_nan = z$nb_nan; 
     total_udfl <- total_udfl + nb_udfl

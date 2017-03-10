@@ -504,13 +504,12 @@ if (mix.type == "logisregmixEM") {
                 if(sum(em.fit$x[,1]==1)==n){
                     x=em.fit$x[,-1]
                 } else x=em.fit$x
-        logit <- function(x) 1/(1 + exp(-x))
 
 
         lambda<-em.fit$lambda
         beta<-em.fit$beta
         xbeta.new=em.fit$x%*%beta
-        prob=logit(xbeta.new)
+        prob=inv.logit(xbeta.new)
 
                   j = 0
                 lambda.bs=NULL

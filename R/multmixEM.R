@@ -25,7 +25,7 @@ multmixEM <- function (y, lambda = NULL, theta = NULL, k = 2, maxit = 10000,
     theta <- pmax(theta, 1e-100) # ensure no zeros
     # preparatory E-step prior to entering main EM loop
     loglamcd <- log(lambda) + log(theta) %*% t(y) # kxn matrix of log(lambda * component densities)
-    z <- .C("multinompost", as.integer(n), as.integer(k),
+    z <- .C(C_multinompost, as.integer(n), as.integer(k),
         as.double(loglamcd), post=double(n*k), loglik=as.double(llconstant),
         PACKAGE = "mixtools")
     post <- matrix(z$post, ncol=k)
@@ -48,7 +48,7 @@ multmixEM <- function (y, lambda = NULL, theta = NULL, k = 2, maxit = 10000,
       # E-step:  prepare to find posteriors using C function
       loglamcd <- log(lambda) + log(theta) %*% t(y) # kxn matrix of log(lambda * component densities)
       # E-step:  Call C function to return nxk matrix of posteriors along with loglikelihood
-      z <- .C("multinompost", as.integer(n), as.integer(k),
+      z <- .C(C_multinompost, as.integer(n), as.integer(k),
               as.double(loglamcd), post=double(n*k), loglik=as.double(llconstant),
               PACKAGE = "mixtools")
       post <- matrix(z$post, ncol=k)

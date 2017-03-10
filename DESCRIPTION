@@ -1,6 +1,6 @@
 Package: mixtools
-Version: 1.0.4
-Date: 2016-01-11
+Version: 1.1.0
+Date: 2017-03-10
 Title: Tools for Analyzing Finite Mixture Models
 Authors@R: c(person("Derek", "Young", role = c("aut", "cre"),
 	email = "derek.young@uky.edu"),
@@ -11,12 +11,12 @@ Authors@R: c(person("Derek", "Young", role = c("aut", "cre"),
 	person("Thomas", "Hettmansperger", role = "ctb"),
 	person("Hoben", "Thomas", role = "ctb"),
 	person("Fengjuan", "Xuan", role = "ctb"))
-Depends: R (>= 3.2.2)
-Imports: boot, MASS, segmented, stats
-Description: A collection of R functions for analyzing finite mixture models.  This package is based upon work supported by the National Science Foundation under Grant No. SES-0518772.
+Depends: R (>= 3.2.0)
+Imports: MASS, segmented, stats, survival
+Description: Analyzes finite mixture models for various parametric and semiparametric settings.  This includes mixtures of parametric distributions (normal, multivariate normal, multinomial, gamma), various Reliability Mixture Models (RMMs), mixtures-of-regressions settings (linear regression, logistic regression, Poisson regression, linear regression with changepoints, predictor-dependent mixing proportions, random effects regressions, hierarchical mixtures-of-experts), and tools for selecting the number of components (bootstrapping the likelihood ratio test statistic and model selection criteria).  Bayesian estimation of mixtures-of-linear-regressions models is available as well as a novel data depth method for obtaining credible bands.  This package is based upon work supported by the National Science Foundation under Grant No. SES-0518772.
 License: GPL (>= 2)
 NeedsCompilation: yes
-Packaged: 2016-01-11 19:58:20 UTC; derekyoung
+Packaged: 2017-03-10 01:29:29 UTC; derekyoung
 Author: Derek Young [aut, cre],
   Tatiana Benaglia [aut],
   Didier Chauveau [aut],
@@ -27,4 +27,4 @@ Author: Derek Young [aut, cre],
   Fengjuan Xuan [ctb]
 Maintainer: Derek Young <derek.young@uky.edu>
 Repository: CRAN
-Date/Publication: 2016-01-12 00:23:37
+Date/Publication: 2017-03-10 08:50:20

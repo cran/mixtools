@@ -1,7 +1,6 @@
 logisregmixEM=function (y, x, N = NULL, lambda = NULL, beta = NULL, k = 2, 
     addintercept = TRUE, epsilon = 1e-08, maxit = 10000, verb = FALSE) 
 {
-    logit <- function(x) 1/(1 + exp(-x))
     if (addintercept) {
         x = cbind(1, x)
     }
@@ -20,7 +19,7 @@ logisregmixEM=function (y, x, N = NULL, lambda = NULL, beta = NULL, k = 2,
     z <- matrix(0, n, k)
     diff <- 1
     iter <- 0
-    comp <- t(t(dbinom(y, size = N, prob = logit(xbeta))) * lambda)
+    comp <- t(t(dbinom(y, size = N, prob = inv.logit(xbeta))) * lambda)
     compsum <- apply(comp, 1, sum)
     obsloglik <- sum(log(compsum))
     ll <- obsloglik
@@ -29,9 +28,9 @@ logisregmixEM=function (y, x, N = NULL, lambda = NULL, beta = NULL, k = 2,
         j.star = apply(xbeta, 1, which.max)
         for (i in 1:n) {
             for (j in 1:k) {
-                z[i, j] = lambda[j]/lambda[j.star[i]] * (logit(xbeta[i, 
-                  j])/logit(xbeta[i, j.star[i]]))^y[i] * ((1 - 
-                  logit(xbeta[i, j]))/(1 - logit(xbeta[i, j.star[i]])))^(N[i] - 
+                z[i, j] = lambda[j]/lambda[j.star[i]] * (inv.logit(xbeta[i, 
+                  j])/inv.logit(xbeta[i, j.star[i]]))^y[i] * ((1 - 
+                  inv.logit(xbeta[i, j]))/(1 - inv.logit(xbeta[i, j.star[i]])))^(N[i] - 
                   y[i])
             }
         }
@@ -50,7 +49,7 @@ logisregmixEM=function (y, x, N = NULL, lambda = NULL, beta = NULL, k = 2,
             diff <- 1
             iter <- 0
             xbeta <- x %*% beta
-            comp <- t(t(dbinom(y, size = N, prob = logit(xbeta))) * 
+            comp <- t(t(dbinom(y, size = N, prob = inv.logit(xbeta))) * 
                 lambda)
             compsum <- apply(comp, 1, sum)
             obsloglik <- sum(log(compsum))
@@ -63,7 +62,7 @@ logisregmixEM=function (y, x, N = NULL, lambda = NULL, beta = NULL, k = 2,
                 silent = TRUE))
             beta = sapply(lm.out, coef)
             xbeta <- x %*% beta
-            comp <- t(t(dbinom(y, size = N, prob = logit(xbeta))) * 
+            comp <- t(t(dbinom(y, size = N, prob = inv.logit(xbeta))) * 
                 lambda)
             compsum <- apply(comp, 1, sum)
             newobsloglik <- sum(log(compsum))
@@ -81,7 +80,7 @@ logisregmixEM=function (y, x, N = NULL, lambda = NULL, beta = NULL, k = 2,
                 diff <- 1
                 iter <- 0
                 xbeta <- x %*% beta
-                comp <- t(t(dbinom(y, size = N, prob = logit(xbeta))) * 
+                comp <- t(t(dbinom(y, size = N, prob = inv.logit(xbeta))) * 
                   lambda)
                 compsum <- apply(comp, 1, sum)
                 obsloglik <- sum(log(compsum))

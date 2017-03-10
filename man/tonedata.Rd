@@ -30,7 +30,7 @@ Original source: Cohen, E. A. (1980), \emph{Inharmonic tone
 
 R source:  Hennig, Christian (2010), fpc: Flexible procedures 
    for clustering, R package version 2.0-2.  
-   \url{http://CRAN.R-project.org/package=fpc}
+   \url{https://cran.r-project.org/package=fpc}
 }
 \references{
 de Veaux, R. D. (1989), Mixtures of Linear Regressions,

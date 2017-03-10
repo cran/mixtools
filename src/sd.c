@@ -1,7 +1,7 @@
 #include<math.h>
 
 /* Translated from FORTRAN code written by Fengjuan Xuan */
-void C_mudepth (int *nn, int *tt, int *dd, double *mpt, 
+void mudepth (int *nn, int *tt, int *dd, double *mpt, 
               double *x, int *count, double *sdep) {
   int n=*nn, t=*tt, d=*dd;                
   int i, j, k, l;

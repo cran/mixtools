@@ -32,12 +32,12 @@ spEMsymloc <- function(x, mu0, bw = bw.nrd0(x), h=bw, eps = 1e-8, maxiter=100,
     ## density estimation step
     if(stochastic){
       z <- t(apply(z.hat, 1, function(prob) rmultinom(1, 1, prob)))
-      ans <- .C("KDEsymloc", n=as.integer(n), m=as.integer(m),
+      ans <- .C(C_KDEsymloc, n=as.integer(n), m=as.integer(m),
                 mu=as.double(mu[iter,]), x=as.double(x), bw=as.double(bw),
                 z=as.double(z), f = double(n*m),
                 PACKAGE="mixtools")
     } else {
-      ans <- .C("KDEsymloc", n=as.integer(n), m=as.integer(m),
+      ans <- .C(C_KDEsymloc, n=as.integer(n), m=as.integer(m),
                 mu=as.double(mu[iter,]), x=as.double(x), bw=as.double(bw),
                 z=as.double(z.hat), f = double(n*m),                     
                 PACKAGE="mixtools")

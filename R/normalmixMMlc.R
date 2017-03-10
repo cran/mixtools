@@ -20,10 +20,10 @@
 normalmixMMlc <- function (x, 
 			lambda = NULL, mu = NULL, sigma = NULL, k = 2,
 			mean.constr = NULL,
-	  		mean.lincstr = NULL, mean.constant = NULL,
-	  		var.lincstr = NULL, gparam = NULL,
-          	epsilon = 1e-08, maxit = 1000, maxrestarts=20, 
-          	verb = FALSE) {
+			mean.lincstr = NULL, mean.constant = NULL,
+			var.lincstr = NULL, gparam = NULL,
+			epsilon = 1e-08, maxit = 1000, maxrestarts=20, 
+			verb = FALSE) {
   ECM <- TRUE  # always required in this case
   A <- var.lincstr
   x <- as.vector(x);     n <- length(x)
@@ -54,11 +54,12 @@ normalmixMMlc <- function (x,
       lambda <- tmp$lambda; mu <- tmp$mu; k <- tmp$k; sigma <- tmp$s
 
       q <- dim(A)[2] # nb of inverse variance parameters (gamma)
-      g <- gparam # init g values *required* for MM algo
-	  iv <- A %*% g # inverse variances, as a one-column matrix
-	  v <- 1/iv
-	  # is it necessary to redefined sigma from g here ?
-	  sigma <- as.vector(sqrt(v))      
+      if(is.null(gparam)) g <- rexp(q)
+      else g <- gparam 
+      iv <- A %*% g # inverse variances, as a one-column matrix
+  	  v <- 1/iv
+  	  # is it necessary to redefined sigma from g here ?
+  	  sigma <- as.vector(sqrt(v))      
       diff <- epsilon+1
       iter <- 0
       postprobs <- matrix(nrow = n, ncol = k)
@@ -67,7 +68,7 @@ normalmixMMlc <- function (x,
       sigma <- rep(sigma,k)[1:k] # sigma still needed for post computation   
       
       ## Initialization E-step here:
-      z <- .C("normpost", as.integer(n), as.integer(k),
+      z <- .C(C_normpost, as.integer(n), as.integer(k),
               as.double(x), as.double(mu), 
               as.double(sigma), as.double(lambda),
               res2 = double(n*k), double(3*k), post = double(n*k),
@@ -105,7 +106,7 @@ normalmixMMlc <- function (x,
 			}
 
           # ECM E-step number one:
-          z <- .C("normpost", as.integer(n), as.integer(k),
+          z <- .C(C_normpost, as.integer(n), as.integer(k),
                   as.double(x), as.double(mu), 
                   as.double(sigma), as.double(lambda),
                   res2 = double(n*k), double(3*k), post = double(n*k),
@@ -146,7 +147,7 @@ normalmixMMlc <- function (x,
           }        
         
         # ECM E-step number two:
-        z <- .C("normpost", as.integer(n), as.integer(k),
+        z <- .C(C_normpost, as.integer(n), as.integer(k),
                 as.double(x), as.double(mu), 
                 as.double(sigma), as.double(lambda),
                 res2 = double(n*k), double(3*k), post = double(n*k),

@@ -626,7 +626,6 @@ boot.comp <- function (y, x = NULL, N = NULL, max.comp = 2, B = 100, sig = 0.05,
         Q1 = 0
         obs.Q = 0
         i = 1
-        logit <- function(x) 1/(1 + exp(-x))
         while (sigtest == 1 && i <= k) {
             Q.star[[i]] = 0
             if (i == 1) {
@@ -655,7 +654,7 @@ boot.comp <- function (y, x = NULL, N = NULL, max.comp = 2, B = 100, sig = 0.05,
                 }
                 while (j < B) {
                   j = j + 1
-                  y.sim = rbinom(length(y), size = N, prob = logit(xbeta))
+                  y.sim = rbinom(length(y), size = N, prob = inv.logit(xbeta))
                   xy.simout = glm(cbind(y.sim, N - y.sim) ~ x, 
                     family = binomial())
                   em.out = try(logisregmixEM(y = y.sim, x = x, 
@@ -701,7 +700,7 @@ boot.comp <- function (y, x = NULL, N = NULL, max.comp = 2, B = 100, sig = 0.05,
                   j = j + 1
                   wt = rmultinom(length(y), size = 1, prob = H0.fit$lambda)
                   y.sim = sapply(1:length(y), function(i) rbinom(1, 
-                    size = N[i], prob = logit(xbeta)[, (wt[, 
+                    size = N[i], prob = inv.logit(xbeta)[, (wt[, 
                       i] == 1)]))
                   em.out.0 = try(logisregmixEM(y = y.sim, x = x, 
                     N = N, k = i, ...), silent = TRUE)

@@ -86,11 +86,11 @@ spregmix = function (lmformula, bw = NULL, constbw = FALSE,
 
     ## density estimation step  
     if (symm) {
-      ans <- .C ("KDEsymloc2", n=as.integer(n), m=as.integer(m),
+      ans <- .C(C_KDEsymloc2, n=as.integer(n), m=as.integer(m),
                  mu = xbetavec, y=as.double(y), bw=as.double(bw),
                  z=as.double(z.hat), f=double(n*m))
     } else {
-      ans <- .C ("KDEloc2", n=as.integer(n), m=as.integer(m),
+      ans <- .C(C_KDEloc2, n=as.integer(n), m=as.integer(m),
                  mu = xbetavec, y=as.double(y), bw=as.double(bw),
                  z=as.double(z.hat), f=double(n*m))
     }

@@ -31,7 +31,7 @@ regmixEM.lambda = function (y, x, lambda = NULL, beta = NULL, sigma = NULL,
   while (diff > epsilon && iter < 1) {
     V=as.double(sweep(lambda, 2, s+rep(0,k), "/"))
     W=as.double(sweep(res2, 2, 2*(s+rep(0,k))^2, "/"))
-    z <- matrix(.C("newz", as.integer(n), as.integer(k), V=V, W=W,
+    z <- matrix(.C(C_newz, as.integer(n), as.integer(k), V=V, W=W,
                    newz=double(n*k), PACKAGE = "mixtools")$newz, ncol=k)
 	z = z/apply(z,1,sum)    
     if (addintercept) {

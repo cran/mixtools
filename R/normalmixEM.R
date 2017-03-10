@@ -46,7 +46,7 @@ function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
       mu <- rep(mu, k)[1:k]
       sigma <- rep(sigma,k)[1:k]
       # Initialization E-step here:
-      z <- .C("normpost", as.integer(n), as.integer(k),
+      z <- .C(C_normpost, as.integer(n), as.integer(k),
               as.double(x), as.double(mu), 
               as.double(sigma), as.double(lambda),
               res2 = double(n*k), double(3*k), post = double(n*k),
@@ -73,7 +73,7 @@ function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
         if (ECM) {  # If ECM==FALSE, then this is a true EM algorithm and
                     # so we omit the E-step between the mu and sigma updates
           # E-step number one:
-          z <- .C("normpost", as.integer(n), as.integer(k),
+          z <- .C(C_normpost, as.integer(n), as.integer(k),
                   as.double(x), as.double(mu), 
                   as.double(sigma), as.double(lambda),
                   res2 = double(n*k), double(3*k), post = double(n*k),
@@ -107,7 +107,7 @@ function (x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
         }
         
         # E-step number two:
-        z <- .C("normpost", as.integer(n), as.integer(k),
+        z <- .C(C_normpost, as.integer(n), as.integer(k),
                 as.double(x), as.double(mu), 
                 as.double(sigma), as.double(lambda),
                 res2 = double(n*k), double(3*k), post = double(n*k),

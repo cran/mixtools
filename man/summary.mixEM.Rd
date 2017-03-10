@@ -39,7 +39,9 @@
 \code{\link{regmixEM.loc}},
 \code{\link{regmixEM.mixed}},
 \code{\link{regmixEM.chgpt}},
-\code{\link{repnormmixEM}}
+\code{\link{repnormmixEM}},
+\code{\link{expRMM_EM}},
+\code{\link{weibullRMM_SEM}}
 }
 \examples{
 data(faithful)

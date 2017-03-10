@@ -2,7 +2,7 @@
 \title{Plots of Marginal Density Estimates from the mvnpEM Algorithm Output}
 \alias{plot.mvnpEM} 
 \usage{
-\method{plot}{mvnpEM}(x, truenorm = FALSE, mu = NULL, v = NULL, 
+\method{plot}{mvnpEM}(x, truenorm = FALSE, lambda = NULL, mu = NULL, v = NULL, 
             lgdcex = 1, \dots)
 }
 \description{
@@ -19,7 +19,8 @@
   
   \item{truenorm}{Mostly for checking purpose, if the nonparametric model is to be compared
   with a multivariate Gaussian mixture as the true model.}
-
+  
+  \item{lambda}{true weight parameters, for Gaussian models only (see above)}
   \item{mu}{true mean parameters, for Gaussian models only (see above)}
   \item{v}{true covariance matrices, for Gaussian models only (see above)}
 

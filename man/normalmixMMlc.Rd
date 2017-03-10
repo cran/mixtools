@@ -51,17 +51,17 @@ normalmixMMlc(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   by binning the data.}
 
   \item{sigma}{Starting value of vector of component standard deviations 
-  for algorithm.  Obsolete for linear constraint on the inverse variances,
-  use \code{gparam} instead to specify a starting value.
-  Note: This needs more precision}
+  for algorithm.  
+  Obsolete for linear constraints on the inverse variances;
+  use \code{gparam} instead to specify a starting value.}
 
   \item{k}{Number of components.  Initial value ignored unless \code{mu} 
   and \code{sigma} are both NULL.}
 
   \item{mean.constr}{First, simplest way to define 
   	  equality constraints on the mean parameters, given as
-  a vector of length \code{k}, like in \code{\link{normalmixEM}}.  
-  Each vector entry helps specify the constraints,
+  a vector of length \code{k}, as in \code{\link{normalmixEM}}.  
+  Each vector entry specifies the constraints,
   if any, on the corresponding mean parameter:  If \code{NA}, the corresponding
   parameter is unconstrained.  If numeric, the corresponding
   parameter is fixed at that value.  If a character string consisting of
@@ -72,7 +72,7 @@ normalmixMMlc(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   \code{mean.constr = c(NA, 0, "a", "-a")}, then the first mean parameter
   is unconstrained, the second is fixed at zero, and the third and forth
   are constrained to be equal and opposite in sign.
-  Note: if there are no linear constraints for the variances, it is
+  Note: if there are no linear constraints for the means, it is
   more efficient to use directly \code{\link{normalmixEM}}.}
   
   \item{mean.lincstr}{Matrix \eqn{M} \eqn{(k,p)} in the linear constraint for the means
@@ -87,8 +87,9 @@ normalmixMMlc(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   
   	\item{gparam}{Vector of \eqn{q} starting values
   		for the \eqn{\gamma} parameter in the
-  	  linear constraint for the inverse variances.
-  	  This parameter is required.}
+  	  linear constraint for the inverse variances;
+  	  see \code{var.lincstr}.  If NULL, a vector of randomly generated
+    	standard exponential variables is used.}
   
   \item{epsilon}{The convergence criterion.  
   	  Convergence is declared when the change in 
@@ -115,10 +116,8 @@ normalmixMMlc(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   \item{x}{The raw data.}
   \item{lambda}{The final mixing proportions.}
   \item{mu}{The final mean parameters.}
-  \item{sigma}{The final standard deviations. If \code{arbmean} = FALSE, then only the smallest standard
-   deviation is returned. See \code{scale} below.}
-  \item{scale}{If \code{arbmean} = FALSE, then the scale factor for the component standard deviations is returned.
-   Otherwise, this is omitted from the output.}
+  \item{sigma}{The final standard deviation(s)}
+  \item{scale}{Scale factor for the component standard deviations, if applicable.}
   \item{loglik}{The final log-likelihood.}
   \item{posterior}{An nxk matrix of posterior probabilities for
    observations.}
@@ -131,7 +130,8 @@ normalmixMMlc(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   \item{ft}{A character vector giving the name of the function.}
 }
 \seealso{
- \code{\link{normalmixEM}}, \code{\link{mvnormalmixEM}}, \code{\link{normalmixEM2comp}}
+ \code{\link{normalmixEM}}, \code{\link{mvnormalmixEM}}, 
+ \code{\link{normalmixEM2comp}}, \code{\link{tauequivnormalmixEM}}
 }
 \references{
   \itemize{
@@ -143,11 +143,9 @@ normalmixMMlc(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
   \item Chauveau, D. and Hunter, D.R. (2013)
   	ECM and MM algorithms for mixtures with constrained parameters,
   	\emph{preprint \url{http://hal.archives-ouvertes.fr/hal-00625285}}.
-  \item Thomas, H., Lohaus, A., and Domsch, H. (2011), 
-  	Extensions of Reliability Theory, in 
-  	Nonparametric Statistics and Mixture Models: A Festschrift in
-  	Honor of Thomas Hettmansperger \emph{Singapore:  World Scientific},
-  	pp. 309-316.
+  \item Thomas, H., Lohaus, A., and Domsch, H. (2011) Stable Unstable Reliability
+        Theory, \emph{British Journal of Mathematical and Statistical Psychology}
+        65(2): 201-221.
   }
 }
 
@@ -162,8 +160,8 @@ normalmixMMlc(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
 lbd <- c(0.6,0.3,0.1); m <- length(lbd)
 sigma <- sig0 <- sqrt(c(1,9,9))
 # means constaints mu = M beta
-M <- matrix(c(1,1,1,0,1,-1), 3, 2)
-beta <- c(1,5) # unknown constained mean
+M <- matrix(c(1,1,1,0,-1,1), 3, 2)
+beta <- c(1,5) # unknown constrained mean
 mu0 <- mu <- as.vector(M \%*\% beta)
 # linear constraint on the inverse variances pi = A.g
 A <- matrix(c(1,1,1,0,1,0), m, 2, byrow=TRUE)
@@ -171,8 +169,8 @@ iv0 <- 1/(sig0^2)
 g0 <- c(iv0[2],iv0[1] - iv0[2]) # gamma^0 init 
 
 # simulation and EM fits
-set.seed(40); n=100; x <- rnormmix(n,lbd,mu,sigma)
-s <- normalmixEM(x,mu=mu0,sigma=sig0) # plain EM
+set.seed(50); n=100; x <- rnormmix(n,lbd,mu,sigma)
+s <- normalmixEM(x,mu=mu0,sigma=sig0,maxit=2000) # plain EM
 # EM with var and mean linear constraints
 sc <- normalmixMMlc(x, lambda=lbd, mu=mu0, sigma=sig0,
 					mean.lincstr=M, var.lincstr=A, gparam=g0)

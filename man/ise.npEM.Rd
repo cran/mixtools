@@ -68,7 +68,7 @@ lambda <- c(0.4, 0.6)
 mu <- matrix(c(0, 0, 0, 3, 3, 5), m, r, byrow=TRUE) # means 
 sigma <- matrix(rep(1, 6), m, r, byrow=TRUE) # stdevs
 blockid = c(1,1,2) # block structure of coordinates
-n <- 500
+n <- 200
 x <- rmvnormmix(n, lambda, mu, sigma) # simulated data
 
 # fit the model with "arbitrary" initial centers

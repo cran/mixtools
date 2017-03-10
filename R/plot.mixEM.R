@@ -221,6 +221,8 @@ plot.mixEM <-function (x, whichplots = 1,
         }
       }
     }
+    if (mix.object$ft == "expRMM_EM") {plotexpRMM(mix.object, ...)} # all default
+    if (mix.object$ft == "weibullRMM_SEM") {plotweibullRMM(mix.object, ...)} # all default
   }
   par(def.par) # reset ask and mar to original values
 }

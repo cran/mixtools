@@ -1,6 +1,5 @@
 \name{plotseq.npEM}
 \alias{plotseq.npEM}
-\alias{plotseq}
 \title{Plotting sequences of estimates from non- or semiparametric EM-like Algorithm}
 \usage{
   \method{plotseq}{npEM}(x, \dots)

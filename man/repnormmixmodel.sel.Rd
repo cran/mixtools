@@ -35,7 +35,7 @@ repnormmixmodel.sel(x, k = 2, ...)
 data(Waterdata)
 water<-t(as.matrix(Waterdata[,3:10]))
 set.seed(100)
-out <- repnormmixmodel.sel(water, k = 3, epsilon = 1e-01)
+out <- repnormmixmodel.sel(water, k = 3, epsilon = 5e-01)
 out
 }
 

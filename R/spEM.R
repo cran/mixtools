@@ -39,9 +39,7 @@ spEM <- function(x, mu0, blockid = 1:ncol(x),
   mu <- sigma <- array(0, dim=c(maxiter, m, max(u)))
   stackedx <- x[rep(1:n,m),]
   loglik <- NULL
-  #  Cfunction <- ifelse(constbw, "KDErepeated", "KDErepeatedbw")
-  Cfunction <- "KDElocscale"
-  
+
   while (!finished) {
     iter <- iter + 1
     bw.old <- bw
@@ -80,7 +78,7 @@ spEM <- function(x, mu0, blockid = 1:ncol(x),
                            sigma[iter, rep(1:m, each=n), u])
       h <- bw <- 0.9 / (n*r)^(1/5) * min(1, wiqr<-wIQR(wt=wts, x=scaledx)/1.34)
     }
-    ans <- .C(Cfunction, n = as.integer(n), m = as.integer(m), 
+    ans <- .C(C_KDElocscale, n = as.integer(n), m = as.integer(m), 
               r = as.integer(r), blockid=as.integer(u), 
               mu = as.double(mu[iter, , ]), 
               sigma = as.double(sigma[iter, , ]),

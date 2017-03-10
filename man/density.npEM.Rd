@@ -54,7 +54,7 @@ for (j in 1:2)
 ## Superimpose several semiparametric fits with different bandwidths:
 bw <- c(1, 3, 5)
 for (i in 1:3) {
-  sp <- spEMsymloc(Minutes, c(50,80), bw=bw[i])
+  sp <- spEMsymloc(Minutes, c(50,80), bw=bw[i], eps=1e-3)
   for (j in 1:2) 
     lines(density(sp, component=j, scale=TRUE), col=1+i, lwd=2)    
 }

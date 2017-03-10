@@ -46,7 +46,7 @@ all columns in mu and sigma are identical.
 ##Generate data from a 2-component mixture of trivariate normals.
 
 set.seed(100)
-n <- 500
+n <- 200
 lambda <- rep(1, 2)/2
 mu <- matrix(2*(1:6), 2, 3)
 sigma <- matrix(1,2,3)

@@ -1,6 +1,29 @@
+Changes in mixtools 1.1.0
+============================
+* 2017-03-10
+
+* Properly registered native routines for internal C code to conform with R-devel checks.
+
+* Fixed some inconsistencies with the S3 methods used.
+
+* Added tauequivnormalmixEM() to search for a local maximum of the likelihood surface for a univariate finite mixture of normals with possible equality constraints on the stdev parameters.
+
+* Added expRMM_EM() for fitting univariate finite mixtures-of-exponentials with right censoring.  Some associated distribution functions for this calculation were also added.
+
+* Added weibullRMM_SEM(), which is a stochastic EM algorithm for estimating Reliability Mixture Models (RMM) with censoring.
+
+* Added spRMM_SEM(), which is a stochastic EM algorithm for estimating a semiparametric Scaling RMM with censoring.
+
+* Corrected an issue with loading WaterdataFull.
+
+* Removed dependency on 'boot' package and revised code in the appropriate functions.  Thanks to Tim Hesterberg and Karl Millar of Google for this suggestion.
+
+* Updated some help files.
+
+
 Changes in mixtools 1.0.4
 ============================
-* 2016—01-11
+* 2016-01-11
 
 * Added mvnpEM() and some related functions, which are multivariate blocks extension to the npEM() function.
 

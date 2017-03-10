@@ -42,7 +42,7 @@ spEMsymlocN01 <- function(x, mu0=2, bw = bw.nrd0(x), h=bw, eps = 1e-8,
     mu[iter] <- sum(x*z.hat[,2])/(n*lambda[iter,2]) #
 
     ## second component density estimation step evaluated at x_i-mu's  
-      ans <- .C("KDEsymloc1comp", n=as.integer(n), m=as.integer(m),
+      ans <- .C(C_KDEsymloc1comp, n=as.integer(n),
                 mu=as.double(mu[iter]), lbd2=as.double(lambda[iter,2]),
                 x=as.double(x), bw=as.double(bw),
                 z=as.double(z.hat), f = double(n)) 
