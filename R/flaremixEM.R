@@ -5,7 +5,7 @@ while(j<=length(nu)){
 temp=try(try.flare(y=y, x=x, lambda = lambda, beta = beta, sigma = sigma, alpha = alpha, nu=nu[j],
 		epsilon = epsilon, maxit = maxit, verb = verb, restart=restart),silent=TRUE)
 
-if(class(temp)=="try-error") j=j+1 else j=2^100
+if(any(class(temp)=="try-error")) j=j+1 else j=2^100
 }
 
 

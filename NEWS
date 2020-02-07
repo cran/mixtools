@@ -1,3 +1,18 @@
+Changes in mixtools 1.2.0
+============================
+* 2020-02-05
+
+* Fixed compatibility issues with R 4.0.0.
+
+* Modified the NAMESPACE to only import three functions from the kernlab package: kpca(), pcv(), and Q().
+
+* Modified gammamixEM() to reflect the developments in Young, Chen, Hewage, and Nilo-Poyanco (2019).  This includes the addition of the argument mom.start to use a method-of-moments starting value strategy, as well as the addition of the fix.alpha argument for estimating a common shape parameter across the different components.
+
+* Added the mixturegram() function to construct mixturegrams for determining the number of components, which was introduced by Young, Ke, and Zeng (2018).
+
+* Modified the way the mixing proportions were randomly generated in the poisregmix.init() and logisregmix.init() functions.  Previously, there was the possibility of generating too small of a mixing component, which could cause numerical instabilities.  Thanks to Xiaoqiong Fang for identifying this issue.
+
+
 Changes in mixtools 1.1.0
 ============================
 * 2017-03-10

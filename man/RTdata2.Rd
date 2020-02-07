@@ -2,7 +2,9 @@
 \docType{data}
 \title{Reaction Time (RT) Data Set \# 2} 
 \alias{RTdata2}
-\usage{RTdata2}
+\usage{
+data(RTdata2)
+}
 \description{
   This data set involves normally developing children 9 years of age presented 
   visual simuli on a computer monitor.  There are three different experimental

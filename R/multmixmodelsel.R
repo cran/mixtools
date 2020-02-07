@@ -1,6 +1,6 @@
 multmixmodel.sel <- function (y, comps = NULL, ...) 
 {
-    if (class(y)=="list" && !is.null(y$y)) {
+    if (class(y)[1]=="list" && !is.null(y$y)) {
       y <- y$y
     }
     n = dim(y)[1]

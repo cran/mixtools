@@ -6,7 +6,9 @@
   This data set gives the equivalence ratios and peak nitrogen oxide emissions in a
   study using pure ethanol as a spark-ignition engine fuel.  
 }
-\usage{NOdata}
+\usage{
+data(NOdata)
+}
 \format{This data frame consists of:
 \itemize{
   \item{\code{NO}}{The peak nitrogen oxide emission levels.}

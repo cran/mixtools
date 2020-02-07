@@ -70,7 +70,7 @@ while(j<restart){
 
 beta.new <- try(beta - (1/2^j)*temp,silent=TRUE)
 
-if(class(beta.new)=="try-error" || sum(is.na(beta.new))>0) beta.new=beta else beta.new=beta.new
+if(any(class(beta.new)=="try-error") || sum(is.na(beta.new))>0) beta.new=beta else beta.new=beta.new
 
 	  xbeta.new <- x %*% beta.new
 	  res.new <- y-xbeta.new

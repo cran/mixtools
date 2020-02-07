@@ -2,7 +2,9 @@
 \docType{data}
 \title{Simulated Data from 2-Component Mixture of Regressions with Random Effects}
 \alias{RanEffdata}
-\usage{RanEffdata}
+\usage{
+data(RanEffdata)
+}
 \description{
   This data set was generated from a 2-component mixture of regressions with random effects. 
 } 

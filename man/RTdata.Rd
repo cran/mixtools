@@ -2,7 +2,9 @@
 \docType{data}
 \title{Reaction Time (RT) Data Set}
 \alias{RTdata}
-\usage{RTdata}
+\usage{
+data(RTdata)
+}
 \description{
   This data set involves normally developing children 9 years of age presented with two visual simuli on a computer monitor.
   The left image is the target stimuli and on the right is either an exact copy or a mirror image

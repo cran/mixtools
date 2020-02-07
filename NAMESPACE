@@ -26,6 +26,7 @@ export("logisregmix.init")
 export("logisregmixEM")
 export("makemultdata")
 export("matsqrt")
+export("mixturegram")
 export("multmix.init")
 export("multmixEM")
 export("multmixmodel.sel")
@@ -129,8 +130,9 @@ S3method(summary, npEM)
 S3method(summary, spRMM)
 
 # Import from
-importFrom("grDevices", "chull")
+importFrom("kernlab", "kpca", "pcv", "Q")
+importFrom("grDevices", "chull", "adjustcolor", "colors")
 importFrom("graphics", "abline", "barplot", "hist", "layout",
   "layout.show", "legend", "lines", "par", "plot", "points",
-  "segments", "title")
+  "segments", "title", "axis", "polygon", "rect")
 importFrom("utils", "packageDescription", "tail")

@@ -2,7 +2,9 @@
 \docType{data}
 \title{GNP and CO2 Data Set}
 \alias{CO2data}
-\usage{CO2data}
+\usage{
+data(CO2data)
+}
 \description{
   This data set gives the gross national product (GNP) per capita in 1996 for various countries as
   well as their estimated carbon dioxide (CO2) emission per capita for the same year. 

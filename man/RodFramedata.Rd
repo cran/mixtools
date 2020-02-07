@@ -2,7 +2,9 @@
 \docType{data}
 \title{Rod and Frame Task Data Set}
 \alias{RodFramedata}
-\usage{RodFramedata}
+\usage{
+data(RodFramedata)
+}
 \description{
   This data set involves assessing children longitudinally at 6 age points from ages 4 through 18 years for the rod and
   frame task.  This task sits the child in a darkened room in front of a luminous square frame tilted at 28 degrees on its

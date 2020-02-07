@@ -3,7 +3,9 @@
 \title{Water-Level Task Data Set}
 \alias{Waterdata}
 \alias{WaterdataFull}
-\usage{Waterdata}
+\usage{
+data(Waterdata)
+}
 \description{
   This data set arises from the water-level task proposed by the Swiss 
   psychologist Jean Piaget to assess children's understanding of the physical 

@@ -67,7 +67,7 @@ while(j == 1){
 
     out <- try(flaremixEM(y, x, beta = c(3, 4), nu = nu,
                lambda = c(.75, .25), sigma = 1), silent = TRUE)
-    if(class(out) == "try-error"){
+    if(any(class(out) == "try-error")){
         j <- 1
     } else j <- 2
 }

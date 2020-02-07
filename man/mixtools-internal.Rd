@@ -10,6 +10,7 @@
 \alias{kfoldCV}
 \alias{KMintegrate}
 \alias{KMod}
+\alias{ldc}
 \alias{logit}
 \alias{npMSL_old}
 \alias{plotseq}
@@ -35,7 +36,8 @@ kern.T(x, xi, h)
 kfoldCV(h, x, nbsets = 2, w = rep(1, length(x)), 
         lower = mean(x) - 5*sd(x), upper = mean(x) + 5*sd(x))
 KMintegrate(s) 
-KMod(cpd, already.ordered=TRUE)
+KMod(cpd, already.ordered = TRUE)
+ldc(data, class, score)
 logit(mu)
 npMSL_old(x, mu0, blockid = 1:ncol(x),
           bw=bw.nrd0(as.vector(as.matrix(x))), samebw = TRUE,
@@ -76,17 +78,18 @@ wbw.kCV(x, nbfold = 5, w = rep(1, length(x)),
   \item{nbfold}{See updated arguments in the \code{npMSL} function.}
   \item{hmin}{See updated arguments in the \code{npMSL} function.}
   \item{hmax}{See updated arguments in the \code{npMSL} function.}
+  \item{data}{Data, possibly multivariate, fed to the \code{mixturegram} function.}
+  \item{class}{The number of classes, inputted based on number of components in the \code{mixturegram} function.}
+  \item{score}{The score vector from LDA used in constructing a mixturegram.}
   \item{lam}{A vector of mixture proportions, should sum to one.}
   \item{rate}{A vector of mixture component rates.}
   \item{t}{Argument for \code{dexpmixt}.}
   \item{mu}{A proportion for which to calculate the logit function; i.e., \code{log(mu / (1 - mu))}.}
   \item{eta}{Any real value for which to calculate the inverse logit function; 
-        i.e., \code{1 / (1 + exp(eta))}.}
-  
+        i.e., \code{1 / (1 + exp(eta))}.}  
   \item{cpd}{Argument for \code{HRkde}.}
   \item{kernelft}{Argument for \code{HRkde}.} 
   \item{s}{Argument for \code{KMintegrate}.}
-  
   \item{meanlog}{Argument for \code{rlnormscalemix}.}
   \item{sdlog}{Argument for \code{rlnormscalemix}.}
 }

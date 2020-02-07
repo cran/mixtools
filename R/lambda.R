@@ -23,7 +23,7 @@ lambda=function (z, x, xi, h = NULL, kernel = c("Gaussian", "Beta",
     W=(kern.O(x, xi, h) * inwindow)
   }
   A=try(solve(t(X.mat)%*%(W*X.mat)), silent=TRUE)
-  if(class(A)=="try-error") {
+  if(class(A)[1]=="try-error") {
     A=ginv(t(X.mat)%*%(W*X.mat))
   }
   beta.x=A%*%t(X.mat)%*%(W*z)

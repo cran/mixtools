@@ -1,6 +1,6 @@
 multmixEM <- function (y, lambda = NULL, theta = NULL, k = 2, maxit = 10000, 
     epsilon = 1e-08, verb = FALSE) {
-  if (class(y)=="list" && !is.null(y$y)) {
+  if (class(y)[1]=="list" && !is.null(y$y)) {
     y <- y$y
   }
   n <- nrow(y)
