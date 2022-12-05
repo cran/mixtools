@@ -4,8 +4,8 @@
 \usage{
 normalmixEM(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2, 
             mean.constr = NULL, sd.constr = NULL,
-            epsilon = 1e-08, maxit = 1000, maxrestarts=20, 
-            verb = FALSE, fast=FALSE, ECM = FALSE,
+            epsilon = 1e-08, maxit = 1000, maxrestarts = 20, 
+            verb = FALSE, fast = FALSE, ECM = FALSE,
             arbmean = TRUE, arbvar = TRUE) 
 }
 \description{
@@ -130,7 +130,7 @@ normalmixEM(x, lambda = NULL, mu = NULL, sigma = NULL, k = 2,
 \references{
   \itemize{
   \item McLachlan, G. J. and Peel, D. (2000) \emph{Finite Mixture Models}, 
-  John Wiley \& Sons, Inc.
+  John Wiley and Sons, Inc.
   \item Meng, X.-L. and Rubin, D. B. (1993) Maximum Likelihood Estimation
   Via the ECM Algorithm:  A General Framework, \emph{Biometrika} 80(2):
   267-278.
