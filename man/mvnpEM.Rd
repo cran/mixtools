@@ -105,7 +105,7 @@ mvnpEM(x, mu0, blockid = 1:ncol(x), samebw = TRUE,
    \item  Chauveau, D., and Hoang, V. T. L. (2015),
    Nonparametric mixture models with conditionally independent multivariate component densities, 
    Preprint under revision.
-   \url{https://hal.archives-ouvertes.fr/hal-01094837}
+   \url{https://hal.science/hal-01094837}
    }
 }
 

@@ -10,7 +10,7 @@
 data(NOdata)
 }
 \format{This data frame consists of:
-\itemize{
+\describe{
   \item{\code{NO}}{The peak nitrogen oxide emission levels.}
   \item{\code{Equivalence}}{The equivalence ratios for the engine at compression ratios from 7.5 to 18.}
 }

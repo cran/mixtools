@@ -779,7 +779,7 @@ values of all of the parameters.  For instance, in the case of model
 \label{section:SPexample}
 
 Both \citet{hunter2007ims} and \citet{bordes2006set} study a particular
-case of model ({\ref{mvmixture}) in which $x$ is univariate and
+case of model (\ref{mvmixture}) in which $x$ is univariate and
 \begin{equation}
   \label{spmodel}
   g_{\vec \theta}(x) = \sum_{j=1}^m\lambda_j \phi(x-\mu_j),

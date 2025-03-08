@@ -43,7 +43,7 @@ with Conditionally Independent Multivariate Component Densities}
 Chauveau, D., and Hoang, V. T. L. (2015),
    Nonparametric mixture models with conditionally independent multivariate component densities, 
    Preprint under revision.
-   \url{https://hal.archives-ouvertes.fr/hal-01094837}
+   \url{https://hal.science/hal-01094837}
 }
 \seealso{ 
 \code{\link{mvnpEM}},

@@ -1,5 +1,5 @@
 Package: mixtools
-Version: 2.0.0
+Version: 2.0.0.1
 Date: 2022-12-04
 Title: Tools for Analyzing Finite Mixture Models
 Authors@R: c(person("Derek", "Young", role = c("aut", "cre"),
@@ -18,7 +18,7 @@ URL: https://github.com/dsy109/mixtools
 Description: Analyzes finite mixture models for various parametric and semiparametric settings.  This includes mixtures of parametric distributions (normal, multivariate normal, multinomial, gamma), various Reliability Mixture Models (RMMs), mixtures-of-regressions settings (linear regression, logistic regression, Poisson regression, linear regression with changepoints, predictor-dependent mixing proportions, random effects regressions, hierarchical mixtures-of-experts), and tools for selecting the number of components (bootstrapping the likelihood ratio test statistic, mixturegrams, and model selection criteria).  Bayesian estimation of mixtures-of-linear-regressions models is available as well as a novel data depth method for obtaining credible bands.  This package is based upon work supported by the National Science Foundation under Grant No. SES-0518772 and the Chan Zuckerberg Initiative: Essential Open Source Software for Science (Grant No. 2020-255193).
 License: GPL (>= 2)
 NeedsCompilation: yes
-Packaged: 2022-12-05 06:17:17 UTC; derekyoung
+Packaged: 2025-03-08 07:39:45 UTC; hornik
 Author: Derek Young [aut, cre] (<https://orcid.org/0000-0002-3048-3803>),
   Tatiana Benaglia [aut],
   Didier Chauveau [aut],
@@ -30,4 +30,4 @@ Author: Derek Young [aut, cre] (<https://orcid.org/0000-0002-3048-3803>),
   Fengjuan Xuan [ctb]
 Maintainer: Derek Young <derek.young@uky.edu>
 Repository: CRAN
-Date/Publication: 2022-12-05 14:30:02 UTC
+Date/Publication: 2025-03-08 08:58:50 UTC

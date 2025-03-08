@@ -10,7 +10,7 @@ data(CO2data)
   well as their estimated carbon dioxide (CO2) emission per capita for the same year. 
 }
 \format{This data frame consists of 28 countries and the following columns:
-\itemize{
+\describe{
   \item{\code{GNP}}{The gross national product per capita in 1996.}
   \item{\code{CO2}}{The estimated carbon dioxide emission per capita in 1996.}
   \item{\code{country}}{An abbreviation pertaining to the country measured 
